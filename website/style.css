@@ -351,6 +351,7 @@ ul {
 .gradient-text {
     background: linear-gradient(135deg, var(--primary-color) 20%, var(--secondary-color) 80%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
