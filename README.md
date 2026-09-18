@@ -1,39 +1,82 @@
-# 🩺 Medical Report Analyser
+# 🩺 MediPulse AI — Medical Report Analyser
 
-An AI-powered web application designed to simplify the interpretation of medical reports. The platform enables users to upload medical documents and receive organized, easy-to-understand insights through an intuitive interface.
+An intelligent, AI-powered healthcare web application designed to translate complex medical reports and diagnostic lab results into plain-English, clinically grounded insights.
 
-> ⚠️ This project is a prototype developed for learning, innovation, and demonstration purposes. It is not intended to replace professional medical advice.
+> ⚠️ **Disclaimer:** MediPulse AI is an educational and demonstrational prototype designed for health literacy and accessibility. It is **not** a substitute for professional medical advice, diagnosis, or clinical treatment. Always consult a licensed healthcare professional.
 
 ---
 
 ## 📌 Project Overview
 
-Medical reports often contain complex medical terminology that can be difficult for patients to understand. This project aims to bridge that gap by providing a user-friendly platform that analyzes reports and presents key information in a simplified manner.
-
-The application focuses on improving accessibility and helping users better understand their health records.
+Medical lab reports often contain confusing acronyms and reference numbers (e.g. MCV, MCH, HbA1c, eGFR, SGPT) that can be difficult for patients to understand. **MediPulse AI** bridges this gap by automatically extracting biomarkers, evaluating them against gender- and age-calibrated clinical reference ranges, and generating clear patient summaries, dietary suggestions, and doctor consultation questions.
 
 ---
 
 ## ✨ Features
 
-- 📄 Upload medical reports
-- 🤖 AI-powered report analysis
-- 📊 Easy-to-understand report summaries
-- 💻 Modern and responsive user interface
-- 📱 Mobile-friendly design
-- ⚡ Fast and lightweight frontend
-- 🎨 Clean healthcare-inspired UI
-- 🔒 User-friendly dashboard
+- ⚡ **Instant Multi-Panel Biomarker Engine:** Automatically detects and extracts 40+ clinical parameters across:
+  - **Complete Blood Count (CBC):** Hemoglobin, RBC, WBC, Platelets, Hematocrit, MCV, MCH, Ferritin
+  - **Lipid & Cardiovascular Panel:** Total Cholesterol, HDL ("Good"), LDL ("Bad"), Triglycerides
+  - **Metabolic & Diabetes Profile:** Fasting Blood Sugar, HbA1c
+  - **Kidney / Renal Function:** Serum Creatinine, Blood Urea Nitrogen (BUN), eGFR, Uric Acid
+  - **Liver / Hepatic Function:** ALT / SGPT, AST / SGOT, Total Bilirubin
+  - **Thyroid:** TSH (Thyroid Stimulating Hormone)
+- 📊 **Visual Range Position Meters:** Interactive gauges showing where your biomarker falls (`[ Low | Normal | High ]`).
+- 🧪 **1-Click Pre-loaded Clinical Cases:** Test instantly with realistic scenarios:
+  1. *Complete Blood Count (CBC) — Microcytic Anemia*
+  2. *Lipid Profile — Cardiovascular Risk*
+  3. *Comprehensive Metabolic Panel — Diabetes & Renal Strain*
+  4. *Routine Wellness Checkup — Optimal Baseline*
+- 📄 **Flexible Input Support:** Drag-and-drop file upload (TXT, CSV, PDF/Image OCR preview) or direct text pasting.
+- 🥗 **Tailored Lifestyle Guidance:** Personalized dietary recommendations, physical activity plans, and items to avoid based on flagged markers.
+- 🩺 **Doctor Discussion Prep Kit:** High-yield questions to ask your healthcare provider at your next visit.
+- 💬 **Interactive AI Health Assistant:** In-app medical Q&A chat for follow-up inquiries.
+- 🖨️ **Print & Export:** One-click formatted PDF printing and summary clipboard export.
+- 🌓 **Dark / Light Theme:** Modern clinical glassmorphism design with persistent theme toggle.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- HTML5
-- CSS3
-- JavaScript
-- AI Integration (Prototype)
-- Vercel Deployment
+- **Frontend:** HTML5, CSS3 (Modern Glassmorphism & Custom Properties), Vanilla JavaScript (ES6+ Modules)
+- **Tooling & Dev Server:** Vite 8
+- **Backend Service:** Python (Built-in standard library HTTP server or Flask/FastAPI)
+- **Typography & Icons:** Google Fonts (*Outfit* & *Plus Jakarta Sans*), Font Awesome 6
+
+---
+
+## 🚀 Quick Start & Installation
+
+### Prerequisites
+- **Node.js:** v18.0.0 or later
+- **npm:** v9.0.0 or later
+- *(Optional)* Python 3.9+ for backend API
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/ANKITT2006/medical-report-analyser.git
+cd medical-report-analyser
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Run Development Server
+```bash
+npm run dev
+```
+Open your browser and navigate to:
+```
+http://localhost:5173/
+```
+
+### 4. Optional: Run Python Backend
+```bash
+python website/app.py
+```
+*(The frontend runs fully standalone client-side out of the box, with optional hybrid fallback to the Python backend).*
 
 ---
 
@@ -41,75 +84,31 @@ The application focuses on improving accessibility and helping users better unde
 
 ```
 medical-report-analyser/
-│
 ├── website/
-│   ├── index.html
-│   ├── css/
-│   ├── js/
-│   ├── assets/
-│   └── images/
-│
-├── README.md
+│   ├── index.html      # Main clinical web application interface
+│   ├── style.css       # Healthcare theme styling, animations & dark mode
+│   ├── script.js       # Diagnostic parser, biomarker DB & AI logic
+│   └── app.py          # Python REST API backend service
+├── package.json        # NPM configuration & scripts
+├── package-lock.json   # Locked dependency tree
+├── .gitignore          # Git exclusion rules
+└── README.md           # Project documentation
 ```
-
----
-
-## 🎯 Objectives
-
-- Simplify medical report interpretation
-- Improve healthcare accessibility
-- Demonstrate AI-assisted medical analysis
-- Provide a clean and responsive healthcare interface
-
----
-
-## 🚀 Future Enhancements
-
-- OCR support for scanned reports
-- AI-generated health recommendations
-- Disease risk prediction
-- PDF report uploads
-- User authentication
-- Patient history tracking
-- Doctor dashboard
-- Multi-language support
-- Medical chatbot integration
-- Cloud database support
-
----
-
-## 💡 Learning Outcomes
-
-Through this project I learned:
-
-- Responsive Web Design
-- Frontend Development
-- UI/UX Design
-- AI Application Prototyping
-- Project Deployment using Vercel
-- Git & GitHub Workflow
-
----
-
-
-## ⚠️ Disclaimer
-
-This application is developed for educational and demonstration purposes only. It should not be considered a substitute for professional medical advice, diagnosis, or treatment.
 
 ---
 
 ## 👨‍💻 Author
 
-**Ankit Nag**
-
-B.Tech CSE (AI & ML)
-
-VIT Bhopal University
-
-GitHub: https://github.com/ANKIT2006-sudo
+**Ankit Nag**  
+B.Tech CSE (AI & ML)  
+VIT Bhopal University  
+- GitHub: [@ANKIT2006-sudo](https://github.com/ANKIT2006-sudo)  
+- Repository: [medical-report-analyser](https://github.com/ANKITT2006/medical-report-analyser)
 
 ---
 
-## ⭐ Support
+## ⭐ Support & Contributing
 
-If you found this project useful, consider giving it a ⭐ on GitHub!
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/ANKITT2006/medical-report-analyser/issues) if you would like to contribute.
+
+If you found this project helpful, please give it a ⭐️!

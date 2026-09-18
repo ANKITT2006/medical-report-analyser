@@ -1,0 +1,23 @@
+{
+  "name": "medical-report-analyser",
+  "version": "1.0.0",
+  "description": "An AI-powered web application designed to simplify the interpretation of medical reports.",
+  "scripts": {
+    "dev": "vite website --port 5173 --host",
+    "build": "vite build website",
+    "preview": "vite preview website",
+    "start": "vite website --port 5173 --host"
+  },
+  "keywords": [
+    "medical",
+    "health",
+    "ai",
+    "report-analyser",
+    "lab-results"
+  ],
+  "author": "Ankit Nag",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^8.3.0"
+  }
+}

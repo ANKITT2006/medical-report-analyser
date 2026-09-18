@@ -3,190 +3,627 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AI Social Impact Dashboard demonstrating smart city solutions for waste management, traffic optimization, and environmental monitoring.">
-    <title>Smart AI Social Impact</title>
-    <!-- CSS Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="MediPulse AI - AI-powered medical report analyser that translates complex diagnostic lab tests, blood work, and clinical reports into plain-English patient insights.">
+    <title>MediPulse AI — Medical Report Analyser</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="light-mode">
-    <!-- Decorative Background Elements -->
-    <div class="bg-shape shape-1"></div>
-    <div class="bg-shape shape-2"></div>
-    <div class="bg-shape shape-3"></div>
+    <!-- Background Ambient Glow Shapes -->
+    <div class="glow-bg glow-1"></div>
+    <div class="glow-bg glow-2"></div>
+    <div class="glow-bg glow-3"></div>
 
-    <!-- Navigation Bar -->
-    <nav class="navbar glass-effect">
-        <div class="container nav-container">
-            <a href="#" class="logo">
-                <i class="fa-solid fa-leaf"></i> EcoMind AI
-            </a>
-            <ul class="nav-links">
-                <li><a href="#hero" class="active">Home</a></li>
-                <li><a href="#dashboard">Dashboard</a></li>
-                <li><a href="#report">Report Issue</a></li>
-            </ul>
+    <!-- Navigation Header -->
+    <header class="header glass-nav">
+        <div class="container nav-wrapper">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">MediPulse<span class="brand-accent">AI</span></span>
+                    <span class="brand-subtitle">Clinical Report Analyser</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#analyser" class="nav-link active"><i class="fa-solid fa-file-medical"></i> Analyser</a>
+                <a href="#samples" class="nav-link"><i class="fa-solid fa-flask-vial"></i> Sample Reports</a>
+                <a href="#features" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> Features</a>
+                <a href="#faq" class="nav-link"><i class="fa-solid fa-circle-question"></i> Guide</a>
+            </nav>
+
             <div class="nav-actions">
-                <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">
+                <div class="system-status" id="system-status">
+                    <span class="status-dot"></span>
+                    <span class="status-label">AI Engine Ready</span>
+                </div>
+                <button id="theme-toggle" class="btn-icon" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
                     <i class="fa-solid fa-moon"></i>
                 </button>
             </div>
         </div>
-    </nav>
+    </header>
+
+    <!-- Medical Disclaimer Strip -->
+    <div class="disclaimer-strip">
+        <div class="container disclaimer-content">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span><strong>Educational Prototype:</strong> This AI tool simplifies medical terminology for informational purposes. Always consult a qualified physician or healthcare provider for medical diagnosis and treatment decisions.</span>
+        </div>
+    </div>
 
     <main>
         <!-- Hero Section -->
-        <section id="hero" class="hero section">
-            <div class="container hero-content">
-                <div class="hero-text">
-                    <h1 class="animate-up">AI for a <span class="gradient-text">Better Future</span></h1>
-                    <p class="animate-up delay-1">Empowering communities with smart, AI-driven solutions for waste management, traffic optimization, and environmental monitoring.</p>
-                    <div class="hero-buttons animate-up delay-2">
-                        <a href="#dashboard" class="btn btn-primary">View Dashboard</a>
-                        <a href="#report" class="btn btn-secondary glass-effect">Report Issue</a>
+        <section class="hero-section">
+            <div class="container hero-grid">
+                <div class="hero-info">
+                    <div class="badge-pill">
+                        <i class="fa-solid fa-sparkles"></i> AI-Powered Diagnostics Assistant
+                    </div>
+                    <h1 class="hero-heading">
+                        Understand Your <span class="gradient-text">Medical Reports</span> in Plain English
+                    </h1>
+                    <p class="hero-desc">
+                        Demystify blood tests, lipid panels, metabolic profiles, and urinalysis. MediPulse AI extracts biomarkers, flags out-of-range metrics against clinical reference ranges, and translates complex medical jargon into clear, actionable health insights.
+                    </p>
+                    <div class="hero-cta-group">
+                        <a href="#analyser" class="btn btn-primary">
+                            <i class="fa-solid fa-file-arrow-up"></i> Upload or Paste Report
+                        </a>
+                        <a href="#samples" class="btn btn-secondary glass-card">
+                            <i class="fa-solid fa-flask"></i> Try Sample Reports
+                        </a>
+                    </div>
+                    <div class="hero-stats-row">
+                        <div class="stat-item">
+                            <span class="stat-number">40+</span>
+                            <span class="stat-text">Clinical Biomarkers</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-text">Private & Local</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-number">&lt; 1s</span>
+                            <span class="stat-text">Instant Analysis</span>
+                        </div>
                     </div>
                 </div>
-                <div class="hero-visual animate-up delay-3 glass-effect">
-                    <div class="status-ring">
-                        <div class="status-circle pulse"></div>
-                        <span>System Active & Monitoring</span>
+
+                <!-- Interactive Hero Visual -->
+                <div class="hero-card-showcase glass-card">
+                    <div class="showcase-header">
+                        <div class="pulse-indicator">
+                            <span class="ping"></span>
+                            <span class="dot"></span>
+                        </div>
+                        <span class="showcase-title">Live Clinical Scanner</span>
+                        <span class="badge badge-normal">AI Ready</span>
+                    </div>
+
+                    <div class="sample-scan-box">
+                        <div class="scan-line"></div>
+                        <div class="sample-metric-preview">
+                            <div class="metric-preview-row">
+                                <span class="m-name"><i class="fa-solid fa-droplet text-danger"></i> Hemoglobin (Hb)</span>
+                                <span class="m-val text-warning">9.8 g/dL (Low)</span>
+                            </div>
+                            <div class="mini-bar"><div class="mini-fill fill-warning" style="width: 35%;"></div></div>
+                        </div>
+                        <div class="sample-metric-preview">
+                            <div class="metric-preview-row">
+                                <span class="m-name"><i class="fa-solid fa-dna text-primary"></i> Fasting Blood Sugar</span>
+                                <span class="m-val text-normal">92 mg/dL (Normal)</span>
+                            </div>
+                            <div class="mini-bar"><div class="mini-fill fill-normal" style="width: 60%;"></div></div>
+                        </div>
+                        <div class="sample-metric-preview">
+                            <div class="metric-preview-row">
+                                <span class="m-name"><i class="fa-solid fa-heart-pulse text-danger"></i> Total Cholesterol</span>
+                                <span class="m-val text-danger">245 mg/dL (High)</span>
+                            </div>
+                            <div class="mini-bar"><div class="mini-fill fill-danger" style="width: 85%;"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="showcase-footer">
+                        <div class="ai-badge">
+                            <i class="fa-solid fa-brain"></i> Automatic Biomarker Extraction
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Main Dashboard Section -->
-        <section id="dashboard" class="dashboard section">
+        <!-- 1-Click Sample Reports Section -->
+        <section id="samples" class="section samples-section">
             <div class="container">
-                <div class="section-header">
-                    <h2>Smart City Overview</h2>
-                    <div class="domain-tabs glass-effect">
-                        <button class="tab-btn active" data-domain="all">All</button>
-                        <button class="tab-btn" data-domain="waste">Waste</button>
-                        <button class="tab-btn" data-domain="traffic">Traffic</button>
-                        <button class="tab-btn" data-domain="environment">Environment</button>
-                    </div>
+                <div class="section-title-wrap text-center">
+                    <span class="section-badge">Instant Demo</span>
+                    <h2>Explore Pre-loaded Clinical Test Cases</h2>
+                    <p>Click any test report below to instantly load real clinical data and see the AI analysis in action.</p>
                 </div>
-                
-                <div class="dashboard-grid">
-                    <!-- Impact Metrics Card -->
-                    <div class="card glass-effect metrics-card slide-in">
-                        <h3><i class="fa-solid fa-chart-line"></i> Impact Metrics</h3>
-                        <div class="metrics-grid">
-                            <div class="metric">
-                                <span class="metric-value">2,450</span>
-                                <span class="metric-label">Issues Resolved</span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-value">98%</span>
-                                <span class="metric-label">AI Accuracy</span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-value">12.5k</span>
-                                <span class="metric-label">Active Alerts</span>
-                            </div>
+
+                <div class="sample-cards-grid">
+                    <!-- Sample 1 -->
+                    <div class="sample-card glass-card" onclick="loadSampleReport('cbc_anemia')">
+                        <div class="sample-card-icon icon-red">
+                            <i class="fa-solid fa-droplet"></i>
                         </div>
-                        <div class="progress-container">
-                            <div class="progress-header">
-                                <span>City Optimization Progress</span>
-                                <span>78%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 78%;"></div>
-                            </div>
+                        <div class="sample-badge badge-warning">Microcytic Anemia</div>
+                        <h3>Complete Blood Count (CBC)</h3>
+                        <p>Simulates low hemoglobin, reduced RBC & elevated WBC indicating mild microcytic iron-deficiency anemia.</p>
+                        <div class="sample-tags">
+                            <span>Hb: 9.8 g/dL</span>
+                            <span>RBC: 3.2 M/uL</span>
+                            <span>WBC: 11,800</span>
                         </div>
+                        <button type="button" class="btn btn-sample" onclick="event.stopPropagation(); loadSampleReport('cbc_anemia')">
+                            <span>Load Case</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
                     </div>
 
-                    <!-- AI Suggestions Card -->
-                    <div class="card glass-effect suggestions-card slide-in delay-1">
-                        <h3><i class="fa-solid fa-lightbulb"></i> AI Output Feed</h3>
-                        <ul class="suggestion-list" id="ai-feed">
-                            <li class="suggestion-item">
-                                <div class="icon-box warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                                <div class="suggestion-content">
-                                    <h4>Traffic Congestion Detected</h4>
-                                    <p>Rerouting public transit to avoid Main Street.</p>
-                                </div>
-                                <span class="badge high">High Risk</span>
-                            </li>
-                            <li class="suggestion-item">
-                                <div class="icon-box success"><i class="fa-solid fa-recycle"></i></div>
-                                <div class="suggestion-content">
-                                    <h4>Waste Collection Needed</h4>
-                                    <p>Zone D bins at 90% capacity. Dispatching truck.</p>
-                                </div>
-                                <span class="badge medium">Med Risk</span>
-                            </li>
-                        </ul>
+                    <!-- Sample 2 -->
+                    <div class="sample-card glass-card" onclick="loadSampleReport('lipid_cardio')">
+                        <div class="sample-card-icon icon-amber">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                        <div class="sample-badge badge-danger">Cardiovascular Risk</div>
+                        <h3>Lipid & Cardiac Profile</h3>
+                        <p>Demonstrates elevated total cholesterol, high LDL, high triglycerides, and suboptimal HDL levels.</p>
+                        <div class="sample-tags">
+                            <span>Chol: 268 mg/dL</span>
+                            <span>LDL: 178 mg/dL</span>
+                            <span>Trig: 240 mg/dL</span>
+                        </div>
+                        <button type="button" class="btn btn-sample" onclick="event.stopPropagation(); loadSampleReport('lipid_cardio')">
+                            <span>Load Case</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Sample 3 -->
+                    <div class="sample-card glass-card" onclick="loadSampleReport('diabetic_renal')">
+                        <div class="sample-card-icon icon-purple">
+                            <i class="fa-solid fa-vial"></i>
+                        </div>
+                        <div class="sample-badge badge-danger">Metabolic & Renal</div>
+                        <h3>Metabolic & Diabetic Panel</h3>
+                        <p>Simulates poorly controlled blood glucose (elevated HbA1c) alongside borderline elevated serum creatinine.</p>
+                        <div class="sample-tags">
+                            <span>Glucose: 172 mg/dL</span>
+                            <span>HbA1c: 8.6%</span>
+                            <span>Creatinine: 1.4 mg/dL</span>
+                        </div>
+                        <button type="button" class="btn btn-sample" onclick="event.stopPropagation(); loadSampleReport('diabetic_renal')">
+                            <span>Load Case</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Sample 4 -->
+                    <div class="sample-card glass-card" onclick="loadSampleReport('healthy_baseline')">
+                        <div class="sample-card-icon icon-emerald">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <div class="sample-badge badge-normal">Optimal Health</div>
+                        <h3>Routine Wellness Checkup</h3>
+                        <p>Standard comprehensive health panel with all key blood, metabolic, and liver biomarkers within optimal ranges.</p>
+                        <div class="sample-tags">
+                            <span>Hb: 14.5 g/dL</span>
+                            <span>Sugar: 88 mg/dL</span>
+                            <span>Chol: 175 mg/dL</span>
+                        </div>
+                        <button type="button" class="btn btn-sample" onclick="event.stopPropagation(); loadSampleReport('healthy_baseline')">
+                            <span>Load Case</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Reporting Section (AI Form Simulation) -->
-        <section id="report" class="report section">
+        <!-- Main Analyser Section -->
+        <section id="analyser" class="section analyser-section">
             <div class="container">
-                <div class="report-wrapper glass-effect">
-                    <!-- Input Form -->
-                    <div class="report-form-container">
-                        <h2>Report an Issue</h2>
-                        <p>Let AI analyze and suggest solutions for community issues.</p>
-                        <form id="issue-form" class="ai-form">
-                            <div class="form-group">
-                                <label for="category">Category</label>
-                                <div class="select-wrapper">
-                                    <select id="category" required>
-                                        <option value="" disabled selected>Select an issue type...</option>
-                                        <option value="waste">Waste Management</option>
-                                        <option value="traffic">Traffic & Infrastructure</option>
-                                        <option value="environment">Environmental Hazard</option>
-                                        <option value="safety">Public Safety</option>
-                                    </select>
-                                    <i class="fa-solid fa-chevron-down select-icon"></i>
-                                </div>
+                <div class="section-title-wrap">
+                    <span class="section-badge"><i class="fa-solid fa-microchip"></i> AI Report Analyser</span>
+                    <h2>Input Your Medical Diagnostic Report</h2>
+                    <p>Upload a report file (PDF/Text/Image), paste lab results, or customize the parameters below.</p>
+                </div>
+
+                <div class="analyser-workspace glass-card">
+                    <!-- Left Column: Input Form & Upload -->
+                    <div class="analyser-input-panel">
+                        <!-- Patient Context Settings -->
+                        <div class="context-bar">
+                            <div class="context-group">
+                                <label for="patient-gender"><i class="fa-solid fa-user"></i> Biological Sex</label>
+                                <select id="patient-gender" class="form-select">
+                                    <option value="female">Female (Standard Reference)</option>
+                                    <option value="male" selected>Male (Standard Reference)</option>
+                                </select>
                             </div>
-                            <div class="form-group">
-                                <label for="description">Issue Description</label>
-                                <textarea id="description" rows="4" placeholder="Describe the issue in detail..." required></textarea>
+                            <div class="context-group">
+                                <label for="patient-age"><i class="fa-solid fa-cake-candles"></i> Age Group</label>
+                                <select id="patient-age" class="form-select">
+                                    <option value="adult" selected>Adult (18-64 yrs)</option>
+                                    <option value="senior">Senior (65+ yrs)</option>
+                                    <option value="young">Young Adult (12-17 yrs)</option>
+                                </select>
                             </div>
-                            <button type="submit" class="btn btn-submit">
-                                <span>Analyze with AI</span>
-                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <div class="context-group">
+                                <label for="report-category"><i class="fa-solid fa-tag"></i> Panel Type</label>
+                                <select id="report-category" class="form-select">
+                                    <option value="auto" selected>Auto-Detect Biomarkers</option>
+                                    <option value="cbc">Complete Blood Count (CBC)</option>
+                                    <option value="lipid">Lipid & Cardiovascular Panel</option>
+                                    <option value="metabolic">Metabolic & Diabetes Panel</option>
+                                    <option value="renal">Kidney Function (KFT/RFT)</option>
+                                    <option value="liver">Liver Function (LFT)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Input Method Tabs -->
+                        <div class="input-tabs">
+                            <button class="input-tab-btn active" id="tab-btn-text" onclick="switchInputTab('text')">
+                                <i class="fa-solid fa-pen-to-square"></i> Paste / Edit Lab Data
                             </button>
-                        </form>
-                    </div>
-                    
-                    <!-- AI Response Area -->
-                    <div class="ai-response-container glass-effect hidden" id="ai-response-panel">
-                        <!-- Loading State -->
-                        <div class="loading-state" id="loading-state">
-                            <div class="spinner"></div>
-                            <p>Analyzing context and generating solutions...</p>
+                            <button class="input-tab-btn" id="tab-btn-file" onclick="switchInputTab('file')">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> Upload File / Photo
+                            </button>
                         </div>
-                        <!-- Result State -->
-                        <div class="result-state hidden" id="result-state">
-                            <div class="result-header">
-                                <h3><i class="fa-solid fa-microchip"></i> AI Analysis Complete</h3>
-                                <span class="badge" id="result-risk">Medium Risk</span>
+
+                        <!-- Method 1: Textarea Input -->
+                        <div id="text-input-container" class="input-tab-content active">
+                            <div class="textarea-wrapper">
+                                <div class="textarea-header">
+                                    <span>Enter report values or paste lab notes:</span>
+                                    <button type="button" class="btn-text" onclick="clearReportInput()">
+                                        <i class="fa-solid fa-trash-can"></i> Clear
+                                    </button>
+                                </div>
+                                <textarea id="report-text" rows="11" class="form-textarea" placeholder="Example format:
+Hemoglobin: 10.2 g/dL
+Total Cholesterol: 245 mg/dL
+LDL Cholesterol: 165 mg/dL
+HDL Cholesterol: 42 mg/dL
+Fasting Blood Sugar: 135 mg/dL
+HbA1c: 7.8 %
+Serum Creatinine: 1.3 mg/dL
+Platelet Count: 210,000 /uL
+WBC Count: 8,400 /uL"></textarea>
                             </div>
-                            <div class="result-body">
-                                <div class="result-box">
-                                    <h4>Suggested Actions</h4>
-                                    <ul id="result-actions" class="action-list">
-                                        <!-- Dynamically populated -->
+                        </div>
+
+                        <!-- Method 2: File Dropzone Input -->
+                        <div id="file-input-container" class="input-tab-content">
+                            <div class="dropzone" id="file-dropzone">
+                                <input type="file" id="file-input" accept=".txt,.csv,.pdf,.png,.jpg,.jpeg" class="file-hidden-input">
+                                <div class="dropzone-icon">
+                                    <i class="fa-solid fa-file-arrow-up"></i>
+                                </div>
+                                <h4>Drag & Drop your Medical Report here</h4>
+                                <p class="dropzone-sub">Supports TXT, CSV, PDF, or image lab reports (Max 10MB)</p>
+                                <button type="button" class="btn btn-outline" onclick="document.getElementById('file-input').click()">
+                                    Browse Files
+                                </button>
+                                <div id="selected-file-info" class="selected-file-info hidden">
+                                    <i class="fa-solid fa-file-lines"></i>
+                                    <span id="selected-file-name">filename.txt</span>
+                                    <span id="selected-file-size" class="text-muted">(24 KB)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Submit Button -->
+                        <div class="analyser-actions">
+                            <button id="btn-analyze" class="btn btn-primary btn-block btn-lg" onclick="analyzeMedicalReport()">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                <span>Analyze Medical Report with AI</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Analysis Loading / Results -->
+                    <div class="analyser-results-panel" id="results-panel">
+                        <!-- Default Empty State Placeholder -->
+                        <div class="empty-state" id="empty-state">
+                            <div class="empty-icon">
+                                <i class="fa-solid fa-notes-medical"></i>
+                            </div>
+                            <h3>Awaiting Medical Data</h3>
+                            <p>Select a sample case or paste your report on the left, then click <strong>"Analyze Medical Report with AI"</strong> to view clinical insights.</p>
+                            <div class="quick-tips">
+                                <div class="tip-item"><i class="fa-solid fa-check"></i> Auto-identifies 40+ medical parameters</div>
+                                <div class="tip-item"><i class="fa-solid fa-check"></i> Visualizes out-of-range biomarkers</div>
+                                <div class="tip-item"><i class="fa-solid fa-check"></i> Generates doctor discussion questions</div>
+                            </div>
+                        </div>
+
+                        <!-- Loading State -->
+                        <div class="loading-state hidden" id="loading-state">
+                            <div class="spinner-medical">
+                                <i class="fa-solid fa-heart-pulse pulse-fast"></i>
+                            </div>
+                            <h3>Analyzing Medical Biomarkers...</h3>
+                            <p id="loading-status-text">Extracting lab metrics, evaluating reference intervals, and constructing clinical narrative...</p>
+                            <div class="progress-track">
+                                <div class="progress-thumb" id="analysis-progress-bar"></div>
+                            </div>
+                        </div>
+
+                        <!-- Active Analysis Result Dashboard -->
+                        <div class="result-dashboard hidden" id="result-state">
+                            <!-- Overall Health Summary Card -->
+                            <div class="result-card-primary">
+                                <div class="result-top-banner">
+                                    <div class="report-meta">
+                                        <span class="report-tag" id="res-panel-type"><i class="fa-solid fa-clipboard-check"></i> Comprehensive Panel</span>
+                                        <span class="report-time" id="res-timestamp"><i class="fa-regular fa-clock"></i> Just now</span>
+                                    </div>
+                                    <div class="risk-badge-wrap">
+                                        <span class="risk-badge badge-warning" id="res-risk-badge">
+                                            <i class="fa-solid fa-circle-exclamation"></i> Moderate Attention Needed
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="vital-score-row">
+                                    <div class="vital-score-circle">
+                                        <div class="score-number" id="res-health-score">78</div>
+                                        <div class="score-denom">/100</div>
+                                        <div class="score-label">Health Index</div>
+                                    </div>
+
+                                    <div class="vital-metrics-grid">
+                                        <div class="vital-chip">
+                                            <span class="vital-chip-num" id="res-total-markers">8</span>
+                                            <span class="vital-chip-lbl">Total Tested</span>
+                                        </div>
+                                        <div class="vital-chip chip-normal">
+                                            <span class="vital-chip-num text-normal" id="res-normal-markers">5</span>
+                                            <span class="vital-chip-lbl">In Range</span>
+                                        </div>
+                                        <div class="vital-chip chip-warning">
+                                            <span class="vital-chip-num text-warning" id="res-abnormal-markers">3</span>
+                                            <span class="vital-chip-lbl">Flagged</span>
+                                        </div>
+                                        <div class="vital-chip chip-danger">
+                                            <span class="vital-chip-num text-danger" id="res-critical-markers">1</span>
+                                            <span class="vital-chip-lbl">Critical</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Plain English Narrative -->
+                                <div class="narrative-box">
+                                    <h4><i class="fa-solid fa-stethoscope"></i> Patient Summary (Plain English)</h4>
+                                    <p id="res-narrative-summary" class="narrative-text">
+                                        Loading clinical summary...
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Results Navigation Tabs -->
+                            <div class="results-subtabs">
+                                <button type="button" class="subtab-btn active" id="btn-tab-biomarkers" onclick="switchResultTab('biomarkers', this)">
+                                    <i class="fa-solid fa-table-list"></i> Biomarkers Breakdown
+                                </button>
+                                <button type="button" class="subtab-btn" id="btn-tab-lifestyle" onclick="switchResultTab('lifestyle', this)">
+                                    <i class="fa-solid fa-apple-whole"></i> Diet & Lifestyle
+                                </button>
+                                <button type="button" class="subtab-btn" id="btn-tab-doctor" onclick="switchResultTab('doctor', this)">
+                                    <i class="fa-solid fa-user-doctor"></i> Doctor Questions
+                                </button>
+                                <button type="button" class="subtab-btn" id="btn-tab-assistant" onclick="switchResultTab('assistant', this)">
+                                    <i class="fa-solid fa-comments"></i> AI Health Chat
+                                </button>
+                            </div>
+
+                            <!-- Tab 1: Biomarkers Table & Gauges -->
+                            <div id="tab-content-biomarkers" class="subtab-content active">
+                                <div class="biomarkers-header-row">
+                                    <span class="filter-label">Filter:</span>
+                                    <div class="filter-pill-group">
+                                        <button type="button" class="filter-pill active" id="filter-all" onclick="filterBiomarkers('all', this)">All (<span id="count-all">0</span>)</button>
+                                        <button type="button" class="filter-pill" id="filter-flagged" onclick="filterBiomarkers('flagged', this)">Out of Range (<span id="count-flagged">0</span>)</button>
+                                        <button type="button" class="filter-pill" id="filter-normal" onclick="filterBiomarkers('normal', this)">Normal (<span id="count-normal">0</span>)</button>
+                                    </div>
+                                </div>
+
+                                <div class="biomarkers-table-container">
+                                    <table class="biomarkers-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Biomarker</th>
+                                                <th>Detected Value</th>
+                                                <th>Standard Range</th>
+                                                <th>Range Position</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="biomarkers-table-body">
+                                            <!-- Dynamically populated -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Tab 2: Diet & Lifestyle Recommendations -->
+                            <div id="tab-content-lifestyle" class="subtab-content">
+                                <div class="recommendations-grid">
+                                    <div class="rec-card rec-card-nutrition glass-card">
+                                        <div class="rec-icon icon-emerald"><i class="fa-solid fa-carrot"></i></div>
+                                        <h4>Dietary Adjustments</h4>
+                                        <ul id="rec-diet-list" class="rec-bullet-list">
+                                            <!-- Populated -->
+                                        </ul>
+                                    </div>
+                                    <div class="rec-card rec-card-activity glass-card">
+                                        <div class="rec-icon icon-primary"><i class="fa-solid fa-person-walking"></i></div>
+                                        <h4>Physical Activity & Habits</h4>
+                                        <ul id="rec-activity-list" class="rec-bullet-list">
+                                            <!-- Populated -->
+                                        </ul>
+                                    </div>
+                                    <div class="rec-card rec-card-avoid glass-card">
+                                        <div class="rec-icon icon-amber"><i class="fa-solid fa-ban"></i></div>
+                                        <h4>Items to Limit / Avoid</h4>
+                                        <ul id="rec-avoid-list" class="rec-bullet-list">
+                                            <!-- Populated -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab 3: Doctor Questions -->
+                            <div id="tab-content-doctor" class="subtab-content">
+                                <div class="doctor-kit-container glass-card">
+                                    <div class="doctor-kit-header">
+                                        <div class="kit-icon"><i class="fa-solid fa-clipboard-question"></i></div>
+                                        <div>
+                                            <h4>Questions to Ask Your Doctor</h4>
+                                            <p>Bring these tailored questions to your upcoming clinical appointment:</p>
+                                        </div>
+                                    </div>
+                                    <ul id="doctor-questions-list" class="doctor-q-list">
+                                        <!-- Populated -->
                                     </ul>
                                 </div>
-                                <div class="result-box">
-                                    <h4>Recommendations for City Planners</h4>
-                                    <p id="result-recommendation"></p>
+                            </div>
+
+                            <!-- Tab 4: AI Health Assistant Chat -->
+                            <div id="tab-content-assistant" class="subtab-content">
+                                <div class="chat-container glass-card">
+                                    <div class="chat-header">
+                                        <i class="fa-solid fa-robot"></i>
+                                        <div>
+                                            <h4>MediPulse Health Assistant</h4>
+                                            <span>Ask follow-up questions about this report</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="chat-messages" id="chat-messages">
+                                        <div class="chat-msg msg-ai">
+                                            <div class="msg-avatar"><i class="fa-solid fa-user-doctor"></i></div>
+                                            <div class="msg-bubble">
+                                                Hello! I've analyzed your medical report. You can ask me questions like:
+                                                <em>"What dietary changes will help my cholesterol?"</em> or 
+                                                <em>"Why is my hemoglobin flagged?"</em>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="chat-input-bar">
+                                        <input type="text" id="chat-input" placeholder="Ask a question about your report..." onkeydown="if(event.key==='Enter') sendChatMessage()">
+                                        <button class="btn btn-primary btn-icon-round" onclick="sendChatMessage()" title="Send">
+                                            <i class="fa-solid fa-paper-plane"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <button type="button" id="reset-form" class="btn btn-secondary btn-sm" style="margin-top: 1rem;">Report Another Issue</button>
+
+                            <!-- Export / Utility Bar -->
+                            <div class="result-footer-actions">
+                                <button class="btn btn-secondary" onclick="printReportSummary()">
+                                    <i class="fa-solid fa-print"></i> Print / Save PDF
+                                </button>
+                                <button class="btn btn-secondary" onclick="copySummaryToClipboard()">
+                                    <i class="fa-solid fa-copy"></i> Copy Summary
+                                </button>
+                                <button class="btn btn-outline" onclick="resetAnalyser()">
+                                    <i class="fa-solid fa-rotate-left"></i> Analyze Another Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Showcase Section -->
+        <section id="features" class="section features-section">
+            <div class="container">
+                <div class="section-title-wrap text-center">
+                    <span class="section-badge">Platform Capabilities</span>
+                    <h2>Comprehensive Diagnostic Report Intelligence</h2>
+                    <p>Built for clarity, speed, and empowering patient understanding.</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon icon-primary"><i class="fa-solid fa-microscope"></i></div>
+                        <h3>Multi-Panel Biomarker Engine</h3>
+                        <p>Automatic detection and classification for CBC hematology, lipid profiles, diabetes glycemia, kidney function, and liver enzymes.</p>
+                    </div>
+
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon icon-emerald"><i class="fa-solid fa-sliders"></i></div>
+                        <h3>Calibrated Reference Ranges</h3>
+                        <p>Evaluates biomarker values against gender and age-adjusted clinical reference intervals, showing visual position indicators.</p>
+                    </div>
+
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon icon-purple"><i class="fa-solid fa-language"></i></div>
+                        <h3>Medical Jargon Translator</h3>
+                        <p>Replaces intimidating technical terms with clear, compassionate patient summaries that explain real-world health implications.</p>
+                    </div>
+
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon icon-amber"><i class="fa-solid fa-comment-medical"></i></div>
+                        <h3>Follow-up Consultation Kit</h3>
+                        <p>Equips you with targeted questions and evidence-based lifestyle modifications to discuss with your primary physician.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ & Guide Section -->
+        <section id="faq" class="section faq-section">
+            <div class="container">
+                <div class="section-title-wrap text-center">
+                    <span class="section-badge">Help & FAQ</span>
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Everything you need to know about the Medical Report Analyser prototype.</p>
+                </div>
+
+                <div class="faq-accordion">
+                    <div class="faq-item glass-card">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h4>How does the biomarker extraction work?</h4>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>MediPulse AI scans uploaded text and documents using fuzzy medical pattern matching and regular expressions to identify clinical biomarker names, detected numeric values, and units of measurement. It then matches each biomarker against clinical laboratory reference ranges.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item glass-card">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h4>Is my medical data kept private?</h4>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes. In this prototype, data analysis runs client-side inside your browser session. Your medical reports are not permanently stored on remote databases.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item glass-card">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h4>Can this tool replace a doctor?</h4>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No. MediPulse AI is designed strictly as an educational and informational tool to help patients understand complex lab terminology. It does not provide medical diagnoses or prescribe medications. Please always discuss your test results with a licensed healthcare professional.</p>
                         </div>
                     </div>
                 </div>
@@ -195,29 +632,31 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer glass-effect">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <i class="fa-solid fa-leaf"></i> EcoMind AI
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <div class="brand">
+                    <div class="brand-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <span class="brand-title">MediPulse<span class="brand-accent">AI</span></span>
                 </div>
-                <p>Social Impact & Smart Systems Gen AI Demo</p>
-                <div class="social-links">
-                    <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <p>An educational prototype for medical report comprehension and healthcare accessibility.</p>
+            </div>
+            <div class="footer-info">
+                <p>Developed by <strong>Ankit Nag</strong> • B.Tech CSE (AI & ML) • VIT Bhopal University</p>
+                <div class="footer-links">
+                    <a href="https://github.com/ANKITT2006/medical-report-analyser" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub Repository</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- Toast Notification -->
-    <div id="toast" class="toast glass-effect hidden">
-        <i class="fa-solid fa-circle-check"></i>
-        <span id="toast-message">Report submitted successfully!</span>
+    <div id="toast" class="toast hidden">
+        <i class="fa-solid fa-circle-check" id="toast-icon"></i>
+        <span id="toast-message">Analysis completed successfully!</span>
     </div>
 
-    <!-- JavaScript File -->
-    <script src="script.js"></script>
+    <!-- Scripts -->
+    <script type="module" src="script.js"></script>
 </body>
 </html>
