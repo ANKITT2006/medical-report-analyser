@@ -1,0 +1,357 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://medipulse.ai/schemas/reference_data.schema.json",
+  "title": "ClinicalReferenceDataDocument",
+  "description": "Strict schema for authoritative laboratory reference intervals, diagnostic criteria, critical limits, and therapeutic targets.",
+  "type": "object",
+  "required": [
+    "panel_category",
+    "schema_version",
+    "last_reviewed_date",
+    "biomarkers"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "panel_category": {
+      "type": "string",
+      "enum": [
+        "CBC",
+        "LIPID_PROFILE",
+        "DIABETES_PROFILE",
+        "KFT"
+      ]
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "last_reviewed_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "biomarkers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "metric_id",
+          "canonical_name",
+          "loinc_code",
+          "description",
+          "standard_unit",
+          "supported_alternative_units",
+          "data_concepts",
+          "provenance"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "metric_id": {
+            "type": "string",
+            "enum": [
+              "hemoglobin",
+              "rbc",
+              "wbc",
+              "platelets",
+              "mcv",
+              "mch",
+              "mchc",
+              "hematocrit",
+              "cholesterol_total",
+              "ldl",
+              "hdl",
+              "triglycerides",
+              "glucose_fasting",
+              "glucose_random",
+              "hba1c",
+              "creatinine",
+              "urea",
+              "bun",
+              "egfr",
+              "uric_acid"
+            ]
+          },
+          "canonical_name": {
+            "type": "string"
+          },
+          "loinc_code": {
+            "type": ["string", "null"],
+            "pattern": "^[0-9]{3,5}-[0-9]$"
+          },
+          "loinc_verification_status": {
+            "type": "string",
+            "enum": [
+              "VERIFIED_REGISTRY",
+              "PENDING_CONFIRMATION",
+              "NOT_APPLICABLE"
+            ]
+          },
+          "loinc_details": {
+            "type": "object",
+            "properties": {
+              "loinc_version": { "type": "string" },
+              "component": { "type": "string" },
+              "property": { "type": "string" },
+              "system_specimen": { "type": "string" },
+              "scale_type": { "type": "string" },
+              "method_type": { "type": "string" }
+            }
+          },
+          "aliases": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "description": {
+            "type": "string"
+          },
+          "standard_unit": {
+            "type": "string"
+          },
+          "supported_alternative_units": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["unit", "conversion_factor_to_standard"],
+              "additionalProperties": false,
+              "properties": {
+                "unit": { "type": "string" },
+                "conversion_factor_to_standard": { "type": "number" },
+                "conversion_formula": { "type": ["string", "null"] }
+              }
+            }
+          },
+          "fasting_requirements": {
+            "type": "object",
+            "required": ["is_required", "details"],
+            "additionalProperties": false,
+            "properties": {
+              "is_required": { "type": "boolean" },
+              "recommended_hours": { "type": ["number", "null"] },
+              "details": { "type": "string" }
+            }
+          },
+          "measurement_context": {
+            "type": "object",
+            "properties": {
+              "measurement_type": { "type": "string" },
+              "methodology": { "type": "string" },
+              "equation_name": { "type": "string" },
+              "equation_formula": { "type": "string" },
+              "required_inputs": { "type": "array", "items": { "type": "string" } },
+              "longitudinal_requirements": { "type": "string" },
+              "clinical_limitations": { "type": "string" }
+            }
+          },
+          "data_concepts": {
+            "type": "object",
+            "description": "Strict separation between normal lab intervals, disease criteria, critical limits, and clinical risk categories.",
+            "required": [
+              "laboratory_reference_intervals"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "laboratory_reference_intervals": {
+                "type": "array",
+                "description": "Physiological 95% central intervals from healthy reference cohorts.",
+                "items": {
+                  "$ref": "#/$defs/IntervalDefinition"
+                }
+              },
+              "clinical_diagnostic_thresholds": {
+                "type": "array",
+                "description": "Consensus disease cutoffs (e.g., ADA Diabetes diagnostic thresholds, requiring confirmation).",
+                "items": {
+                  "$ref": "#/$defs/DiagnosticThresholdDefinition"
+                }
+              },
+              "critical_laboratory_limits": {
+                "type": "array",
+                "description": "Panic / immediately life-threatening values mandating urgent physician notification.",
+                "items": {
+                  "$ref": "#/$defs/CriticalLimitDefinition"
+                }
+              },
+              "treatment_targets": {
+                "type": "array",
+                "description": "Guideline-recommended therapeutic targets under active medical management.",
+                "items": {
+                  "$ref": "#/$defs/TargetDefinition"
+                }
+              },
+              "risk_classification_thresholds": {
+                "type": "array",
+                "description": "Epidemiological/cardiovascular/renal staging tiers (e.g., KDIGO GFR categories).",
+                "items": {
+                  "$ref": "#/$defs/RiskTierDefinition"
+                }
+              }
+            }
+          },
+          "provenance": {
+            "type": "object",
+            "required": [
+              "primary_source_organization",
+              "primary_document_title",
+              "publication_year",
+              "source_url",
+              "verification_status"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "primary_source_organization": { "type": "string" },
+              "primary_document_title": { "type": "string" },
+              "publication_year": { "type": "integer" },
+              "source_url": { "type": "string" },
+              "verification_status": {
+                "type": "string",
+                "enum": [
+                  "VERIFIED_DOCUMENTED_SOURCE",
+                  "PENDING_LABORATORY_CALIBRATION",
+                  "PROVISIONAL_CONSENSUS"
+                ]
+              },
+              "clinical_notes": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "IntervalDefinition": {
+      "type": "object",
+      "required": [
+        "population",
+        "gender",
+        "age_min_years",
+        "age_max_years",
+        "unit",
+        "min_normal",
+        "max_normal",
+        "source_reference"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "population": { "type": "string" },
+        "gender": { "type": "string", "enum": ["all", "male", "female"] },
+        "age_min_years": { "type": "number" },
+        "age_max_years": { "type": "number" },
+        "pregnancy_status": { "type": "string", "default": "NOT_PREGNANT" },
+        "unit": { "type": "string" },
+        "min_normal": { "type": ["number", "null"] },
+        "max_normal": { "type": ["number", "null"] },
+        "source_reference": { "type": "string" },
+        "verification_status": {
+          "type": "string",
+          "enum": ["VERIFIED", "PENDING_VERIFICATION"]
+        },
+        "interval_context_note": { "type": ["string", "null"] }
+      }
+    },
+    "DiagnosticThresholdDefinition": {
+      "type": "object",
+      "required": [
+        "condition_name",
+        "clinical_criteria",
+        "cutoff_value",
+        "comparison_operator",
+        "unit",
+        "requires_repeat_confirmation",
+        "source_guideline"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "condition_name": { "type": "string" },
+        "clinical_criteria": { "type": "string" },
+        "cutoff_value": { "type": "number" },
+        "comparison_operator": { "type": "string", "enum": [">=", ">", "<=", "<", "between"] },
+        "unit": { "type": "string" },
+        "requires_repeat_confirmation": { "type": "boolean" },
+        "source_guideline": { "type": "string" },
+        "verification_status": {
+          "type": "string",
+          "enum": ["VERIFIED", "PENDING_VERIFICATION"]
+        }
+      }
+    },
+    "CriticalLimitDefinition": {
+      "type": "object",
+      "required": [
+        "unit",
+        "clinical_urgency",
+        "source_reference"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "critical_low": { "type": ["number", "null"] },
+        "critical_high": { "type": ["number", "null"] },
+        "unit": { "type": "string" },
+        "clinical_urgency": { "type": "string" },
+        "source_reference": { "type": "string" },
+        "verification_status": {
+          "type": "string",
+          "enum": ["VERIFIED", "PENDING_VERIFICATION"]
+        },
+        "limit_type": {
+          "type": "string",
+          "enum": [
+            "LABORATORY_SPECIFIC_PANIC_ALERT",
+            "CLINICAL_PRACTICE_ALERT_THRESHOLD",
+            "CONSENSUS_PANIC_SURVEY_MEDIAN"
+          ]
+        },
+        "institutional_note": { "type": ["string", "null"] }
+      }
+    },
+    "TargetDefinition": {
+      "type": "object",
+      "required": [
+        "target_population",
+        "goal_description",
+        "target_value",
+        "comparison_operator",
+        "unit",
+        "source_guideline"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "target_population": { "type": "string" },
+        "goal_description": { "type": "string" },
+        "target_value": { "type": "number" },
+        "comparison_operator": { "type": "string", "enum": ["<", "<=", ">", ">=", "between"] },
+        "unit": { "type": "string" },
+        "source_guideline": { "type": "string" },
+        "verification_status": {
+          "type": "string",
+          "enum": ["VERIFIED", "PENDING_VERIFICATION"]
+        }
+      }
+    },
+    "RiskTierDefinition": {
+      "type": "object",
+      "required": [
+        "tier_name",
+        "tier_description",
+        "lower_bound",
+        "upper_bound",
+        "unit",
+        "clinical_significance",
+        "source_classification"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "tier_name": { "type": "string" },
+        "tier_description": { "type": "string" },
+        "lower_bound": { "type": ["number", "null"] },
+        "upper_bound": { "type": ["number", "null"] },
+        "unit": { "type": "string" },
+        "clinical_significance": { "type": "string" },
+        "source_classification": { "type": "string" },
+        "verification_status": {
+          "type": "string",
+          "enum": ["VERIFIED", "PENDING_VERIFICATION"]
+        }
+      }
+    }
+  }
+}

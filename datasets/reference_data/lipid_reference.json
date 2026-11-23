@@ -1,0 +1,537 @@
+{
+  "panel_category": "LIPID_PROFILE",
+  "schema_version": "1.2.0",
+  "last_reviewed_date": "2026-11-22",
+  "biomarkers": [
+    {
+      "metric_id": "cholesterol_total",
+      "canonical_name": "Total Cholesterol",
+      "loinc_code": "2093-3",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Cholesterol",
+        "property": "Mass concentration (MCnc)",
+        "system_specimen": "Serum or Plasma (Ser/Plas)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Unspecified / Enzymatic"
+      },
+      "aliases": ["total cholesterol", "cholesterol total", "serum cholesterol", "cholesterol"],
+      "description": "Total circulating mass concentration of cholesterol sterols across all lipoprotein fractions (HDL, LDL, IDL, VLDL).",
+      "standard_unit": "mg/dL",
+      "supported_alternative_units": [
+        {
+          "unit": "mmol/L",
+          "conversion_factor_to_standard": 38.67,
+          "conversion_formula": "mg/dL = mmol/L * 38.67"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Nonfasting lipid screening is clinically valid and acceptable for initial cardiovascular risk assessment per ACC/AHA cholesterol guidelines. Nonfasting total cholesterol exhibits minimal clinical variance (< 2-3%) compared to fasting states."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_MEASUREMENT",
+        "methodology": "Enzymatic automated spectrophotometry / colorimetric assay"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adults (Desirable Reference Baseline; subject to local laboratory analytical platform verification)",
+            "gender": "all",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "mg/dL",
+            "min_normal": 125.0,
+            "max_normal": 199.0,
+            "source_reference": "NCEP ATP III / 2018 AHA/ACC Blood Cholesterol Guidelines (Reaffirmed)",
+            "interval_context_note": "Total cholesterol represents combined sterol mass across all circulating lipoprotein classes (VLDL, LDL, HDL). Population distributions shift with age and dietary patterns. Local laboratory calibration and method-specific cutoffs apply.",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Severe Hypercholesterolemia (Phenotypic Marker for Familial Hypercholesterolemia Evaluation)",
+            "clinical_criteria": "Total cholesterol >= 290 mg/dL (or LDL-C >= 190 mg/dL) represents a clinical threshold indicating severe hypercholesterolemia. Guideline recommendations suggest clinical evaluation for secondary causes and consideration of high-intensity lipid-lowering therapy by a healthcare provider. Does not constitute an autonomous prescription or automated disease diagnosis.",
+            "cutoff_value": 290.0,
+            "comparison_operator": ">=",
+            "unit": "mg/dL",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "2018 AHA/ACC/AACVPR/AAPA/ABC/ACPM/ADA/AGS/APhA/ASPC/NLA/PCNA Guideline on the Management of Blood Cholesterol",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [],
+        "treatment_targets": [
+          {
+            "target_population": "Adult Primary Prevention Cohort",
+            "goal_description": "Desirable population reference target for circulating total cholesterol",
+            "target_value": 200.0,
+            "comparison_operator": "<",
+            "unit": "mg/dL",
+            "source_guideline": "2018 AHA/ACC Blood Cholesterol Clinical Practice Guidelines",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "risk_classification_thresholds": [
+          {
+            "tier_name": "Desirable",
+            "tier_description": "Optimal low atherosclerotic cardiovascular disease baseline",
+            "lower_bound": 0.0,
+            "upper_bound": 199.0,
+            "unit": "mg/dL",
+            "clinical_significance": "Favorable baseline lipid profile",
+            "source_classification": "NCEP ATP III / AHA/ACC Guidelines",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "Borderline High",
+            "tier_description": "Moderate elevation; warrants lifestyle evaluation and ASCVD risk discussion",
+            "lower_bound": 200.0,
+            "upper_bound": 239.0,
+            "unit": "mg/dL",
+            "clinical_significance": "Increased circulating atherogenic particle exposure",
+            "source_classification": "NCEP ATP III / AHA/ACC Guidelines",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "High",
+            "tier_description": "Substantially elevated total cholesterol tier",
+            "lower_bound": 240.0,
+            "upper_bound": null,
+            "unit": "mg/dL",
+            "clinical_significance": "Associated with increased atherogenic plaque progression risk",
+            "source_classification": "NCEP ATP III / AHA/ACC Guidelines",
+            "verification_status": "VERIFIED"
+          }
+        ]
+      },
+      "provenance": {
+        "primary_source_organization": "American Heart Association / American College of Cardiology (AHA/ACC)",
+        "primary_document_title": "2018 AHA/ACC/AACVPR/AAPA/ABC/ACPM/ADA/AGS/APhA/ASPC/NLA/PCNA Guideline on the Management of Blood Cholesterol",
+        "publication_year": 2018,
+        "source_url": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000000625",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Ground truth is verified against the official 2018 AHA/ACC Cholesterol Guideline (Circulation 2019;139:e1082-e1143). An alleged 2026 focused update could not be corroborated in official published literature; marked unresolved and retained the verified 2018 guideline."
+      }
+    },
+    {
+      "metric_id": "ldl",
+      "canonical_name": "Low-Density Lipoprotein Cholesterol",
+      "loinc_code": "13457-7",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Cholesterol.in LDL",
+        "property": "Mass concentration (MCnc)",
+        "system_specimen": "Serum or Plasma (Ser/Plas)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Calculated (by Friedewald or Martin-Hopkins equation)"
+      },
+      "aliases": ["ldl", "ldl cholesterol", "low density lipoprotein", "bad cholesterol", "ldl-c"],
+      "description": "Cholesterol transported within atherogenic apolipoprotein B-100 particles directly implicated in vascular plaque accumulation.",
+      "standard_unit": "mg/dL",
+      "supported_alternative_units": [
+        {
+          "unit": "mmol/L",
+          "conversion_factor_to_standard": 38.67,
+          "conversion_formula": "mg/dL = mmol/L * 38.67"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Nonfasting lipid screening is clinically valid for baseline assessment per AHA/ACC guidelines. Fasting lipid testing (10-12 hours) is specifically indicated when: (1) Initial nonfasting triglycerides are >= 400 mg/dL; (2) Calculating Friedewald LDL in borderline patients; (3) Establishing precise baseline before pharmacotherapy in high-risk patients; (4) Screening for familial hypertriglyceridemia."
+      },
+      "measurement_context": {
+        "measurement_type": "CALCULATED_OR_DIRECT",
+        "methodology": "Calculated via Friedewald equation [LDL = Total Cholesterol - HDL - (Triglycerides/5)] or Martin-Hopkins novel adjustable factor; OR Direct homogenous enzymatic assay (LOINC 18262-6). When triglycerides exceed 400 mg/dL, Friedewald calculation is invalid and direct LDL measurement or non-HDL cholesterol must be utilized."
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adult General Population (Optimal Range; subject to local laboratory verification)",
+            "gender": "all",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "mg/dL",
+            "min_normal": 50.0,
+            "max_normal": 99.0,
+            "source_reference": "2018 AHA/ACC Multi-Society Blood Cholesterol Guidelines",
+            "interval_context_note": "Desirable baseline reflects low atherogenic burden. In clinical practice, LDL is evaluated based on global 10-year ASCVD risk rather than a rigid normal/abnormal cutoff. Method-dependent (calculated vs direct enzymatic).",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Severe Primary Hypercholesterolemia Threshold",
+            "clinical_criteria": "LDL-C >= 190 mg/dL represents an established clinical risk threshold where clinical practice guidelines recommend evaluating for primary genetic hypercholesterolemia and discussing high-intensity statin therapy with the patient. Guideline threshold is an educational and diagnostic decision-support reference, not an automated prescription instruction.",
+            "cutoff_value": 190.0,
+            "comparison_operator": ">=",
+            "unit": "mg/dL",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "2018 AHA/ACC Blood Cholesterol Clinical Practice Guidelines",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [],
+        "treatment_targets": [
+          {
+            "target_population": "Adults with High ASCVD Risk / Secondary Prevention",
+            "goal_description": "Guideline therapeutic target recommendation: >= 50% reduction in LDL-C baseline and achieving LDL-C < 70 mg/dL (or < 55 mg/dL in very-high-risk patients). Stored as clinical guidance reference; treatment decisions remain solely within physician discretion.",
+            "target_value": 70.0,
+            "comparison_operator": "<",
+            "unit": "mg/dL",
+            "source_guideline": "2018 AHA/ACC Cholesterol Guidelines / ESC-EAS Dyslipidaemia Guidelines",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "risk_classification_thresholds": [
+          {
+            "tier_name": "Optimal",
+            "tier_description": "Favorable cardiovascular baseline",
+            "lower_bound": 0.0,
+            "upper_bound": 99.0,
+            "unit": "mg/dL",
+            "clinical_significance": "Lowest atherogenic risk tier",
+            "source_classification": "NCEP ATP III / AHA/ACC",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "Near Optimal / Above Optimal",
+            "tier_description": "Mild elevation",
+            "lower_bound": 100.0,
+            "upper_bound": 129.0,
+            "unit": "mg/dL",
+            "clinical_significance": "Borderline tier; evaluated in context of overall 10-year risk",
+            "source_classification": "NCEP ATP III",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "Borderline High",
+            "tier_description": "Elevated circulating atherogenic particles",
+            "lower_bound": 130.0,
+            "upper_bound": 159.0,
+            "unit": "mg/dL",
+            "clinical_significance": "Lifestyle intervention and cardiovascular risk calculation indicated",
+            "source_classification": "NCEP ATP III",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "High",
+            "tier_description": "Substantially elevated atherogenic burden",
+            "lower_bound": 160.0,
+            "upper_bound": 189.0,
+            "unit": "mg/dL",
+            "clinical_significance": "Clinically significant hypercholesterolemia",
+            "source_classification": "NCEP ATP III",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "Very High",
+            "tier_description": "Severe primary dyslipidemia tier",
+            "lower_bound": 190.0,
+            "upper_bound": null,
+            "unit": "mg/dL",
+            "clinical_significance": "High lifetime risk of premature cardiovascular events",
+            "source_classification": "AHA/ACC Guidelines",
+            "verification_status": "VERIFIED"
+          }
+        ]
+      },
+      "provenance": {
+        "primary_source_organization": "American Heart Association / American College of Cardiology (AHA/ACC)",
+        "primary_document_title": "2018 AHA/ACC/AACVPR/AAPA/ABC/ACPM/ADA/AGS/APhA/ASPC/NLA/PCNA Guideline on the Management of Blood Cholesterol",
+        "publication_year": 2018,
+        "source_url": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000000625",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Calculation methodology must be documented. Note alternative direct LDL measurement LOINC is 18262-6. Ground truth verified to 2018 AHA/ACC guideline."
+      }
+    },
+    {
+      "metric_id": "hdl",
+      "canonical_name": "High-Density Lipoprotein Cholesterol",
+      "loinc_code": "2085-9",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Cholesterol.in HDL",
+        "property": "Mass concentration (MCnc)",
+        "system_specimen": "Serum or Plasma (Ser/Plas)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Direct enzymatic or precipitation"
+      },
+      "aliases": ["hdl", "hdl cholesterol", "high density lipoprotein", "good cholesterol", "hdl-c"],
+      "description": "Cholesterol mass carried within high-density lipoproteins mediating reverse cholesterol transport from vascular tissue to hepatocytes.",
+      "standard_unit": "mg/dL",
+      "supported_alternative_units": [
+        {
+          "unit": "mmol/L",
+          "conversion_factor_to_standard": 38.67,
+          "conversion_formula": "mg/dL = mmol/L * 38.67"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "HDL concentrations remain stable across fasting and postprandial states (< 1-2% deviation)."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_MEASUREMENT",
+        "methodology": "Direct homogenous enzymatic clearance assay"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adult Males (Biological Sex-Stratified; subject to local laboratory verification)",
+            "gender": "male",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "mg/dL",
+            "min_normal": 40.0,
+            "max_normal": 80.0,
+            "source_reference": "NCEP ATP III / 2018 AHA/ACC Guidelines",
+            "interval_context_note": "Sex-stratified reference baseline. Male reference interval is lower than females due to hormonal influences on hepatic lipase and apolipoprotein A-I.",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "population": "Adult Females (Biological Sex-Stratified; subject to local laboratory verification)",
+            "gender": "female",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "mg/dL",
+            "min_normal": 50.0,
+            "max_normal": 90.0,
+            "source_reference": "NCEP ATP III / 2018 AHA/ACC Guidelines",
+            "interval_context_note": "Sex-stratified reference baseline. Females average 10 mg/dL higher HDL-C than males throughout adulthood due to estrogen effects on reverse cholesterol transport.",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Metabolic Syndrome Diagnostic Criterion: Suboptimal HDL (Male)",
+            "clinical_criteria": "HDL-C < 40 mg/dL serves as one of five standardized diagnostic components for metabolic syndrome. Presence of this criterion alone does not establish a diagnosis of metabolic syndrome (requires >= 3 components).",
+            "cutoff_value": 40.0,
+            "comparison_operator": "<",
+            "unit": "mg/dL",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "AHA/NHLBI Scientific Statement on Diagnosis and Management of the Metabolic Syndrome",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "condition_name": "Metabolic Syndrome Diagnostic Criterion: Suboptimal HDL (Female)",
+            "clinical_criteria": "HDL-C < 50 mg/dL serves as one of five standardized diagnostic components for metabolic syndrome. Requires >= 3 total criteria for confirmed metabolic syndrome diagnosis.",
+            "cutoff_value": 50.0,
+            "comparison_operator": "<",
+            "unit": "mg/dL",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "AHA/NHLBI Scientific Statement on Diagnosis and Management of the Metabolic Syndrome",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [],
+        "treatment_targets": [
+          {
+            "target_population": "Adult Cardioprotective Target",
+            "goal_description": "Cardioprotective high HDL level guideline benchmark",
+            "target_value": 60.0,
+            "comparison_operator": ">=",
+            "unit": "mg/dL",
+            "source_guideline": "NCEP ATP III",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "risk_classification_thresholds": [
+          {
+            "tier_name": "Low HDL (Cardiovascular Risk Factor)",
+            "tier_description": "Negative prognostic indicator",
+            "lower_bound": 0.0,
+            "upper_bound": 39.9,
+            "unit": "mg/dL",
+            "clinical_significance": "Associated with heightened atherogenic cardiovascular risk",
+            "source_classification": "NCEP ATP III",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "Acceptable Range",
+            "tier_description": "Standard population clearance",
+            "lower_bound": 40.0,
+            "upper_bound": 59.9,
+            "unit": "mg/dL",
+            "clinical_significance": "Neutral cardiovascular risk tier",
+            "source_classification": "NCEP ATP III",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "Cardioprotective",
+            "tier_description": "High protective reverse cholesterol clearance",
+            "lower_bound": 60.0,
+            "upper_bound": null,
+            "unit": "mg/dL",
+            "clinical_significance": "Favorable risk-reducing factor in classic risk scoring",
+            "source_classification": "NCEP ATP III",
+            "verification_status": "VERIFIED"
+          }
+        ]
+      },
+      "provenance": {
+        "primary_source_organization": "National Cholesterol Education Program / American Heart Association",
+        "primary_document_title": "ATP III Full Report / Metabolic Syndrome Consensus Statement",
+        "publication_year": 2002,
+        "source_url": "https://www.nhlbi.nih.gov/files/docs/guidelines/atp3full.pdf",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Very elevated levels (> 100 mg/dL) do not confer additional cardiovascular benefit and may reflect dysfunctional pro-inflammatory HDL."
+      }
+    },
+    {
+      "metric_id": "triglycerides",
+      "canonical_name": "Triglycerides",
+      "loinc_code": "2571-8",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Triglyceride",
+        "property": "Mass concentration (MCnc)",
+        "system_specimen": "Serum or Plasma (Ser/Plas)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Enzymatic colorimetric assay"
+      },
+      "aliases": ["triglycerides", "triglyceride", "tg", "serum triglycerides"],
+      "description": "Glycerol esters containing three fatty acid chains; primary storage and transport form of metabolic dietary and hepatic fat.",
+      "standard_unit": "mg/dL",
+      "supported_alternative_units": [
+        {
+          "unit": "mmol/L",
+          "conversion_factor_to_standard": 88.57,
+          "conversion_formula": "mg/dL = mmol/L * 88.57"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Nonfasting lipid profiling is supported for initial screening per 2018 AHA/ACC guidelines. Postprandial nonfasting triglycerides are modestly higher (~20-30 mg/dL) than fasting levels due to chylomicrons. Fasting (10-12 hours) is specifically recommended when nonfasting triglycerides are >= 400 mg/dL, in patients with a history of hypertriglyceridemic pancreatitis, or when monitoring targeted triglyceride-lowering therapy."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_MEASUREMENT",
+        "methodology": "Enzymatic (lipase / glycerol kinase / peroxidase) automated assay"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adults (Normal Reference Range - Fasting / Nonfasting Adjusted; subject to local laboratory analytical platforms)",
+            "gender": "all",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "mg/dL",
+            "min_normal": 40.0,
+            "max_normal": 149.0,
+            "source_reference": "2018 AHA/ACC Guidelines / NCEP ATP III",
+            "interval_context_note": "Fasting triglycerides < 150 mg/dL represents standard normal metabolic state. Nonfasting triglycerides may be 20-30 mg/dL higher postprandially. Local laboratory assays establish calibrated normative percentiles.",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Metabolic Syndrome Criterion: Elevated Triglycerides",
+            "clinical_criteria": "Fasting triglycerides >= 150 mg/dL (or nonfasting >= 175 mg/dL) satisfies one component criterion for metabolic syndrome. Requires >= 3 total criteria for diagnosis of metabolic syndrome.",
+            "cutoff_value": 150.0,
+            "comparison_operator": ">=",
+            "unit": "mg/dL",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "AHA/NHLBI Metabolic Syndrome Scientific Statement",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "condition_name": "Severe Hypertriglyceridemia (Pancreatitis Risk Stratification Tier)",
+            "clinical_criteria": "Triglycerides >= 500 mg/dL (persistent) identifies severe hypertriglyceridemia where clinical guidelines advise physician evaluation for secondary causes (uncontrolled diabetes, alcohol, medication) and consideration of fibrate/omega-3 therapy to mitigate acute pancreatitis risk. Represents a risk threshold, not an automatic prescription order.",
+            "cutoff_value": 500.0,
+            "comparison_operator": ">=",
+            "unit": "mg/dL",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "Endocrine Society Clinical Practice Guideline on Hypertriglyceridemia",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [
+          {
+            "critical_low": null,
+            "critical_high": 1000.0,
+            "unit": "mg/dL",
+            "clinical_urgency": "Urgent alert: Extreme hypertriglyceridemia conferring acute risk of hyperchylomicronemia syndrome, lipemia retinalis, and severe acute pancreatitis (> 1000 mg/dL). Warrants prompt physician contact.",
+            "source_reference": "American Gastroenterological Association (AGA) Guidelines / Endocrine Society",
+            "verification_status": "VERIFIED",
+            "limit_type": "CLINICAL_PRACTICE_ALERT_THRESHOLD",
+            "institutional_note": "A clinical guideline threshold denoting high risk of acute pancreatitis; laboratory notification policies vary by institution (some hospital labs set panic notification at > 1000 mg/dL; others notify at > 500 mg/dL)."
+          }
+        ],
+        "treatment_targets": [
+          {
+            "target_population": "Adult General Population",
+            "goal_description": "Target desirable triglyceride concentration",
+            "target_value": 150.0,
+            "comparison_operator": "<",
+            "unit": "mg/dL",
+            "source_guideline": "2018 AHA/ACC Blood Cholesterol Guidelines",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "risk_classification_thresholds": [
+          {
+            "tier_name": "Normal",
+            "tier_description": "Desirable baseline",
+            "lower_bound": 0.0,
+            "upper_bound": 149.0,
+            "unit": "mg/dL",
+            "clinical_significance": "Optimal metabolic fat clearance",
+            "source_classification": "NCEP ATP III",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "Borderline High",
+            "tier_description": "Mild elevation (150-199 mg/dL fasting or 175-199 nonfasting)",
+            "lower_bound": 150.0,
+            "upper_bound": 199.0,
+            "unit": "mg/dL",
+            "clinical_significance": "Marker of insulin resistance and lifestyle factors; evaluate diet and physical activity",
+            "source_classification": "NCEP ATP III",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "Moderate Hypertriglyceridemia",
+            "tier_description": "Elevated atherogenic remnant lipoproteins",
+            "lower_bound": 200.0,
+            "upper_bound": 499.0,
+            "unit": "mg/dL",
+            "clinical_significance": "Independent ASCVD risk-enhancing factor",
+            "source_classification": "2018 AHA/ACC Guidelines",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "Severe Hypertriglyceridemia",
+            "tier_description": "Severe elevation",
+            "lower_bound": 500.0,
+            "upper_bound": null,
+            "unit": "mg/dL",
+            "clinical_significance": "High acute pancreatitis risk requiring medical assessment",
+            "source_classification": "Endocrine Society Guidelines",
+            "verification_status": "VERIFIED"
+          }
+        ]
+      },
+      "provenance": {
+        "primary_source_organization": "American Heart Association / American College of Cardiology / Endocrine Society",
+        "primary_document_title": "2018 AHA/ACC/AACVPR/AAPA/ABC/ACPM/ADA/AGS/APhA/ASPC/NLA/PCNA Guideline on the Management of Blood Cholesterol",
+        "publication_year": 2018,
+        "source_url": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000000625",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Fasting status and duration must be recorded. When nonfasting triglycerides are >= 400 mg/dL, laboratory must either perform direct LDL or reflex to fasting sample. Source verified to 2018 AHA/ACC guideline; alleged 2026 update marked unresolved."
+      }
+    }
+  ]
+}

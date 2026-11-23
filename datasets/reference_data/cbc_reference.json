@@ -1,0 +1,675 @@
+{
+  "panel_category": "CBC",
+  "schema_version": "1.2.0",
+  "last_reviewed_date": "2026-11-22",
+  "biomarkers": [
+    {
+      "metric_id": "hemoglobin",
+      "canonical_name": "Hemoglobin",
+      "loinc_code": "718-7",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Hemoglobin",
+        "property": "Mass concentration (MCnc)",
+        "system_specimen": "Whole Blood (Bld)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Automated count / Spectrophotometry"
+      },
+      "aliases": ["hemoglobin", "haemoglobin", "hb", "hgb"],
+      "description": "Primary iron-containing metalloprotein in erythrocytes responsible for intravascular molecular oxygen transport from lungs to peripheral tissues.",
+      "standard_unit": "g/dL",
+      "supported_alternative_units": [
+        {
+          "unit": "g/L",
+          "conversion_factor_to_standard": 0.1,
+          "conversion_formula": "g/dL = g/L * 0.1"
+        },
+        {
+          "unit": "mmol/L",
+          "conversion_factor_to_standard": 1.6114,
+          "conversion_formula": "g/dL = mmol/L * 1.6114"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Fasting not physiologically required for standard Complete Blood Count."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_MEASUREMENT",
+        "methodology": "Automated blood cell analyzer (SLS-hemoglobin or cyanmethemoglobin method)"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adult Non-Pregnant Males (Biological Sex-Stratified; subject to local laboratory platform calibration)",
+            "gender": "male",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "g/dL",
+            "min_normal": 13.5,
+            "max_normal": 17.5,
+            "source_reference": "Tietz Textbook of Clinical Chemistry (6th Ed.) / MedlinePlus (2024)",
+            "verification_status": "VERIFIED",
+            "interval_context_note": "Reference intervals vary with local analyzer instrumentation, patient smoking status, and geographical altitude."
+          },
+          {
+            "population": "Adult Non-Pregnant Females (Biological Sex-Stratified; subject to local laboratory platform calibration)",
+            "gender": "female",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "g/dL",
+            "min_normal": 12.0,
+            "max_normal": 15.5,
+            "source_reference": "Tietz Textbook of Clinical Chemistry (6th Ed.) / MedlinePlus (2024)",
+            "verification_status": "VERIFIED",
+            "interval_context_note": "In pregnant patients, physiological hemodilution lowers reference limits (1st trimester: 11.0; 2nd trimester: 10.5; 3rd trimester: 11.0 g/dL)."
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Anemia (WHO Epidemiological Diagnostic Criterion - Adult Male)",
+            "clinical_criteria": "Hemoglobin < 13.0 g/dL defines anemia in adult men. Serves as clinical diagnostic criterion; underlying etiology (iron deficiency, chronic disease, hemolysis, hemoglobinopathy) must be established by further clinical investigation.",
+            "cutoff_value": 13.0,
+            "comparison_operator": "<",
+            "unit": "g/dL",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "WHO Haemoglobin concentrations for the diagnosis of anaemia and assessment of severity (2011)",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "condition_name": "Anemia (WHO Epidemiological Diagnostic Criterion - Non-Pregnant Adult Female)",
+            "clinical_criteria": "Hemoglobin < 12.0 g/dL defines anemia in non-pregnant adult women. Warrants clinical evaluation of iron stores and red cell indices.",
+            "cutoff_value": 12.0,
+            "comparison_operator": "<",
+            "unit": "g/dL",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "WHO Haemoglobin concentrations for the diagnosis of anaemia and assessment of severity (2011)",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [
+          {
+            "critical_low": 7.0,
+            "critical_high": 20.0,
+            "unit": "g/dL",
+            "clinical_urgency": "Urgent notification limit: High risk of tissue hypoxia (< 7.0 g/dL; common transfusion consideration trigger in hemodynamically stable patients per AABB guidelines) or severe hyperviscosity (> 20.0 g/dL). Does not mandate automatic transfusion; clinical context governs all decisions.",
+            "source_reference": "Massachusetts General Hospital Laboratory Handbook / Kost Critical Limits Consensus Survey",
+            "verification_status": "VERIFIED",
+            "limit_type": "LABORATORY_SPECIFIC_PANIC_ALERT",
+            "institutional_note": "Institutional panic value policy. MGH sets panic limits at < 7.0 g/dL and > 20.0 g/dL. Surveys by Kost (Am J Clin Pathol 1990) show multi-institutional consensus panic ranges of 6.6-7.0 g/dL (low) and 19.9-20.0 g/dL (high). Exact notification cutoffs depend on local laboratory SOP."
+          }
+        ],
+        "treatment_targets": [],
+        "risk_classification_thresholds": []
+      },
+      "provenance": {
+        "primary_source_organization": "World Health Organization / MedlinePlus / Tietz",
+        "primary_document_title": "Haemoglobin concentrations for the diagnosis of anaemia and assessment of severity",
+        "publication_year": 2011,
+        "source_url": "https://www.who.int/publications/i/item/WHO-NMH-NHD-MNM-11.1",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Diagnostic threshold for anemia differs from general hospital statistical reference intervals."
+      }
+    },
+    {
+      "metric_id": "rbc",
+      "canonical_name": "Red Blood Cell Count",
+      "loinc_code": "789-8",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Erythrocytes",
+        "property": "Number concentration (NCnc)",
+        "system_specimen": "Whole Blood (Bld)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Automated count"
+      },
+      "aliases": ["rbc", "red blood cell", "red blood cells", "erythrocytes", "rbc count"],
+      "description": "Total concentration of circulating erythrocytes per unit volume of whole blood.",
+      "standard_unit": "M/uL",
+      "supported_alternative_units": [
+        {
+          "unit": "x10^12/L",
+          "conversion_factor_to_standard": 1.0,
+          "conversion_formula": "1 M/uL = 1 x10^12/L"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Fasting not required."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_MEASUREMENT",
+        "methodology": "Hydrodynamic focusing and electrical impedance / flow cytometry"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adult Males (Biological Sex-Stratified; subject to local laboratory verification)",
+            "gender": "male",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "M/uL",
+            "min_normal": 4.5,
+            "max_normal": 5.9,
+            "source_reference": "MedlinePlus Medical Encyclopedia (2024)",
+            "verification_status": "VERIFIED",
+            "interval_context_note": "Depends on altitude, hydration status, and analyzer calibration."
+          },
+          {
+            "population": "Adult Females (Biological Sex-Stratified; subject to local laboratory verification)",
+            "gender": "female",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "M/uL",
+            "min_normal": 4.0,
+            "max_normal": 5.2,
+            "source_reference": "MedlinePlus Medical Encyclopedia (2024)",
+            "verification_status": "VERIFIED",
+            "interval_context_note": "Lower ranges observed during normal pregnancy due to plasma expansion."
+          }
+        ],
+        "clinical_diagnostic_thresholds": [],
+        "critical_laboratory_limits": [],
+        "treatment_targets": [],
+        "risk_classification_thresholds": []
+      },
+      "provenance": {
+        "primary_source_organization": "U.S. National Library of Medicine (MedlinePlus)",
+        "primary_document_title": "RBC count test",
+        "publication_year": 2024,
+        "source_url": "https://medlineplus.gov/ency/article/003644.htm",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Counts vary with high altitude acclimatization and hydration status."
+      }
+    },
+    {
+      "metric_id": "wbc",
+      "canonical_name": "White Blood Cell Count",
+      "loinc_code": "6690-2",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Leukocytes",
+        "property": "Number concentration (NCnc)",
+        "system_specimen": "Whole Blood (Bld)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Automated count"
+      },
+      "aliases": ["wbc", "white blood cell", "white blood cells", "leukocytes", "wbc count", "total leukocyte count"],
+      "description": "Total circulating leukocyte concentration defending against biological infection, inflammation, and cellular debris.",
+      "standard_unit": "/uL",
+      "supported_alternative_units": [
+        {
+          "unit": "x10^9/L",
+          "conversion_factor_to_standard": 1000.0,
+          "conversion_formula": "/uL = (x10^9/L) * 1000"
+        },
+        {
+          "unit": "x10^3/uL",
+          "conversion_factor_to_standard": 1000.0,
+          "conversion_formula": "/uL = (x10^3/uL) * 1000"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Fasting not required."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_MEASUREMENT",
+        "methodology": "Automated hematology analyzer using impedance, optical scatter, or fluorescence flow cytometry"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adults (All Genders; subject to local laboratory verification)",
+            "gender": "all",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "/uL",
+            "min_normal": 4000.0,
+            "max_normal": 11000.0,
+            "source_reference": "MedlinePlus / Tietz Clinical Guide to Laboratory Tests",
+            "verification_status": "VERIFIED",
+            "interval_context_note": "Significant diurnal variation (higher in afternoon) and acute increases with physical exercise, stress, and corticosteroid therapy."
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "SIRS (Systemic Inflammatory Response Syndrome) Leukocyte Criterion",
+            "clinical_criteria": "WBC > 12000 /uL or < 4000 /uL or > 10% immature band forms represents one component criterion for SIRS. Does not autonomously diagnose sepsis or infection without appropriate clinical evaluation.",
+            "cutoff_value": 12000.0,
+            "comparison_operator": ">",
+            "unit": "/uL",
+            "requires_repeat_confirmation": false,
+            "source_guideline": "American College of Chest Physicians / Society of Critical Care Medicine (ACCP/SCCM)",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [
+          {
+            "critical_low": 2000.0,
+            "critical_high": 30000.0,
+            "unit": "/uL",
+            "clinical_urgency": "Urgent alert: Severe opportunistic infection risk (< 2000 /uL) or leukemoid reaction / severe hematologic abnormality (> 30000 /uL). Prompts urgent clinician notification.",
+            "source_reference": "Kost Laboratory Critical Limits Survey / CAP Q-Probes",
+            "verification_status": "VERIFIED",
+            "limit_type": "CONSENSUS_PANIC_SURVEY_MEDIAN",
+            "institutional_note": "Established via national surveys of US hospital panic policies (Kost, Am J Clin Pathol 1990; CAP Q-Probes). Median low threshold: 2,000 /uL (range 1,500-2,500 /uL); median high threshold: 30,000 /uL (range 25,000-50,000 /uL). Subject to institutional laboratory policy."
+          }
+        ],
+        "treatment_targets": [],
+        "risk_classification_thresholds": []
+      },
+      "provenance": {
+        "primary_source_organization": "U.S. National Library of Medicine",
+        "primary_document_title": "WBC count",
+        "publication_year": 2024,
+        "source_url": "https://medlineplus.gov/ency/article/003643.htm",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Physical exertion, corticosteroid administration, and acute stress transiently elevate WBC counts."
+      }
+    },
+    {
+      "metric_id": "platelets",
+      "canonical_name": "Platelet Count",
+      "loinc_code": "777-3",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Platelets",
+        "property": "Number concentration (NCnc)",
+        "system_specimen": "Whole Blood (Bld)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Automated count"
+      },
+      "aliases": ["platelets", "platelet count", "plt", "thrombocytes"],
+      "description": "Circulating anucleate cellular fragments derived from bone marrow megakaryocytes essential for primary hemostatic plug formation.",
+      "standard_unit": "/uL",
+      "supported_alternative_units": [
+        {
+          "unit": "x10^9/L",
+          "conversion_factor_to_standard": 1000.0,
+          "conversion_formula": "/uL = (x10^9/L) * 1000"
+        },
+        {
+          "unit": "x10^3/uL",
+          "conversion_factor_to_standard": 1000.0,
+          "conversion_formula": "/uL = (x10^3/uL) * 1000"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Fasting not required."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_MEASUREMENT",
+        "methodology": "Automated blood cell analyzer (electrical impedance or optical scatter)"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adults (All Genders; subject to local laboratory verification)",
+            "gender": "all",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "/uL",
+            "min_normal": 150000.0,
+            "max_normal": 450000.0,
+            "source_reference": "MedlinePlus / AACC Laboratory Reference Range Guide",
+            "verification_status": "VERIFIED",
+            "interval_context_note": "Slightly lower counts may be observed in healthy individuals of certain demographic backgrounds (e.g., Mediterranean ancestry) without clinical bleeding risk."
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Thrombocytopenia Diagnostic Criterion",
+            "clinical_criteria": "Platelet count < 150000 /uL defines thrombocytopenia. Underlying cause (immune, drug-induced, consumption, sequestration) requires clinical investigation. EDTA pseudothrombocytopenia must be ruled out.",
+            "cutoff_value": 150000.0,
+            "comparison_operator": "<",
+            "unit": "/uL",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "American Society of Hematology (ASH)",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [
+          {
+            "critical_low": 50000.0,
+            "critical_high": 1000000.0,
+            "unit": "/uL",
+            "clinical_urgency": "Urgent alert: Spontaneous bleeding risk (< 50000 /uL; extreme life-threatening intracranial risk < 20000 /uL) or thrombotic complications / extreme thrombocytosis (> 1000000 /uL). Warrants urgent clinician review.",
+            "source_reference": "CAP Critical Values / Massachusetts General Hospital Handbooks",
+            "verification_status": "VERIFIED",
+            "limit_type": "LABORATORY_SPECIFIC_PANIC_ALERT",
+            "institutional_note": "Institutional panic limit policy. MGH sets critical notification threshold at < 50,000 /uL (and > 1,000,000 /uL). For outpatient clinics, some hospital laboratories use < 20,000 /uL as the emergency panic cutoff. Determined by individual hospital laboratory medical director."
+          }
+        ],
+        "treatment_targets": [],
+        "risk_classification_thresholds": []
+      },
+      "provenance": {
+        "primary_source_organization": "U.S. National Library of Medicine",
+        "primary_document_title": "Platelet count",
+        "publication_year": 2024,
+        "source_url": "https://medlineplus.gov/ency/article/003647.htm",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "EDTA-induced platelet clumping must be ruled out via peripheral smear review."
+      }
+    },
+    {
+      "metric_id": "mcv",
+      "canonical_name": "Mean Corpuscular Volume",
+      "loinc_code": "787-2",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Erythrocyte mean corpuscular volume (MCV)",
+        "property": "EntVol (Entitic volume)",
+        "system_specimen": "Red Blood Cells (RBC)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Automated count"
+      },
+      "aliases": ["mcv", "mean corpuscular volume", "erythrocyte volume"],
+      "description": "Average physical volume and size of individual circulating red blood cells, calculated as (Hematocrit x 10) / RBC.",
+      "standard_unit": "fL",
+      "supported_alternative_units": [],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Fasting not required."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_OR_DERIVED",
+        "methodology": "Directly derived from red cell volume distribution pulse heights in analyzer"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adults (All Genders; subject to local laboratory verification)",
+            "gender": "all",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "fL",
+            "min_normal": 80.0,
+            "max_normal": 100.0,
+            "source_reference": "MedlinePlus / Tietz Textbook of Clinical Chemistry",
+            "verification_status": "VERIFIED",
+            "interval_context_note": "Pediatric cohorts have substantially lower MCV values (e.g. 70-86 fL in young children)."
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Microcytosis (Morphologic Classification)",
+            "clinical_criteria": "MCV < 80 fL indicates microcytic red blood cell lineage. Serves as morphological classification directing differential diagnostic workup (e.g., ferritin testing for iron deficiency, hemoglobin electrophoresis for thalassemia). Does not constitute an autonomous diagnosis of iron deficiency.",
+            "cutoff_value": 80.0,
+            "comparison_operator": "<",
+            "unit": "fL",
+            "requires_repeat_confirmation": false,
+            "source_guideline": "British Society for Haematology (BSH) Guidelines for the Investigation of Iron Deficiency",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "condition_name": "Macrocytosis (Morphologic Classification)",
+            "clinical_criteria": "MCV > 100 fL indicates macrocytic red blood cell lineage. Directs differential diagnostic workup (e.g., serum B12, folate, reticulocyte count, thyroid panel). Does not constitute an autonomous diagnosis of megaloblastic anemia.",
+            "cutoff_value": 100.0,
+            "comparison_operator": ">",
+            "unit": "fL",
+            "requires_repeat_confirmation": false,
+            "source_guideline": "British Society for Haematology (BSH)",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [],
+        "treatment_targets": [],
+        "risk_classification_thresholds": []
+      },
+      "provenance": {
+        "primary_source_organization": "U.S. National Library of Medicine",
+        "primary_document_title": "RBC indices: MCV, MCH, MCHC",
+        "publication_year": 2024,
+        "source_url": "https://medlineplus.gov/ency/article/003648.htm",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "MCV serves as an essential branching parameter for morphologic evaluation of anemia."
+      }
+    },
+    {
+      "metric_id": "mch",
+      "canonical_name": "Mean Corpuscular Hemoglobin",
+      "loinc_code": "785-6",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Erythrocyte mean corpuscular hemoglobin (MCH)",
+        "property": "EntMass (Entitic mass)",
+        "system_specimen": "Red Blood Cells (RBC)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Automated count / Calculated"
+      },
+      "aliases": ["mch", "mean corpuscular hemoglobin"],
+      "description": "Average mass of hemoglobin contained inside an individual red blood cell, calculated as (Hemoglobin x 10) / RBC.",
+      "standard_unit": "pg",
+      "supported_alternative_units": [],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Fasting not required."
+      },
+      "measurement_context": {
+        "measurement_type": "CALCULATED",
+        "methodology": "Calculated as (Hemoglobin [g/dL] * 10) / RBC [M/uL]"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adults (All Genders; subject to local laboratory verification)",
+            "gender": "all",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "pg",
+            "min_normal": 27.0,
+            "max_normal": 33.0,
+            "source_reference": "MedlinePlus / Tietz Textbook of Clinical Chemistry",
+            "verification_status": "VERIFIED",
+            "interval_context_note": "Depends directly on precision of hemoglobin and red cell count measurements."
+          }
+        ],
+        "clinical_diagnostic_thresholds": [],
+        "critical_laboratory_limits": [],
+        "treatment_targets": [],
+        "risk_classification_thresholds": []
+      },
+      "provenance": {
+        "primary_source_organization": "U.S. National Library of Medicine",
+        "primary_document_title": "RBC indices: MCV, MCH, MCHC",
+        "publication_year": 2024,
+        "source_url": "https://medlineplus.gov/ency/article/003648.htm",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Parallels MCV; decreased in hypochromic anemias."
+      }
+    },
+    {
+      "metric_id": "mchc",
+      "canonical_name": "Mean Corpuscular Hemoglobin Concentration",
+      "loinc_code": "28540-3",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Erythrocyte mean corpuscular hemoglobin concentration (MCHC)",
+        "property": "Mass concentration (MCnc)",
+        "system_specimen": "Red Blood Cells (RBC)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Automated count / Calculated"
+      },
+      "aliases": ["mchc", "mean corpuscular hemoglobin concentration", "mchc automated"],
+      "description": "Average concentration of hemoglobin in a given volume of packed red blood cells, calculated as (Hemoglobin / Hematocrit) x 100.",
+      "standard_unit": "g/dL",
+      "supported_alternative_units": [
+        {
+          "unit": "g/L",
+          "conversion_factor_to_standard": 0.1,
+          "conversion_formula": "g/dL = g/L * 0.1"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Fasting not required."
+      },
+      "measurement_context": {
+        "measurement_type": "CALCULATED",
+        "methodology": "Calculated as (Hemoglobin [g/dL] / Hematocrit [%]) * 100"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adults (All Genders; subject to local laboratory verification)",
+            "gender": "all",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "g/dL",
+            "min_normal": 32.0,
+            "max_normal": 36.0,
+            "source_reference": "Tietz Clinical Guide to Laboratory Tests (4th Ed.) / MedlinePlus",
+            "verification_status": "VERIFIED",
+            "interval_context_note": "Analytical quality control parameter; tightly regulated physiologically."
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Hereditary Spherocytosis / Cold Agglutinin Evaluation Criterion",
+            "clinical_criteria": "MCHC > 36.0 g/dL indicates potential erythrocyte dehydration, hereditary spherocytosis, or laboratory artifact (cold agglutinin agglutination, lipemia, hemolysis). Directs laboratory investigation, not an autonomous diagnosis.",
+            "cutoff_value": 36.0,
+            "comparison_operator": ">",
+            "unit": "g/dL",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "International Council for Standardization in Haematology (ICSH)",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [],
+        "treatment_targets": [],
+        "risk_classification_thresholds": []
+      },
+      "provenance": {
+        "primary_source_organization": "International Council for Standardization in Haematology / MedlinePlus",
+        "primary_document_title": "ICSH recommendations for the analysis of red blood cells",
+        "publication_year": 2014,
+        "source_url": "https://medlineplus.gov/ency/article/003648.htm",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Serves as a crucial analytical quality check on hematology instrumentation."
+      }
+    },
+    {
+      "metric_id": "hematocrit",
+      "canonical_name": "Hematocrit",
+      "loinc_code": "4544-3",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Hematocrit",
+        "property": "Volume fraction (VFr)",
+        "system_specimen": "Whole Blood (Bld)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Automated count"
+      },
+      "aliases": ["hematocrit", "haematocrit", "hct", "packed cell volume", "pcv"],
+      "description": "Volume fraction of whole blood composed of packed erythrocytes.",
+      "standard_unit": "%",
+      "supported_alternative_units": [
+        {
+          "unit": "L/L",
+          "conversion_factor_to_standard": 100.0,
+          "conversion_formula": "% = (L/L) * 100"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Fasting not required."
+      },
+      "measurement_context": {
+        "measurement_type": "CALCULATED_OR_MEASURED",
+        "methodology": "Automated calculation as (RBC * MCV) / 10; or microhematocrit centrifugation"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adult Males (Biological Sex-Stratified; subject to local laboratory verification)",
+            "gender": "male",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "%",
+            "min_normal": 41.0,
+            "max_normal": 50.0,
+            "source_reference": "MedlinePlus / Tietz Textbook of Clinical Chemistry",
+            "verification_status": "VERIFIED",
+            "interval_context_note": "Lower values observed in patients with fluid overload or recumbent position."
+          },
+          {
+            "population": "Adult Females (Biological Sex-Stratified; subject to local laboratory verification)",
+            "gender": "female",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "%",
+            "min_normal": 36.0,
+            "max_normal": 46.0,
+            "source_reference": "MedlinePlus / Tietz Textbook of Clinical Chemistry",
+            "verification_status": "VERIFIED",
+            "interval_context_note": "Significantly drops during second and third trimesters of pregnancy due to hemodilution (normal 30-38%)."
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Polycythemia Vera Major Diagnostic Criterion",
+            "clinical_criteria": "Hematocrit > 49% in men or > 48% in women serves as one of three major diagnostic criteria for polycythemia vera per WHO classification. Confirmed diagnosis requires meeting additional criteria (e.g., JAK2 mutation, bone marrow biopsy).",
+            "cutoff_value": 49.0,
+            "comparison_operator": ">",
+            "unit": "%",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "WHO Classification of Tumours of Haematopoietic and Lymphoid Tissues (2016 / 2022 Update)",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [
+          {
+            "critical_low": 21.0,
+            "critical_high": 60.0,
+            "unit": "%",
+            "clinical_urgency": "Urgent alert: Severe decompensated anemia / heart failure danger (< 21%) or dangerous hyperviscosity / spontaneous thrombotic event risk (> 60%). Warrants immediate physician communication.",
+            "source_reference": "CAP Critical Values Survey / Hospital Reference Policies",
+            "verification_status": "VERIFIED",
+            "limit_type": "CONSENSUS_PANIC_SURVEY_MEDIAN",
+            "institutional_note": "CAP survey of panic limits indicates median low cutoff of 20-21% and median high cutoff of 60%. Institutional thresholds range from 18-24% (low) and 54-65% (high) depending on inpatient vs. outpatient population."
+          }
+        ],
+        "treatment_targets": [],
+        "risk_classification_thresholds": []
+      },
+      "provenance": {
+        "primary_source_organization": "U.S. National Library of Medicine",
+        "primary_document_title": "Hematocrit test",
+        "publication_year": 2024,
+        "source_url": "https://medlineplus.gov/ency/article/003646.htm",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Corresponds closely to 3x hemoglobin in normocytic normochromic samples."
+      }
+    }
+  ]
+}

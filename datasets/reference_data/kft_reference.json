@@ -1,0 +1,525 @@
+{
+  "panel_category": "KFT",
+  "schema_version": "1.2.0",
+  "last_reviewed_date": "2026-11-22",
+  "biomarkers": [
+    {
+      "metric_id": "creatinine",
+      "canonical_name": "Serum Creatinine",
+      "loinc_code": "2160-0",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Creatinine",
+        "property": "Mass concentration (MCnc)",
+        "system_specimen": "Serum or Plasma (Ser/Plas)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Enzymatic or Jaffe reaction IDMS-traceable"
+      },
+      "aliases": ["serum creatinine", "creatinine", "creat", "s.creatinine"],
+      "description": "Endogenous breakdown product of muscle creatine and phosphocreatine cleared almost exclusively via glomerular filtration without substantial tubular reabsorption.",
+      "standard_unit": "mg/dL",
+      "supported_alternative_units": [
+        {
+          "unit": "umol/L",
+          "conversion_factor_to_standard": 0.01131,
+          "conversion_formula": "mg/dL = umol/L * 0.01131"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Fasting not strictly required; however, cooked red meat ingestion immediately prior to venipuncture can transiently elevate serum levels."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_MEASUREMENT",
+        "methodology": "Isotope Dilution Mass Spectrometry (IDMS)-traceable enzymatic or compensated Jaffe alkaline picrate assay"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adult Males",
+            "gender": "male",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "mg/dL",
+            "min_normal": 0.7,
+            "max_normal": 1.3,
+            "source_reference": "MedlinePlus / Tietz Textbook of Clinical Chemistry",
+            "interval_context_note": "Reference intervals reflect baseline skeletal muscle mass and are method-dependent (IDMS-standardized enzymatic assays yield lower reference limits than uncompensated Jaffe assays). Reporting laboratories establish method-specific intervals. Individual baseline creatinine is crucial for detecting acute changes.",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "population": "Adult Females",
+            "gender": "female",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "mg/dL",
+            "min_normal": 0.6,
+            "max_normal": 1.1,
+            "source_reference": "MedlinePlus / Tietz Textbook of Clinical Chemistry",
+            "interval_context_note": "Lower average reference interval reflects lower mean skeletal muscle mass in females. Decreases physiologically during normal pregnancy due to marked gestational glomerular hyperfiltration. Laboratories must establish method-specific intervals.",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Acute Kidney Injury (KDIGO Stage 1 Diagnostic Definition)",
+            "clinical_criteria": "Increase in serum creatinine by >= 0.3 mg/dL (>= 26.5 umol/L) within 48 hours, or increase in serum creatinine to >= 1.5 times baseline known or presumed to have occurred within the prior 7 days. Stored as diagnostic reference criteria; requires clinical evaluation of etiology (prerenal, intrinsic, postrenal).",
+            "cutoff_value": 0.3,
+            "comparison_operator": ">=",
+            "unit": "mg/dL",
+            "requires_repeat_confirmation": false,
+            "source_guideline": "KDIGO Clinical Practice Guideline for Acute Kidney Injury (2012)",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [
+          {
+            "critical_low": null,
+            "critical_high": 5.0,
+            "unit": "mg/dL",
+            "limit_type": "LABORATORY_SPECIFIC_PANIC_ALERT",
+            "institutional_note": "Hospital laboratory policy-dependent. Massachusetts General Hospital (MGH) Laboratory Handbook and Kost national critical limit survey median designate creatinine >= 5.0 mg/dL (or acute doubling) as urgent notification threshold for acute severe renal failure. Individual institutional alert policies vary between 3.0 and 7.0 mg/dL depending on outpatient vs. hemodialysis unit contexts.",
+            "clinical_urgency": "Urgent alert: Severe acute renal failure with uremic toxicity danger (> 5.0 mg/dL or acute doubling). Prompts immediate clinician review.",
+            "source_reference": "CAP / Massachusetts General Hospital Laboratory Critical Values Policy",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "treatment_targets": [],
+        "risk_classification_thresholds": []
+      },
+      "provenance": {
+        "primary_source_organization": "Kidney Disease: Improving Global Outcomes (KDIGO) / MedlinePlus",
+        "primary_document_title": "KDIGO 2012 Clinical Practice Guideline for Acute Kidney Injury",
+        "publication_year": 2012,
+        "source_url": "https://kdigo.org/guidelines/acute-kidney-injury/",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Absolute levels depend on skeletal muscle mass. Must be utilized to compute standardized eGFR for chronic kidney assessment."
+      }
+    },
+    {
+      "metric_id": "urea",
+      "canonical_name": "Blood Urea (Serum Urea)",
+      "loinc_code": "22703-3",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Urea",
+        "property": "Mass concentration (MCnc)",
+        "system_specimen": "Serum or Plasma (Ser/Plas)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Enzymatic (Urease) / Spectrophotometry"
+      },
+      "aliases": ["blood urea", "serum urea", "urea"],
+      "description": "Total circulating urea molecular mass concentration (CO(NH2)2) synthesized in hepatic urea cycle as primary amino acid nitrogen catabolite.",
+      "standard_unit": "mg/dL",
+      "supported_alternative_units": [
+        {
+          "unit": "mmol/L",
+          "conversion_factor_to_standard": 6.006,
+          "conversion_formula": "mg/dL = mmol/L * 6.006"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Fasting not strictly required; high dietary protein intake directly modulates urea synthesis rates."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_MEASUREMENT",
+        "methodology": "Enzymatic urease / glutamate dehydrogenase assay"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adults (All Genders)",
+            "gender": "all",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "mg/dL",
+            "min_normal": 15.0,
+            "max_normal": 40.0,
+            "source_reference": "Tietz Clinical Guide to Laboratory Tests / International Federation of Clinical Chemistry (IFCC)",
+            "interval_context_note": "Widely utilized internationally outside North America. Moderately dependent on dietary protein intake, hydration status, and hepatic synthetic capacity. Laboratories establish local reference boundaries.",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "clinical_diagnostic_thresholds": [],
+        "critical_laboratory_limits": [
+          {
+            "critical_low": null,
+            "critical_high": 100.0,
+            "unit": "mg/dL",
+            "limit_type": "LABORATORY_SPECIFIC_PANIC_ALERT",
+            "institutional_note": "Laboratory-specific critical notification threshold. Urea > 100 mg/dL (equivalent to BUN ~ 46-50 mg/dL) indicates severe azotemia and triggers clinical evaluation for uremic complications. Institutional thresholds range from 100 to 150 mg/dL.",
+            "clinical_urgency": "Urgent alert: Severe uremic encephalopathy, pericarditis, and platelet dysfunction danger (> 100 mg/dL)",
+            "source_reference": "Renal Critical Care Handbooks / CAP Surveys",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "treatment_targets": [],
+        "risk_classification_thresholds": []
+      },
+      "provenance": {
+        "primary_source_organization": "International Federation of Clinical Chemistry (IFCC) / Tietz",
+        "primary_document_title": "Tietz Clinical Guide to Laboratory Tests (4th Edition)",
+        "publication_year": 2006,
+        "source_url": "https://medlineplus.gov/ency/article/003474.htm",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Distinct from BUN. Conversion factor: Urea (mg/dL) = BUN (mg/dL) * 2.14 based on molecular weight ratio (60.06 / 28.01)."
+      }
+    },
+    {
+      "metric_id": "bun",
+      "canonical_name": "Blood Urea Nitrogen",
+      "loinc_code": "3094-0",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Urea nitrogen",
+        "property": "Mass concentration (MCnc)",
+        "system_specimen": "Serum or Plasma (Ser/Plas)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Enzymatic urease conductivity / spectrophotometry"
+      },
+      "aliases": ["bun", "blood urea nitrogen", "urea nitrogen", "serum bun"],
+      "description": "Mass concentration of nitrogen component within circulating urea molecules in bloodstream.",
+      "standard_unit": "mg/dL",
+      "supported_alternative_units": [
+        {
+          "unit": "mmol/L",
+          "conversion_factor_to_standard": 2.80,
+          "conversion_formula": "mg/dL = mmol/L * 2.80"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Fasting not strictly required."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_MEASUREMENT",
+        "methodology": "Enzymatic urease rate methodology"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adults (All Genders)",
+            "gender": "all",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "mg/dL",
+            "min_normal": 7.0,
+            "max_normal": 20.0,
+            "source_reference": "MedlinePlus / Tietz Textbook of Clinical Chemistry",
+            "interval_context_note": "Subject to dietary protein variation, hydration status, and catabolic rate. Tends to increase mildly with age as GFR declines physiologically. Local laboratory intervals prevail.",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "clinical_diagnostic_thresholds": [],
+        "critical_laboratory_limits": [
+          {
+            "critical_low": null,
+            "critical_high": 100.0,
+            "unit": "mg/dL",
+            "limit_type": "LABORATORY_SPECIFIC_PANIC_ALERT",
+            "institutional_note": "Institutional panic limit. National surveys (Kost 1990; CAP Q-Probes) demonstrate hospital critical alert thresholds for BUN range from 80 to 100 mg/dL, marking advanced azotemia prompting urgent assessment for emergent dialysis indications (uremic pericarditis, encephalopathy, intractable acidosis).",
+            "clinical_urgency": "Urgent alert: Severe uremic toxicity (> 100 mg/dL)",
+            "source_reference": "CAP Critical Values / Hospital Practice Guidelines",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "treatment_targets": [],
+        "risk_classification_thresholds": [
+          {
+            "tier_name": "BUN:Creatinine Ratio Diagnostic Clue (> 20:1)",
+            "tier_description": "A BUN to Serum Creatinine ratio > 20:1 (in mg/dL units) serves as a classic clinical clue pointing toward prerenal hypoperfusion or volume depletion. Critical clinical governance requirement: This ratio is an indirect clinical clue, NOT an autonomous or definitive diagnosis of dehydration or prerenal azotemia. Non-renal factors frequently cause an elevated ratio including gastrointestinal bleeding (digested blood protein absorption), high-dose corticosteroid catabolism, excessive dietary protein intake, or low baseline muscle mass. Clinicians must interpret this ratio strictly in conjunction with physical volume examination, fractional excretion of sodium (FENa/FEUrea), and urine output.",
+            "lower_bound": 20.0,
+            "upper_bound": null,
+            "unit": "ratio",
+            "clinical_significance": "Clinical clue for volume depletion/prerenal hypoperfusion or non-renal factors (GI bleed, steroids, high protein)",
+            "source_classification": "KDIGO Acute Kidney Injury Guideline / Clinical Chemistry Practice",
+            "verification_status": "VERIFIED"
+          }
+        ]
+      },
+      "provenance": {
+        "primary_source_organization": "U.S. National Library of Medicine",
+        "primary_document_title": "Blood Urea Nitrogen (BUN) Test",
+        "publication_year": 2024,
+        "source_url": "https://medlineplus.gov/ency/article/003474.htm",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Widely utilized in North America. Must be clearly distinguished from total serum urea."
+      }
+    },
+    {
+      "metric_id": "egfr",
+      "canonical_name": "Estimated Glomerular Filtration Rate",
+      "loinc_code": "33914-3",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Glomerular filtration rate/1.73 sq M.predicted",
+        "property": "Area-normalized volume rate (ArVolRate)",
+        "system_specimen": "Serum, Plasma or Blood (Ser/Plas/Bld)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Calculated by Creatinine-based formula (2021 CKD-EPI without race)"
+      },
+      "aliases": ["egfr", "estimated gfr", "glomerular filtration rate", "gfr"],
+      "description": "Calculated biological filtration clearance of functional renal nephrons normalized to standard body surface area (1.73 m^2).",
+      "standard_unit": "mL/min/1.73m^2",
+      "supported_alternative_units": [
+        {
+          "unit": "mL/min",
+          "conversion_factor_to_standard": 1.0,
+          "conversion_formula": "Normalized to 1.73 m^2 body surface area"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Calculated value derived from serum creatinine; fasting not required."
+      },
+      "measurement_context": {
+        "measurement_type": "CALCULATED_ESTIMATE",
+        "methodology": "2021 CKD-EPI Creatinine Equation (Inker et al., NEJM 2021), endorsed by KDIGO 2024 and NKF/ASN Task Force. Equation: eGFRcr = 142 * min(Scr/kappa, 1)^alpha * max(Scr/kappa, 1)^(-1.200) * 0.9938^Age * (1.012 if female), where kappa = 0.7 (female) or 0.9 (male), alpha = -0.241 (female) or -0.302 (male). Input variables required: Serum Creatinine (IDMS-traceable, mg/dL), Age (years), and Biological Sex. Note: eGFR is a mathematical estimate, not a direct clearance measurement (e.g., inulin or iohexol).",
+        "longitudinal_requirements": "KDIGO guidelines require that chronicity (> 3 months) be documented before an eGFR < 60 mL/min/1.73m^2 confirms a diagnosis of Chronic Kidney Disease. A single abnormal eGFR may represent reversible Acute Kidney Injury, transient volume depletion, or hemodynamic fluctuation and must NEVER be classified autonomously as chronic disease.",
+        "clinical_limitations": "Inaccurate in extremes of muscle mass (amputees, bodybuilders, severe muscle wasting, paraplegia), acute hemodynamic instability, pregnancy, vegetarian diets, or rapidly changing kidney function. Cystatin C (eGFRcr-cys) is recommended for confirmatory assessment in borderline cases."
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Healthy Young Adults (Baseline Benchmark)",
+            "gender": "all",
+            "age_min_years": 18,
+            "age_max_years": 39,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "mL/min/1.73m^2",
+            "min_normal": 90.0,
+            "max_normal": 130.0,
+            "source_reference": "KDIGO 2024 Clinical Practice Guideline for the Evaluation and Management of Chronic Kidney Disease",
+            "interval_context_note": "Crucial clinical distinction: 90-130 mL/min/1.73m^2 represents the baseline physiological filtration rate of healthy young adults (ages 20-39). It is NOT a universal reference interval across all adult age groups. GFR physiologically declines with normal aging at approximately 0.75 to 1.0 mL/min/1.73m^2 per year after age 40. In adults >= 65 years, an eGFR of 60-89 mL/min/1.73m^2 is an expected age-related finding and does not constitute CKD in the absence of albuminuria, hematuria, or structural renal damage.",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Chronic Kidney Disease (CKD) Diagnostic Criterion",
+            "clinical_criteria": "eGFR < 60 mL/min/1.73 m^2 present for > 3 months, with or without evidence of kidney damage, OR markers of kidney damage (e.g. albuminuria ACR >= 30 mg/g) present for > 3 months with or without decreased eGFR. A single isolated eGFR < 60 does NOT establish a diagnosis of CKD.",
+            "cutoff_value": 60.0,
+            "comparison_operator": "<",
+            "unit": "mL/min/1.73m^2",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "KDIGO 2024 Clinical Practice Guideline for Chronic Kidney Disease",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [
+          {
+            "critical_low": 15.0,
+            "critical_high": null,
+            "unit": "mL/min/1.73m^2",
+            "limit_type": "CLINICAL_PRACTICE_ALERT_THRESHOLD",
+            "institutional_note": "Clinical practice alert consensus threshold based on KDIGO Kidney Failure classification (Stage 5 CKD / G5). Represents an urgent nephrology clinical evaluation and renal replacement planning trigger rather than an automated hospital lab panic phone call.",
+            "clinical_urgency": "Urgent alert: Kidney Failure / Stage 5 CKD (< 15 mL/min/1.73m^2). Requires urgent nephrology consultation and preparation for kidney replacement therapy or conservative care. Represents a clinical alert, not an automated prescription.",
+            "source_reference": "KDIGO 2024 Guidelines",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "treatment_targets": [
+          {
+            "target_population": "Adults with Confirmed Chronic Kidney Disease",
+            "goal_description": "Guideline therapeutic target recommendation: Preserve functional nephron mass and slow annual eGFR loss to < 1 mL/min/year through blood pressure management, SGLT2i, and RAS inhibition as clinically appropriate.",
+            "target_value": 60.0,
+            "comparison_operator": ">=",
+            "unit": "mL/min/1.73m^2",
+            "source_guideline": "KDIGO 2024 Guidelines",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "risk_classification_thresholds": [
+          {
+            "tier_name": "G1 (Normal or High GFR)",
+            "tier_description": "eGFR >= 90 mL/min/1.73 m^2. Normal baseline kidney function in absence of markers of kidney damage",
+            "lower_bound": 90.0,
+            "upper_bound": null,
+            "unit": "mL/min/1.73m^2",
+            "clinical_significance": "Optimal filtration baseline",
+            "source_classification": "KDIGO CKD Staging",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "G2 (Mildly Decreased GFR)",
+            "tier_description": "eGFR 60 to 89 mL/min/1.73 m^2. Common in elderly populations; not classified as CKD unless accompanied by persistent albuminuria or structural renal damage",
+            "lower_bound": 60.0,
+            "upper_bound": 89.9,
+            "unit": "mL/min/1.73m^2",
+            "clinical_significance": "Evaluate urine albumin-to-creatinine ratio (ACR)",
+            "source_classification": "KDIGO CKD Staging",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "G3a (Mildly to Moderately Decreased GFR)",
+            "tier_description": "eGFR 45 to 59 mL/min/1.73 m^2",
+            "lower_bound": 45.0,
+            "upper_bound": 59.9,
+            "unit": "mL/min/1.73m^2",
+            "clinical_significance": "Meets GFR threshold for CKD if sustained for > 3 months",
+            "source_classification": "KDIGO CKD Staging",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "G3b (Moderately to Severely Decreased GFR)",
+            "tier_description": "eGFR 30 to 44 mL/min/1.73 m^2",
+            "lower_bound": 30.0,
+            "upper_bound": 44.9,
+            "unit": "mL/min/1.73m^2",
+            "clinical_significance": "Elevated cardiovascular and progressive renal risk; medication dosage reviews indicated",
+            "source_classification": "KDIGO CKD Staging",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "G4 (Severely Decreased GFR)",
+            "tier_description": "eGFR 15 to 29 mL/min/1.73 m^2",
+            "lower_bound": 15.0,
+            "upper_bound": 29.9,
+            "unit": "mL/min/1.73m^2",
+            "clinical_significance": "Advanced renal failure; multidisciplinary nephrology management",
+            "source_classification": "KDIGO CKD Staging",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "G5 (Kidney Failure)",
+            "tier_description": "eGFR < 15 mL/min/1.73 m^2",
+            "lower_bound": 0.0,
+            "upper_bound": 14.9,
+            "unit": "mL/min/1.73m^2",
+            "clinical_significance": "End-stage renal disease; kidney replacement therapy evaluation",
+            "source_classification": "KDIGO CKD Staging",
+            "verification_status": "VERIFIED"
+          }
+        ]
+      },
+      "provenance": {
+        "primary_source_organization": "Kidney Disease: Improving Global Outcomes (KDIGO)",
+        "primary_document_title": "KDIGO 2024 Clinical Practice Guideline for the Evaluation and Management of Chronic Kidney Disease",
+        "publication_year": 2024,
+        "source_url": "https://kdigo.org/guidelines/ckd-evaluation-and-management/",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "GFR categories (G1-G5) define level of kidney function. Confirmed CKD diagnosis requires chronicity (> 3 months) or persistent kidney damage markers. Single eGFR values must never trigger automated disease diagnoses."
+      }
+    },
+    {
+      "metric_id": "uric_acid",
+      "canonical_name": "Serum Uric Acid",
+      "loinc_code": "3084-1",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Urate",
+        "property": "Mass concentration (MCnc)",
+        "system_specimen": "Serum or Plasma (Ser/Plas)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Enzymatic (Uricase) / Spectrophotometry"
+      },
+      "aliases": ["uric acid", "serum uric acid", "urate"],
+      "description": "Terminal heterocyclic end-product of endogenous purine nucleotide breakdown and dietary purine metabolism.",
+      "standard_unit": "mg/dL",
+      "supported_alternative_units": [
+        {
+          "unit": "umol/L",
+          "conversion_factor_to_standard": 0.01681,
+          "conversion_formula": "mg/dL = umol/L * 0.01681"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Fasting not strictly required; alcohol and purine-dense foods acutely elevate urate levels."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_MEASUREMENT",
+        "methodology": "Enzymatic uricase colorimetric assay"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Adult Males",
+            "gender": "male",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "mg/dL",
+            "min_normal": 3.4,
+            "max_normal": 7.0,
+            "source_reference": "MedlinePlus / American College of Rheumatology (ACR) Gout Guidelines",
+            "interval_context_note": "Sex-stratified reference interval. Male values are higher due to renal urate handling differences influenced by estrogen in females. Local laboratory reference ranges vary based on cohort calibration.",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "population": "Adult Females",
+            "gender": "female",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "mg/dL",
+            "min_normal": 2.4,
+            "max_normal": 6.0,
+            "source_reference": "MedlinePlus / American College of Rheumatology (ACR) Gout Guidelines",
+            "interval_context_note": "Estrogen promotes renal uric acid excretion (uricosuric effect). Postmenopausal females experience rising urate levels approaching male intervals. Reporting laboratories establish local demographic reference cutoffs.",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Physicochemical Hyperuricemia (Supersaturation Threshold)",
+            "clinical_criteria": "Serum urate > 6.8 mg/dL exceeds physiological solubility limit of monosodium urate at 37 degrees Celsius, permitting crystal precipitation. Important clinical guidance: Hyperuricemia alone does NOT establish a diagnosis of clinical gout in asymptomatic patients; guidelines recommend against automated urate-lowering pharmacotherapy in asymptomatic hyperuricemia.",
+            "cutoff_value": 6.8,
+            "comparison_operator": ">",
+            "unit": "mg/dL",
+            "requires_repeat_confirmation": false,
+            "source_guideline": "2020 American College of Rheumatology Guideline for the Management of Gout",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [
+          {
+            "critical_low": null,
+            "critical_high": 12.0,
+            "unit": "mg/dL",
+            "limit_type": "CLINICAL_PRACTICE_ALERT_THRESHOLD",
+            "institutional_note": "Clinical guideline alert threshold endorsed by the American Society of Clinical Oncology (ASCO) for Tumor Lysis Syndrome (TLS) management and acute urate nephropathy risk. Distinct from routine routine hospital laboratory telephone panic limits (which rarely include uric acid).",
+            "clinical_urgency": "Urgent alert: Danger of acute urate nephropathy and intratubular crystal precipitation (often in Tumor Lysis Syndrome; > 12 mg/dL)",
+            "source_reference": "American Society of Clinical Oncology (ASCO) Tumor Lysis Guidelines",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "treatment_targets": [
+          {
+            "target_population": "Patients with Confirmed Diagnosis of Gout on Urate-Lowering Therapy",
+            "goal_description": "Guideline therapeutic target recommendation: maintain serum urate < 6.0 mg/dL (< 360 umol/L) to facilitate crystal dissolution. Stored as clinical guidance reference; treatment decisions remain solely within physician discretion.",
+            "target_value": 6.0,
+            "comparison_operator": "<",
+            "unit": "mg/dL",
+            "source_guideline": "2020 ACR Guideline for the Management of Gout",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "risk_classification_thresholds": []
+      },
+      "provenance": {
+        "primary_source_organization": "American College of Rheumatology (ACR)",
+        "primary_document_title": "2020 American College of Rheumatology Guideline for the Management of Gout",
+        "publication_year": 2020,
+        "source_url": "https://doi.org/10.1002/art.41247",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Asymptomatic hyperuricemia is NOT treated with urate-lowering pharmacotherapy per ACR guidelines; clinical gout diagnosis requires inflammatory arthritis or tophi."
+      }
+    }
+  ]
+}

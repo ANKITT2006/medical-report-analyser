@@ -1,0 +1,789 @@
+{
+  "metrics": [
+    {
+      "metric_id": "hemoglobin",
+      "gender": "male",
+      "canonical_name": "Hemoglobin (Hb)",
+      "loinc_code": "718-7",
+      "category": "Hematology",
+      "unit": "g/dL",
+      "min_normal": 13.5,
+      "max_normal": 17.5,
+      "critical_low": 8.0,
+      "critical_high": 19.0,
+      "description": "Oxygen-transporting metalloprotein in erythrocytes.",
+      "aliases": [
+        "hemoglobin",
+        "haemoglobin",
+        "hb",
+        "hgb"
+      ]
+    },
+    {
+      "metric_id": "hemoglobin",
+      "gender": "female",
+      "canonical_name": "Hemoglobin (Hb)",
+      "loinc_code": "718-7",
+      "category": "Hematology",
+      "unit": "g/dL",
+      "min_normal": 12.0,
+      "max_normal": 15.5,
+      "critical_low": 7.5,
+      "critical_high": 18.0,
+      "description": "Oxygen-transporting metalloprotein in erythrocytes.",
+      "aliases": [
+        "hemoglobin",
+        "haemoglobin",
+        "hb",
+        "hgb"
+      ]
+    },
+    {
+      "metric_id": "rbc",
+      "gender": "male",
+      "canonical_name": "Red Blood Cell Count (RBC)",
+      "loinc_code": "789-8",
+      "category": "Hematology",
+      "unit": "M/uL",
+      "min_normal": 4.5,
+      "max_normal": 5.9,
+      "critical_low": 3.0,
+      "critical_high": 6.5,
+      "description": "Total circulating erythrocyte count.",
+      "aliases": [
+        "rbc",
+        "red blood cell",
+        "red blood cells",
+        "rbc count",
+        "erythrocytes"
+      ]
+    },
+    {
+      "metric_id": "rbc",
+      "gender": "female",
+      "canonical_name": "Red Blood Cell Count (RBC)",
+      "loinc_code": "789-8",
+      "category": "Hematology",
+      "unit": "M/uL",
+      "min_normal": 4.0,
+      "max_normal": 5.2,
+      "critical_low": 2.8,
+      "critical_high": 6.0,
+      "description": "Total circulating erythrocyte count.",
+      "aliases": [
+        "rbc",
+        "red blood cell",
+        "red blood cells",
+        "rbc count",
+        "erythrocytes"
+      ]
+    },
+    {
+      "metric_id": "wbc",
+      "gender": "all",
+      "canonical_name": "White Blood Cell Count (WBC)",
+      "loinc_code": "6690-2",
+      "category": "Hematology",
+      "unit": "/uL",
+      "min_normal": 4000.0,
+      "max_normal": 11000.0,
+      "critical_low": 2500.0,
+      "critical_high": 18000.0,
+      "description": "Total circulating leukocytes involved in immune defense.",
+      "aliases": [
+        "wbc",
+        "white blood cell",
+        "white blood cells",
+        "wbc count",
+        "leukocytes",
+        "total leukocytes"
+      ]
+    },
+    {
+      "metric_id": "platelets",
+      "gender": "all",
+      "canonical_name": "Platelet Count",
+      "loinc_code": "777-3",
+      "category": "Hematology",
+      "unit": "/uL",
+      "min_normal": 150000.0,
+      "max_normal": 450000.0,
+      "critical_low": 50000.0,
+      "critical_high": 700000.0,
+      "description": "Thrombocytes essential for physiological hemostasis and clotting.",
+      "aliases": [
+        "platelets",
+        "platelet count",
+        "plt",
+        "thrombocytes"
+      ]
+    },
+    {
+      "metric_id": "hematocrit",
+      "gender": "male",
+      "canonical_name": "Hematocrit (Hct)",
+      "loinc_code": "4544-3",
+      "category": "Hematology",
+      "unit": "%",
+      "min_normal": 41.0,
+      "max_normal": 50.0,
+      "critical_low": 28.0,
+      "critical_high": 56.0,
+      "description": "Volume fraction of red blood cells relative to total blood volume.",
+      "aliases": [
+        "hematocrit",
+        "haematocrit",
+        "hct",
+        "pcv"
+      ]
+    },
+    {
+      "metric_id": "hematocrit",
+      "gender": "female",
+      "canonical_name": "Hematocrit (Hct)",
+      "loinc_code": "4544-3",
+      "category": "Hematology",
+      "unit": "%",
+      "min_normal": 36.0,
+      "max_normal": 46.0,
+      "critical_low": 25.0,
+      "critical_high": 52.0,
+      "description": "Volume fraction of red blood cells relative to total blood volume.",
+      "aliases": [
+        "hematocrit",
+        "haematocrit",
+        "hct",
+        "pcv"
+      ]
+    },
+    {
+      "metric_id": "mcv",
+      "gender": "all",
+      "canonical_name": "Mean Corpuscular Volume (MCV)",
+      "loinc_code": "787-2",
+      "category": "Hematology",
+      "unit": "fL",
+      "min_normal": 80.0,
+      "max_normal": 100.0,
+      "critical_low": 65.0,
+      "critical_high": 115.0,
+      "description": "Average volume and physical size of single red blood cell.",
+      "aliases": [
+        "mcv",
+        "mean corpuscular volume"
+      ]
+    },
+    {
+      "metric_id": "mch",
+      "gender": "all",
+      "canonical_name": "Mean Corpuscular Hemoglobin (MCH)",
+      "loinc_code": "785-6",
+      "category": "Hematology",
+      "unit": "pg",
+      "min_normal": 27.0,
+      "max_normal": 33.0,
+      "critical_low": 20.0,
+      "critical_high": 38.0,
+      "description": "Average mass of hemoglobin per red blood cell.",
+      "aliases": [
+        "mch",
+        "mean corpuscular hemoglobin"
+      ]
+    },
+    {
+      "metric_id": "ferritin",
+      "gender": "male",
+      "canonical_name": "Serum Ferritin",
+      "loinc_code": "2276-4",
+      "category": "Hematology",
+      "unit": "ng/mL",
+      "min_normal": 24.0,
+      "max_normal": 336.0,
+      "critical_low": 10.0,
+      "critical_high": 600.0,
+      "description": "Intracellular protein complex storing and releasing physiological iron.",
+      "aliases": [
+        "ferritin",
+        "serum ferritin"
+      ]
+    },
+    {
+      "metric_id": "ferritin",
+      "gender": "female",
+      "canonical_name": "Serum Ferritin",
+      "loinc_code": "2276-4",
+      "category": "Hematology",
+      "unit": "ng/mL",
+      "min_normal": 11.0,
+      "max_normal": 307.0,
+      "critical_low": 8.0,
+      "critical_high": 500.0,
+      "description": "Intracellular protein complex storing and releasing physiological iron.",
+      "aliases": [
+        "ferritin",
+        "serum ferritin"
+      ]
+    },
+    {
+      "metric_id": "cholesterol_total",
+      "gender": "all",
+      "canonical_name": "Total Cholesterol",
+      "loinc_code": "2093-3",
+      "category": "Cardiovascular / Lipids",
+      "unit": "mg/dL",
+      "min_normal": 125.0,
+      "max_normal": 200.0,
+      "critical_low": 90.0,
+      "critical_high": 260.0,
+      "description": "Total circulating sterol lipids in bloodstream.",
+      "aliases": [
+        "total cholesterol",
+        "cholesterol total",
+        "cholesterol",
+        "serum cholesterol"
+      ]
+    },
+    {
+      "metric_id": "hdl",
+      "gender": "male",
+      "canonical_name": "HDL Cholesterol",
+      "loinc_code": "2085-9",
+      "category": "Cardiovascular / Lipids",
+      "unit": "mg/dL",
+      "min_normal": 40.0,
+      "max_normal": 80.0,
+      "critical_low": 30.0,
+      "critical_high": 100.0,
+      "description": "High-density lipoprotein mediating reverse cholesterol transport.",
+      "aliases": [
+        "hdl",
+        "hdl cholesterol",
+        "high-density lipoprotein",
+        "good cholesterol"
+      ]
+    },
+    {
+      "metric_id": "hdl",
+      "gender": "female",
+      "canonical_name": "HDL Cholesterol",
+      "loinc_code": "2085-9",
+      "category": "Cardiovascular / Lipids",
+      "unit": "mg/dL",
+      "min_normal": 50.0,
+      "max_normal": 90.0,
+      "critical_low": 35.0,
+      "critical_high": 100.0,
+      "description": "High-density lipoprotein mediating reverse cholesterol transport.",
+      "aliases": [
+        "hdl",
+        "hdl cholesterol",
+        "high-density lipoprotein",
+        "good cholesterol"
+      ]
+    },
+    {
+      "metric_id": "ldl",
+      "gender": "all",
+      "canonical_name": "LDL Cholesterol",
+      "loinc_code": "13457-7",
+      "category": "Cardiovascular / Lipids",
+      "unit": "mg/dL",
+      "min_normal": 50.0,
+      "max_normal": 100.0,
+      "critical_low": 40.0,
+      "critical_high": 160.0,
+      "description": "Low-density atherogenic lipoprotein.",
+      "aliases": [
+        "ldl",
+        "ldl cholesterol",
+        "low-density lipoprotein",
+        "bad cholesterol"
+      ]
+    },
+    {
+      "metric_id": "triglycerides",
+      "gender": "all",
+      "canonical_name": "Triglycerides",
+      "loinc_code": "2571-8",
+      "category": "Cardiovascular / Lipids",
+      "unit": "mg/dL",
+      "min_normal": 40.0,
+      "max_normal": 150.0,
+      "critical_low": 30.0,
+      "critical_high": 250.0,
+      "description": "Ester derived from glycerol and fatty acids; primary blood lipid energy form.",
+      "aliases": [
+        "triglycerides",
+        "triglyceride",
+        "tg"
+      ]
+    },
+    {
+      "metric_id": "glucose_fasting",
+      "gender": "all",
+      "canonical_name": "Fasting Blood Glucose",
+      "loinc_code": "1558-6",
+      "category": "Metabolic & Glycemia",
+      "unit": "mg/dL",
+      "min_normal": 70.0,
+      "max_normal": 99.0,
+      "critical_low": 60.0,
+      "critical_high": 140.0,
+      "description": "Serum/plasma glucose after an 8 to 12-hour fasting duration.",
+      "aliases": [
+        "fasting blood sugar",
+        "fasting blood glucose",
+        "fbs",
+        "fasting glucose",
+        "blood sugar",
+        "glucose fasting",
+        "glucose"
+      ]
+    },
+    {
+      "metric_id": "hba1c",
+      "gender": "all",
+      "canonical_name": "Glycated Hemoglobin (HbA1c)",
+      "loinc_code": "4548-4",
+      "category": "Metabolic & Glycemia",
+      "unit": "%",
+      "min_normal": 4.0,
+      "max_normal": 5.6,
+      "critical_low": 3.5,
+      "critical_high": 8.0,
+      "description": "Percentage of hemoglobin bound to glucose; reflects 2-3 month glycemic control.",
+      "aliases": [
+        "hba1c",
+        "glycated hemoglobin",
+        "a1c",
+        "hemoglobin a1c"
+      ]
+    },
+    {
+      "metric_id": "creatinine",
+      "gender": "male",
+      "canonical_name": "Serum Creatinine",
+      "loinc_code": "2160-0",
+      "category": "Kidney Function",
+      "unit": "mg/dL",
+      "min_normal": 0.7,
+      "max_normal": 1.3,
+      "critical_low": 0.4,
+      "critical_high": 2.0,
+      "description": "Breakdown product of creatine phosphate from muscle metabolism.",
+      "aliases": [
+        "creatinine",
+        "serum creatinine",
+        "creat"
+      ]
+    },
+    {
+      "metric_id": "creatinine",
+      "gender": "female",
+      "canonical_name": "Serum Creatinine",
+      "loinc_code": "2160-0",
+      "category": "Kidney Function",
+      "unit": "mg/dL",
+      "min_normal": 0.6,
+      "max_normal": 1.1,
+      "critical_low": 0.4,
+      "critical_high": 1.8,
+      "description": "Breakdown product of creatine phosphate from muscle metabolism.",
+      "aliases": [
+        "creatinine",
+        "serum creatinine",
+        "creat"
+      ]
+    },
+    {
+      "metric_id": "bun",
+      "gender": "all",
+      "canonical_name": "Blood Urea Nitrogen (BUN)",
+      "loinc_code": "3094-0",
+      "category": "Kidney Function",
+      "unit": "mg/dL",
+      "min_normal": 7.0,
+      "max_normal": 20.0,
+      "critical_low": 4.0,
+      "critical_high": 30.0,
+      "description": "Urea nitrogen concentration measuring renal clearance efficiency.",
+      "aliases": [
+        "bun",
+        "blood urea nitrogen",
+        "urea nitrogen",
+        "urea"
+      ]
+    },
+    {
+      "metric_id": "egfr",
+      "gender": "all",
+      "canonical_name": "Estimated GFR (eGFR)",
+      "loinc_code": "33914-3",
+      "category": "Kidney Function",
+      "unit": "mL/min",
+      "min_normal": 90.0,
+      "max_normal": 130.0,
+      "critical_low": 60.0,
+      "critical_high": 140.0,
+      "description": "Estimated glomerular filtration rate reflecting nephron filtering capacity.",
+      "aliases": [
+        "egfr",
+        "estimated gfr",
+        "gfr",
+        "glomerular filtration rate"
+      ]
+    },
+    {
+      "metric_id": "uric_acid",
+      "gender": "male",
+      "canonical_name": "Serum Uric Acid",
+      "loinc_code": "3084-1",
+      "category": "Kidney / Metabolic",
+      "unit": "mg/dL",
+      "min_normal": 3.4,
+      "max_normal": 7.0,
+      "critical_low": 2.0,
+      "critical_high": 8.5,
+      "description": "End product of endogenous and dietary purine metabolism.",
+      "aliases": [
+        "uric acid",
+        "serum uric acid"
+      ]
+    },
+    {
+      "metric_id": "uric_acid",
+      "gender": "female",
+      "canonical_name": "Serum Uric Acid",
+      "loinc_code": "3084-1",
+      "category": "Kidney / Metabolic",
+      "unit": "mg/dL",
+      "min_normal": 2.4,
+      "max_normal": 6.0,
+      "critical_low": 1.8,
+      "critical_high": 7.5,
+      "description": "End product of endogenous and dietary purine metabolism.",
+      "aliases": [
+        "uric acid",
+        "serum uric acid"
+      ]
+    },
+    {
+      "metric_id": "alt_sgpt",
+      "gender": "male",
+      "canonical_name": "Alanine Aminotransferase (ALT/SGPT)",
+      "loinc_code": "1742-6",
+      "category": "Liver Function",
+      "unit": "U/L",
+      "min_normal": 7.0,
+      "max_normal": 56.0,
+      "critical_low": 2.0,
+      "critical_high": 90.0,
+      "description": "Transaminase enzyme localized predominantly in hepatocytes.",
+      "aliases": [
+        "alt",
+        "sgpt",
+        "alanine aminotransferase",
+        "alanine transaminase"
+      ]
+    },
+    {
+      "metric_id": "alt_sgpt",
+      "gender": "female",
+      "canonical_name": "Alanine Aminotransferase (ALT/SGPT)",
+      "loinc_code": "1742-6",
+      "category": "Liver Function",
+      "unit": "U/L",
+      "min_normal": 7.0,
+      "max_normal": 45.0,
+      "critical_low": 2.0,
+      "critical_high": 80.0,
+      "description": "Transaminase enzyme localized predominantly in hepatocytes.",
+      "aliases": [
+        "alt",
+        "sgpt",
+        "alanine aminotransferase",
+        "alanine transaminase"
+      ]
+    },
+    {
+      "metric_id": "ast_sgot",
+      "gender": "male",
+      "canonical_name": "Aspartate Aminotransferase (AST/SGOT)",
+      "loinc_code": "1920-8",
+      "category": "Liver Function",
+      "unit": "U/L",
+      "min_normal": 10.0,
+      "max_normal": 40.0,
+      "critical_low": 4.0,
+      "critical_high": 80.0,
+      "description": "Enzyme found in liver parenchymal cells and cardiac/skeletal muscle.",
+      "aliases": [
+        "ast",
+        "sgot",
+        "aspartate aminotransferase"
+      ]
+    },
+    {
+      "metric_id": "ast_sgot",
+      "gender": "female",
+      "canonical_name": "Aspartate Aminotransferase (AST/SGOT)",
+      "loinc_code": "1920-8",
+      "category": "Liver Function",
+      "unit": "U/L",
+      "min_normal": 10.0,
+      "max_normal": 35.0,
+      "critical_low": 4.0,
+      "critical_high": 70.0,
+      "description": "Enzyme found in liver parenchymal cells and cardiac/skeletal muscle.",
+      "aliases": [
+        "ast",
+        "sgot",
+        "aspartate aminotransferase"
+      ]
+    },
+    {
+      "metric_id": "bilirubin_total",
+      "gender": "all",
+      "canonical_name": "Total Bilirubin",
+      "loinc_code": "1975-2",
+      "category": "Liver Function",
+      "unit": "mg/dL",
+      "min_normal": 0.2,
+      "max_normal": 1.2,
+      "critical_low": 0.05,
+      "critical_high": 2.5,
+      "description": "Yellow catabolic byproduct of normal heme breakdown.",
+      "aliases": [
+        "bilirubin",
+        "total bilirubin",
+        "serum bilirubin",
+        "bili total"
+      ]
+    },
+    {
+      "metric_id": "tsh",
+      "gender": "all",
+      "canonical_name": "Thyroid Stimulating Hormone (TSH)",
+      "loinc_code": "3016-3",
+      "category": "Endocrine & Thyroid",
+      "unit": "uIU/mL",
+      "min_normal": 0.4,
+      "max_normal": 4.0,
+      "critical_low": 0.1,
+      "critical_high": 8.0,
+      "description": "Pituitary glycoprotein hormone regulating thyroid gland secretion.",
+      "aliases": [
+        "tsh",
+        "thyroid stimulating hormone"
+      ]
+    }
+  ],
+  "protocols": [
+    {
+      "protocol_id": "PROTO-ANEMIA-01",
+      "condition_id": "ANEMIA_MICROCYTIC",
+      "condition_name": "Microcytic Anemia & Erythrocyte Depletion",
+      "category": "Hematology",
+      "summary_narrative": "Sub-optimal hemoglobin and red cell indices indicate potential iron deficiency anemia or impaired hemoglobin synthesis.",
+      "dietary_guidelines": [
+        "Increase dietary iron intake via bioavailable heme sources (lean poultry, fish) and non-heme sources (lentils, chickpeas, fortified whole grains).",
+        "Co-ingest ascorbic acid (Vitamin C: citrus, bell peppers, tomatoes) to enhance non-heme iron absorption."
+      ],
+      "activity_guidelines": [
+        "Engage in low-to-moderate exertion activities with scheduled rest intervals to avoid hypoxemic fatigue."
+      ],
+      "contraindications_to_avoid": [
+        "Avoid consuming polyphenols, tannins (tea/coffee), and calcium supplements concurrently with iron-rich meals as they inhibit bioavailability."
+      ],
+      "physician_discussion_questions": [
+        "Would you recommend evaluating complete iron indices (serum ferritin, transferrin saturation, TIBC)?",
+        "Should therapeutic oral iron supplementation be initiated?"
+      ],
+      "escalation_flag": false
+    },
+    {
+      "protocol_id": "PROTO-CARDIO-LIPID-01",
+      "condition_id": "ATHEROGENIC_DYSLIPIDEMIA",
+      "condition_name": "Atherogenic Dyslipidemia & Elevated Apolipoproteins",
+      "category": "Cardiovascular / Lipids",
+      "summary_narrative": "Elevated atherogenic circulating lipids (LDL / Total Cholesterol / Triglycerides) increase arterial endothelial plaque accumulation risk.",
+      "dietary_guidelines": [
+        "Adopt an anti-inflammatory Mediterranean dietary framework emphasizing extra virgin olive oil, nuts, and omega-3 polyunsaturated fatty acids.",
+        "Incorporate 25-35g of daily dietary fiber including viscous soluble fiber (psyllium, oat beta-glucan) to enhance bile acid excretion."
+      ],
+      "activity_guidelines": [
+        "Achieve at least 150 minutes per week of moderate-intensity aerobic cardiovascular exercise to stimulate lipoprotein lipase activity and raise HDL."
+      ],
+      "contraindications_to_avoid": [
+        "Eliminate industrial trans-fatty acids and restrict dietary saturated fats to less than 7% of daily caloric intake.",
+        "Minimize ultra-processed simple carbohydrates and high-fructose corn syrups that accelerate hepatic triglyceride synthesis."
+      ],
+      "physician_discussion_questions": [
+        "Should we assess a formal 10-year ASCVD (Atherosclerotic Cardiovascular Disease) risk calculation?",
+        "Are lipid-lowering pharmacological interventions (such as HMG-CoA reductase inhibitors) indicated at this baseline?"
+      ],
+      "escalation_flag": false
+    },
+    {
+      "protocol_id": "PROTO-METABOLIC-DM-01",
+      "condition_id": "IMPAIRED_GLYCEMIA",
+      "condition_name": "Impaired Glycemic Regulation & Insulin Resistance",
+      "category": "Metabolic & Glycemia",
+      "summary_narrative": "Elevated fasting blood glucose and glycated hemoglobin indices reflect impaired insulin sensitivity and disordered carbohydrate metabolism.",
+      "dietary_guidelines": [
+        "Emphasize complex carbohydrates with low glycemic index/load, pairing carbs with lean protein and fiber to blunt postprandial glucose excursions."
+      ],
+      "activity_guidelines": [
+        "Incorporate 10-15 minute post-meal ambulatory walks and bi-weekly resistance training to stimulate insulin-independent GLUT4 glucose uptake."
+      ],
+      "contraindications_to_avoid": [
+        "Avoid sugar-sweetened beverages, refined starches, and rapid-digesting baked goods that trigger acute glycemic spikes."
+      ],
+      "physician_discussion_questions": [
+        "Would formal repeat testing (2-hour oral glucose tolerance test or confirmatory HbA1c) be appropriate?",
+        "Should early metabolic therapeutic agents or diabetes self-management education be initiated?"
+      ],
+      "escalation_flag": false
+    },
+    {
+      "protocol_id": "PROTO-RENAL-CLEARANCE-01",
+      "condition_id": "RENAL_FILTRATION_STRAIN",
+      "condition_name": "Renal Clearance Impairment & Glomerular Strain",
+      "category": "Kidney Function",
+      "summary_narrative": "Elevated serum creatinine and reduced glomerular filtration rate indicate compromised renal excretory function.",
+      "dietary_guidelines": [
+        "Maintain adequate, consistent hydration (2.0 to 2.5 L/day unless restricted for cardiorenal volume overload).",
+        "Moderate dietary sodium intake (< 2,000 mg/day) and avoid excessive concentrated protein loading."
+      ],
+      "activity_guidelines": [
+        "Maintain light-to-moderate physical conditioning while avoiding severe dehydrating rhabdomyolysis-inducing exertion."
+      ],
+      "contraindications_to_avoid": [
+        "Avoid unprescribed non-steroidal anti-inflammatory drugs (NSAIDs such as ibuprofen or naproxen) which cause renal vasoconstriction."
+      ],
+      "physician_discussion_questions": [
+        "Should a spot urine albumin-to-creatinine ratio (uACR) test be performed to assess microalbuminuria?",
+        "Are my current medications appropriately dosed for my renal filtration baseline?"
+      ],
+      "escalation_flag": true
+    },
+    {
+      "protocol_id": "PROTO-HEPATIC-INJURY-01",
+      "condition_id": "HEPATIC_TRANSAMINASE_ELEVATION",
+      "condition_name": "Hepatocellular Stress & Transaminase Elevation",
+      "category": "Liver Function",
+      "summary_narrative": "Elevated ALT/AST enzymes point to hepatocyte membrane leakage and hepatic inflammation.",
+      "dietary_guidelines": [
+        "Adopt an antioxidant-rich whole-food diet low in refined carbohydrates to mitigate hepatic steatosis."
+      ],
+      "activity_guidelines": [
+        "Target regular moderate aerobic exercise to reduce visceral and intrahepatic adipose tissue."
+      ],
+      "contraindications_to_avoid": [
+        "Abstain strictly from alcoholic beverages and minimize hepatically metabolized medications (e.g. excessive acetaminophen)."
+      ],
+      "physician_discussion_questions": [
+        "Would you recommend a diagnostic hepatic ultrasound to screen for fatty liver changes or biliary pathology?",
+        "Should viral hepatitis serologies be ordered?"
+      ],
+      "escalation_flag": false
+    },
+    {
+      "protocol_id": "PROTO-THYROID-DYSREG-01",
+      "condition_id": "THYROID_AXIS_DYSREGULATION",
+      "condition_name": "Hypothalamic-Pituitary-Thyroid Axis Dysregulation",
+      "category": "Endocrine & Thyroid",
+      "summary_narrative": "Out-of-range TSH levels reflect pituitary feedback dysregulation regarding systemic metabolic rate.",
+      "dietary_guidelines": [
+        "Ensure balanced micronutrient adequacy including selenium, zinc, and dietary iodine."
+      ],
+      "activity_guidelines": [
+        "Tailor physical exertion to energy thresholds, pacing physical workouts according to fatigue levels."
+      ],
+      "contraindications_to_avoid": [
+        "Avoid unmonitored high-dose iodine supplements or thyroid glandular extracts without endocrine supervision."
+      ],
+      "physician_discussion_questions": [
+        "Should free T4 and free T3 levels be evaluated along with thyroid peroxidase (anti-TPO) antibodies?"
+      ],
+      "escalation_flag": false
+    }
+  ],
+  "mappings": [
+    {
+      "condition_id": "ANEMIA_MICROCYTIC",
+      "metric_id": "hemoglobin",
+      "trigger_status": "LOW"
+    },
+    {
+      "condition_id": "ANEMIA_MICROCYTIC",
+      "metric_id": "rbc",
+      "trigger_status": "LOW"
+    },
+    {
+      "condition_id": "ANEMIA_MICROCYTIC",
+      "metric_id": "ferritin",
+      "trigger_status": "LOW"
+    },
+    {
+      "condition_id": "ATHEROGENIC_DYSLIPIDEMIA",
+      "metric_id": "cholesterol_total",
+      "trigger_status": "ELEVATED"
+    },
+    {
+      "condition_id": "ATHEROGENIC_DYSLIPIDEMIA",
+      "metric_id": "ldl",
+      "trigger_status": "ELEVATED"
+    },
+    {
+      "condition_id": "ATHEROGENIC_DYSLIPIDEMIA",
+      "metric_id": "triglycerides",
+      "trigger_status": "ELEVATED"
+    },
+    {
+      "condition_id": "IMPAIRED_GLYCEMIA",
+      "metric_id": "glucose_fasting",
+      "trigger_status": "ELEVATED"
+    },
+    {
+      "condition_id": "IMPAIRED_GLYCEMIA",
+      "metric_id": "hba1c",
+      "trigger_status": "ELEVATED"
+    },
+    {
+      "condition_id": "RENAL_FILTRATION_STRAIN",
+      "metric_id": "creatinine",
+      "trigger_status": "ELEVATED"
+    },
+    {
+      "condition_id": "RENAL_FILTRATION_STRAIN",
+      "metric_id": "bun",
+      "trigger_status": "ELEVATED"
+    },
+    {
+      "condition_id": "RENAL_FILTRATION_STRAIN",
+      "metric_id": "egfr",
+      "trigger_status": "LOW"
+    },
+    {
+      "condition_id": "HEPATIC_TRANSAMINASE_ELEVATION",
+      "metric_id": "alt_sgpt",
+      "trigger_status": "ELEVATED"
+    },
+    {
+      "condition_id": "HEPATIC_TRANSAMINASE_ELEVATION",
+      "metric_id": "ast_sgot",
+      "trigger_status": "ELEVATED"
+    },
+    {
+      "condition_id": "THYROID_AXIS_DYSREGULATION",
+      "metric_id": "tsh",
+      "trigger_status": "ELEVATED"
+    },
+    {
+      "condition_id": "THYROID_AXIS_DYSREGULATION",
+      "metric_id": "tsh",
+      "trigger_status": "LOW"
+    }
+  ]
+}

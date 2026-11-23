@@ -35,7 +35,7 @@
 
             <nav class="nav-menu">
                 <a href="#analyser" class="nav-link active"><i class="fa-solid fa-file-medical"></i> Analyser</a>
-                <a href="#samples" class="nav-link"><i class="fa-solid fa-flask-vial"></i> Sample Reports</a>
+                <a href="#architecture" class="nav-link"><i class="fa-solid fa-database"></i> Architecture</a>
                 <a href="#features" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> Features</a>
                 <a href="#faq" class="nav-link"><i class="fa-solid fa-circle-question"></i> Guide</a>
             </nav>
@@ -78,8 +78,8 @@
                         <a href="#analyser" class="btn btn-primary">
                             <i class="fa-solid fa-file-arrow-up"></i> Upload or Paste Report
                         </a>
-                        <a href="#samples" class="btn btn-secondary glass-card">
-                            <i class="fa-solid fa-flask"></i> Try Sample Reports
+                        <a href="#architecture" class="btn btn-secondary glass-card">
+                            <i class="fa-solid fa-database"></i> Pipeline Architecture
                         </a>
                     </div>
                     <div class="hero-stats-row">
@@ -145,86 +145,70 @@
             </div>
         </section>
 
-        <!-- 1-Click Sample Reports Section -->
-        <section id="samples" class="section samples-section">
+        <!-- Pipeline Status & Architecture Overview Section -->
+        <section id="architecture" class="section samples-section">
             <div class="container">
                 <div class="section-title-wrap text-center">
-                    <span class="section-badge">Instant Demo</span>
-                    <h2>Explore Pre-loaded Clinical Test Cases</h2>
-                    <p>Click any test report below to instantly load real clinical data and see the AI analysis in action.</p>
+                    <span class="section-badge"><i class="fa-solid fa-database"></i> Decoupled Architecture</span>
+                    <h2>Extensible Schema-Driven Clinical Data Pipeline</h2>
+                    <p>Direct relational database queries, LOINC biological reference intervals, and dynamic protocol ingestion.</p>
                 </div>
 
                 <div class="sample-cards-grid">
-                    <!-- Sample 1 -->
-                    <div class="sample-card glass-card" onclick="loadSampleReport('cbc_anemia')">
-                        <div class="sample-card-icon icon-red">
-                            <i class="fa-solid fa-droplet"></i>
-                        </div>
-                        <div class="sample-badge badge-warning">Microcytic Anemia</div>
-                        <h3>Complete Blood Count (CBC)</h3>
-                        <p>Simulates low hemoglobin, reduced RBC & elevated WBC indicating mild microcytic iron-deficiency anemia.</p>
-                        <div class="sample-tags">
-                            <span>Hb: 9.8 g/dL</span>
-                            <span>RBC: 3.2 M/uL</span>
-                            <span>WBC: 11,800</span>
-                        </div>
-                        <button type="button" class="btn btn-sample" onclick="event.stopPropagation(); loadSampleReport('cbc_anemia')">
-                            <span>Load Case</span> <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-
-                    <!-- Sample 2 -->
-                    <div class="sample-card glass-card" onclick="loadSampleReport('lipid_cardio')">
-                        <div class="sample-card-icon icon-amber">
-                            <i class="fa-solid fa-heart-pulse"></i>
-                        </div>
-                        <div class="sample-badge badge-danger">Cardiovascular Risk</div>
-                        <h3>Lipid & Cardiac Profile</h3>
-                        <p>Demonstrates elevated total cholesterol, high LDL, high triglycerides, and suboptimal HDL levels.</p>
-                        <div class="sample-tags">
-                            <span>Chol: 268 mg/dL</span>
-                            <span>LDL: 178 mg/dL</span>
-                            <span>Trig: 240 mg/dL</span>
-                        </div>
-                        <button type="button" class="btn btn-sample" onclick="event.stopPropagation(); loadSampleReport('lipid_cardio')">
-                            <span>Load Case</span> <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-
-                    <!-- Sample 3 -->
-                    <div class="sample-card glass-card" onclick="loadSampleReport('diabetic_renal')">
-                        <div class="sample-card-icon icon-purple">
-                            <i class="fa-solid fa-vial"></i>
-                        </div>
-                        <div class="sample-badge badge-danger">Metabolic & Renal</div>
-                        <h3>Metabolic & Diabetic Panel</h3>
-                        <p>Simulates poorly controlled blood glucose (elevated HbA1c) alongside borderline elevated serum creatinine.</p>
-                        <div class="sample-tags">
-                            <span>Glucose: 172 mg/dL</span>
-                            <span>HbA1c: 8.6%</span>
-                            <span>Creatinine: 1.4 mg/dL</span>
-                        </div>
-                        <button type="button" class="btn btn-sample" onclick="event.stopPropagation(); loadSampleReport('diabetic_renal')">
-                            <span>Load Case</span> <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-
-                    <!-- Sample 4 -->
-                    <div class="sample-card glass-card" onclick="loadSampleReport('healthy_baseline')">
+                    <div class="sample-card glass-card">
                         <div class="sample-card-icon icon-emerald">
-                            <i class="fa-solid fa-shield-halved"></i>
+                            <i class="fa-solid fa-server"></i>
                         </div>
-                        <div class="sample-badge badge-normal">Optimal Health</div>
-                        <h3>Routine Wellness Checkup</h3>
-                        <p>Standard comprehensive health panel with all key blood, metabolic, and liver biomarkers within optimal ranges.</p>
+                        <div class="sample-badge badge-normal">Database Layer</div>
+                        <h3>Relational SQL Ingestion</h3>
+                        <p>Powered by SQLite / PostgreSQL DAO repository with zero hardcoded clinical tables.</p>
                         <div class="sample-tags">
-                            <span>Hb: 14.5 g/dL</span>
-                            <span>Sugar: 88 mg/dL</span>
-                            <span>Chol: 175 mg/dL</span>
+                            <span>LOINC Indexed</span>
+                            <span>Gender Specific</span>
+                            <span>Dynamic Protocols</span>
                         </div>
-                        <button type="button" class="btn btn-sample" onclick="event.stopPropagation(); loadSampleReport('healthy_baseline')">
-                            <span>Load Case</span> <i class="fa-solid fa-arrow-right"></i>
-                        </button>
+                    </div>
+
+                    <div class="sample-card glass-card">
+                        <div class="sample-card-icon icon-purple">
+                            <i class="fa-solid fa-filter"></i>
+                        </div>
+                        <div class="sample-badge badge-normal">Ingestion Engine</div>
+                        <h3>Pure Feature Extraction</h3>
+                        <p>Text & file tokenization with unit normalization and canonical alias resolution.</p>
+                        <div class="sample-tags">
+                            <span>Unit Parsing</span>
+                            <span>Alias Mapping</span>
+                            <span>Inconclusive Flags</span>
+                        </div>
+                    </div>
+
+                    <div class="sample-card glass-card">
+                        <div class="sample-card-icon icon-amber">
+                            <i class="fa-solid fa-stethoscope"></i>
+                        </div>
+                        <div class="sample-badge badge-normal">Clinical Protocols</div>
+                        <h3>Dynamic Guidelines</h3>
+                        <p>Multi-condition interaction synthesis citing active database evidence protocols.</p>
+                        <div class="sample-tags">
+                            <span>Evidence IDs</span>
+                            <span>Doctor Escalation</span>
+                            <span>Lifestyle Guidance</span>
+                        </div>
+                    </div>
+
+                    <div class="sample-card glass-card">
+                        <div class="sample-card-icon icon-red">
+                            <i class="fa-solid fa-shield-virus"></i>
+                        </div>
+                        <div class="sample-badge badge-normal">Data Ingestion CLI</div>
+                        <h3>Dataset Seeding Script</h3>
+                        <p>Automated validation CLI to sanity-check and ingest external clinical datasets.</p>
+                        <div class="sample-tags">
+                            <span>CLI Ingest</span>
+                            <span>Pydantic v2</span>
+                            <span>Sanity Validated</span>
+                        </div>
                     </div>
                 </div>
             </div>

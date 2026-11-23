@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://medipulse.ai/schemas/medical_report.schema.json",
+  "title": "MedicalReportDocument",
+  "description": "Strict, normative schema for clinical laboratory report records across CBC, Lipid, Diabetes, and KFT panels.",
+  "type": "object",
+  "required": [
+    "record_id",
+    "provenance",
+    "patient_demographics",
+    "panel_type",
+    "observations",
+    "clinical_assessment"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "record_id": {
+      "type": "string",
+      "description": "Unique UUID or cryptographic hash identifying this medical report record.",
+      "pattern": "^[a-zA-Z0-9_-]{8,64}$"
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Auditable metadata tracking data origin, record classification, and ingestion history.",
+      "required": [
+        "data_tier",
+        "ingestion_timestamp",
+        "source_facility_type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "data_tier": {
+          "type": "string",
+          "description": "Strict segregation flag distinguishing real clinical records from development datasets.",
+          "enum": [
+            "REAL_CLINICAL_DEIDENTIFIED",
+            "SYNTHETIC_DEVELOPMENT",
+            "CANONICAL_BENCHMARK"
+          ]
+        },
+        "ingestion_timestamp": {
+          "type": "string",
+          "description": "ISO 8601 UTC timestamp of ingestion into MediPulse AI.",
+          "format": "date-time"
+        },
+        "collection_timestamp": {
+          "type": ["string", "null"],
+          "description": "ISO 8601 UTC timestamp of specimen collection.",
+          "format": "date-time"
+        },
+        "source_facility_type": {
+          "type": "string",
+          "enum": [
+            "HOSPITAL_LAB",
+            "OUTPATIENT_DIAGNOSTIC_CENTER",
+            "AMBULATORY_CLINIC",
+            "RESEARCH_REPOSITORY",
+            "SYNTHETIC_GENERATOR"
+          ]
+        },
+        "deidentification_method": {
+          "type": ["string", "null"],
+          "description": "HIPAA Safe Harbor or Expert Determination protocol applied if real clinical data.",
+          "enum": [
+            "HIPAA_SAFE_HARBOR",
+            "EXPERT_DETERMINATION",
+            "NOT_APPLICABLE_SYNTHETIC",
+            null
+          ]
+        }
+      }
+    },
+    "patient_demographics": {
+      "type": "object",
+      "description": "Standardized physiological attributes essential for biological reference interval evaluation.",
+      "required": [
+        "age_years",
+        "biological_sex"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "age_years": {
+          "type": "integer",
+          "description": "Chronological patient age in full completed years.",
+          "minimum": 0,
+          "maximum": 125
+        },
+        "biological_sex": {
+          "type": "string",
+          "description": "Phenotypic or assigned biological sex determining sex-stratified reference intervals.",
+          "enum": ["male", "female", "unspecified"]
+        },
+        "pregnancy_status": {
+          "type": "string",
+          "description": "Pregnancy trimester or state altering maternal hematologic/metabolic ranges.",
+          "enum": [
+            "NOT_PREGNANT",
+            "FIRST_TRIMESTER",
+            "SECOND_TRIMESTER",
+            "THIRD_TRIMESTER",
+            "POST_PARTUM",
+            "UNKNOWN",
+            "NOT_APPLICABLE"
+          ],
+          "default": "NOT_APPLICABLE"
+        },
+        "fasting_duration_hours": {
+          "type": ["number", "null"],
+          "description": "Duration of documented fast in hours prior to venipuncture.",
+          "minimum": 0.0,
+          "maximum": 72.0
+        }
+      }
+    },
+    "panel_type": {
+      "type": "string",
+      "description": "The exact diagnostic panel category for this report.",
+      "enum": [
+        "CBC",
+        "LIPID_PROFILE",
+        "DIABETES_PROFILE",
+        "KFT"
+      ]
+    },
+    "observations": {
+      "type": "array",
+      "description": "List of measured quantitative or qualitative clinical lab biomarkers.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "metric_id",
+          "raw_token",
+          "measured_value",
+          "unit",
+          "status"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "metric_id": {
+            "type": "string",
+            "description": "Canonical biomarker identifier matching the biomarker dictionary.",
+            "enum": [
+              "hemoglobin",
+              "rbc",
+              "wbc",
+              "platelets",
+              "mcv",
+              "mch",
+              "mchc",
+              "hematocrit",
+              "cholesterol_total",
+              "ldl",
+              "hdl",
+              "triglycerides",
+              "glucose_fasting",
+              "glucose_random",
+              "hba1c",
+              "creatinine",
+              "urea",
+              "bun",
+              "egfr",
+              "uric_acid"
+            ]
+          },
+          "loinc_code": {
+            "type": ["string", "null"],
+            "description": "Authoritative LOINC universal laboratory code (e.g., '718-7').",
+            "pattern": "^[0-9]{3,5}-[0-9]$"
+          },
+          "raw_token": {
+            "type": "string",
+            "description": "Exact extracted text label from original laboratory report."
+          },
+          "measured_value": {
+            "type": ["number", "null"],
+            "description": "Parsed numeric measurement. Null if specimen was hemolyzed, clotted, or unparseable."
+          },
+          "unit": {
+            "type": "string",
+            "description": "Measurement unit reported on laboratory document.",
+            "enum": [
+              "g/dL",
+              "g/L",
+              "M/uL",
+              "x10^12/L",
+              "/uL",
+              "x10^9/L",
+              "x10^3/uL",
+              "%",
+              "fL",
+              "pg",
+              "mg/dL",
+              "mmol/L",
+              "mmol/mol",
+              "mL/min/1.73m^2",
+              "mL/min",
+              "umol/L"
+            ]
+          },
+          "standardized_value": {
+            "type": ["number", "null"],
+            "description": "Normalized measurement value converted to the canonical unit for this metric."
+          },
+          "standardized_unit": {
+            "type": ["string", "null"],
+            "description": "Canonical unit defined in biomarker dictionary (e.g., 'g/dL', 'mg/dL')."
+          },
+          "reference_interval_applied": {
+            "type": ["object", "null"],
+            "description": "Exact biological reference interval applied for this patient demographic.",
+            "properties": {
+              "min_normal": { "type": ["number", "null"] },
+              "max_normal": { "type": ["number", "null"] },
+              "critical_low": { "type": ["number", "null"] },
+              "critical_high": { "type": ["number", "null"] },
+              "source_id": { "type": "string" }
+            }
+          },
+          "status": {
+            "type": "string",
+            "description": "Evaluated mathematical status against laboratory reference interval only.",
+            "enum": [
+              "NORMAL",
+              "LOW",
+              "ELEVATED",
+              "CRITICAL_LOW",
+              "CRITICAL_HIGH",
+              "INCONCLUSIVE_SPECIMEN_ERROR",
+              "PENDING_REFERENCE_VERIFICATION"
+            ]
+          }
+        }
+      }
+    },
+    "clinical_assessment": {
+      "type": "object",
+      "description": "Clinical evaluation strictly separating biomarker abnormality from confirmed diagnoses.",
+      "required": [
+        "biomarker_abnormality_summary",
+        "has_critical_alert",
+        "confirmed_diagnoses"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "biomarker_abnormality_summary": {
+          "type": "string",
+          "description": "Objective summary of which laboratory parameters deviated from reference intervals."
+        },
+        "has_critical_alert": {
+          "type": "boolean",
+          "description": "Flag indicating if any biomarker violated critical pan-laboratory notification thresholds."
+        },
+        "confirmed_diagnoses": {
+          "type": "array",
+          "description": "List of confirmed medical diagnoses. Must NEVER be automatically derived from a single abnormal test result without supporting evidence.",
+          "items": {
+            "type": "object",
+            "required": [
+              "condition_name",
+              "icd_10_code",
+              "diagnostic_evidence_type",
+              "verification_source"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "condition_name": {
+                "type": "string",
+                "description": "Full formal medical condition name."
+              },
+              "icd_10_code": {
+                "type": "string",
+                "description": "Standardized ICD-10-CM code.",
+                "pattern": "^[A-Z][0-9]{2}(\\.[0-9]{1,4})?$"
+              },
+              "diagnostic_evidence_type": {
+                "type": "string",
+                "description": "Nature of evidence confirming chronic diagnosis.",
+                "enum": [
+                  "REPEATED_CONFIRMATORY_LABS",
+                  "HISTORICAL_MEDICAL_RECORD",
+                  "PHYSICIAN_DOCUMENTED_DIAGNOSIS",
+                  "DIAGNOSTIC_IMAGING_BIOPSY",
+                  "PRESUMPTIVE_ACUTE_OBSERVATION"
+                ]
+              },
+              "verification_source": {
+                "type": "string",
+                "description": "Source clinician, medical record identifier, or clinical registry."
+              }
+            }
+          }
+        },
+        "differential_considerations": {
+          "type": "array",
+          "description": "Non-diagnostic clinical differential considerations based on biomarker patterns.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

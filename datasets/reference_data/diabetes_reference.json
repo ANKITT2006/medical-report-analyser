@@ -1,0 +1,360 @@
+{
+  "panel_category": "DIABETES_PROFILE",
+  "schema_version": "1.2.0",
+  "last_reviewed_date": "2026-11-22",
+  "biomarkers": [
+    {
+      "metric_id": "glucose_fasting",
+      "canonical_name": "Fasting Plasma Glucose",
+      "loinc_code": "1558-6",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Fasting glucose",
+        "property": "Mass concentration (MCnc)",
+        "system_specimen": "Serum or Plasma (Ser/Plas)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Unspecified / Enzymatic (hexokinase or glucose oxidase)"
+      },
+      "aliases": ["fasting blood glucose", "fasting glucose", "fbg", "fbs", "fasting blood sugar"],
+      "description": "Concentration of free D-glucose in venous plasma following a mandatory fast of at least 8 hours.",
+      "standard_unit": "mg/dL",
+      "supported_alternative_units": [
+        {
+          "unit": "mmol/L",
+          "conversion_factor_to_standard": 18.0182,
+          "conversion_formula": "mg/dL = mmol/L * 18.0182"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": true,
+        "recommended_hours": 8.0,
+        "details": "Patient must have zero caloric intake for at least 8 hours prior to venous collection. Water consumption is permitted."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_MEASUREMENT",
+        "methodology": "Enzymatic assay using hexokinase or glucose oxidase in plasma separated from erythrocytes within 30-60 minutes or drawn in glycolytic inhibitor tube (sodium fluoride)."
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Healthy Non-Diabetic Adult Reference Cohort (Subject to local laboratory verification)",
+            "gender": "all",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "mg/dL",
+            "min_normal": 70.0,
+            "max_normal": 99.0,
+            "source_reference": "American Diabetes Association (ADA) Standards of Care in Diabetes (2026)",
+            "verification_status": "VERIFIED",
+            "interval_context_note": "Lower limit in healthy non-diabetic adults can physiologically extend down to 60-65 mg/dL during prolonged fasts without pathology."
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Impaired Fasting Glucose (Prediabetes Diagnostic Category)",
+            "clinical_criteria": "Fasting plasma glucose between 100 mg/dL and 125 mg/dL (5.6-6.9 mmol/L). Identifies patients at heightened risk for future diabetes and cardiovascular complications. Requires clinical lifestyle counseling and periodic rescreening.",
+            "cutoff_value": 100.0,
+            "comparison_operator": ">=",
+            "unit": "mg/dL",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "ADA Standards of Care in Diabetes (2026) - Chapter 2: Classification and Diagnosis of Diabetes",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "condition_name": "Diabetes Mellitus Diagnostic Criterion (FPG)",
+            "clinical_criteria": "Fasting plasma glucose >= 126 mg/dL (7.0 mmol/L). In the absence of unequivocal symptomatic hyperglycemia (polyuria, polydipsia, weight loss) or hyperglycemic crisis, diagnosis requires two abnormal test results either from the same sample (e.g. FPG >= 126 and HbA1c >= 6.5%) or two separate test samples collected on different days. Does not constitute an automated diagnosis on a single isolated test.",
+            "cutoff_value": 126.0,
+            "comparison_operator": ">=",
+            "unit": "mg/dL",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "ADA Standards of Care in Diabetes (2026)",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [
+          {
+            "critical_low": 45.0,
+            "critical_high": 450.0,
+            "unit": "mg/dL",
+            "clinical_urgency": "Panic Alert: Severe neuroglycopenic hypoglycemia / seizure danger (< 45 mg/dL; < 54 mg/dL represents clinically significant Level 2 hypoglycemia) or Diabetic Ketoacidosis / Hyperosmolar Hyperglycemic State risk (> 450 mg/dL). Warrants immediate clinical notification.",
+            "source_reference": "College of American Pathologists (CAP) / Joint Commission Critical Values Standards / ADA",
+            "verification_status": "VERIFIED",
+            "limit_type": "CONSENSUS_PANIC_SURVEY_MEDIAN",
+            "institutional_note": "Hospital laboratory panic limits for glucose commonly range from < 40-50 mg/dL (low) and > 400-500 mg/dL (high) based on inpatient vs. outpatient population, age, and institutional alert protocols."
+          }
+        ],
+        "treatment_targets": [
+          {
+            "target_population": "Non-Pregnant Adults with Diagnosed Diabetes",
+            "goal_description": "Preprandial capillary plasma glucose target range recommended by ADA clinical practice guidelines",
+            "target_value": 130.0,
+            "comparison_operator": "<=",
+            "unit": "mg/dL",
+            "source_guideline": "ADA Standards of Care (2026) - Glycemic Goals",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "risk_classification_thresholds": [
+          {
+            "tier_name": "Normal Fasting Glucose",
+            "tier_description": "Normoglycemia",
+            "lower_bound": 70.0,
+            "upper_bound": 99.0,
+            "unit": "mg/dL",
+            "clinical_significance": "Normal physiological baseline fasting glucose",
+            "source_classification": "ADA (2026)",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "Impaired Fasting Glucose (IFG)",
+            "tier_description": "Prediabetes tier (100-125 mg/dL)",
+            "lower_bound": 100.0,
+            "upper_bound": 125.0,
+            "unit": "mg/dL",
+            "clinical_significance": "Elevated lifetime incidence of diabetes; lifestyle intervention benchmark",
+            "source_classification": "ADA (2026)",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "Diagnostic Diabetes Spectrum",
+            "tier_description": "Diagnostic diabetic threshold (>= 126 mg/dL)",
+            "lower_bound": 126.0,
+            "upper_bound": null,
+            "unit": "mg/dL",
+            "clinical_significance": "Confirmatory repeat testing required before formal clinical diagnosis is established",
+            "source_classification": "ADA (2026)",
+            "verification_status": "VERIFIED"
+          }
+        ]
+      },
+      "provenance": {
+        "primary_source_organization": "American Diabetes Association (ADA)",
+        "primary_document_title": "Standards of Care in Diabetes—2026",
+        "publication_year": 2026,
+        "source_url": "https://diabetesjournals.org/care/issue",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Diagnostic threshold (126 mg/dL) must never be stored as or confused with standard reference interval limit (99 mg/dL). Diagnostic confirmation protocol is mandatory."
+      }
+    },
+    {
+      "metric_id": "glucose_random",
+      "canonical_name": "Random Plasma Glucose",
+      "loinc_code": "2345-7",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Glucose",
+        "property": "Mass concentration (MCnc)",
+        "system_specimen": "Serum or Plasma (Ser/Plas)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "Unspecified / Enzymatic"
+      },
+      "aliases": ["random blood glucose", "random glucose", "casual glucose", "rbg", "random blood sugar"],
+      "description": "Venous plasma glucose concentration drawn at any time of day without regard to interval since last meal.",
+      "standard_unit": "mg/dL",
+      "supported_alternative_units": [
+        {
+          "unit": "mmol/L",
+          "conversion_factor_to_standard": 18.0182,
+          "conversion_formula": "mg/dL = mmol/L * 18.0182"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "Obtained casually without regard to meal timing."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_MEASUREMENT",
+        "methodology": "Enzymatic spectrophotometry on venous plasma"
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Healthy Non-Diabetic Adults (Expected Postprandial/Casual Physiological Range; depends on carbohydrate intake and interval since meal)",
+            "gender": "all",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "mg/dL",
+            "min_normal": 70.0,
+            "max_normal": 139.0,
+            "source_reference": "Tietz Textbook of Clinical Chemistry and Molecular Diagnostics / MedlinePlus",
+            "verification_status": "VERIFIED",
+            "interval_context_note": "Clinical note: 70-139 mg/dL represents expected casual postprandial glucose in non-diabetic adults; it is NOT a universal reference interval because casual glucose fluctuates dynamically with meal composition, gastric emptying, and elapsed hours post-ingestion."
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Diabetes Mellitus Diagnostic Criterion (Random Glucose with Unequivocal Symptoms)",
+            "clinical_criteria": "In an individual presenting with classic symptoms of hyperglycemia (polyuria, polydipsia, unexplained weight loss) or hyperglycemic crisis, a random plasma glucose >= 200 mg/dL (11.1 mmol/L) establishes the diagnosis of diabetes without requiring repeat testing. In an asymptomatic individual, an isolated random glucose >= 200 mg/dL does NOT establish a diagnosis and mandates formal confirmatory testing (fasting plasma glucose or HbA1c on a separate sample).",
+            "cutoff_value": 200.0,
+            "comparison_operator": ">=",
+            "unit": "mg/dL",
+            "requires_repeat_confirmation": false,
+            "source_guideline": "ADA Standards of Care in Diabetes (2026) - Chapter 2: Classification and Diagnosis of Diabetes",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [
+          {
+            "critical_low": 45.0,
+            "critical_high": 450.0,
+            "unit": "mg/dL",
+            "clinical_urgency": "Urgent alert: Life-threatening neuroglycopenic hypoglycemia or hyperosmolar hyperglycemic crisis (> 450 mg/dL)",
+            "source_reference": "CAP Critical Values / Joint Commission Standards",
+            "verification_status": "VERIFIED",
+            "limit_type": "CONSENSUS_PANIC_SURVEY_MEDIAN",
+            "institutional_note": "Panic alert limits for random glucose depend on institutional laboratory SOP and clinical setting (ICU vs. ambulatory)."
+          }
+        ],
+        "treatment_targets": [
+          {
+            "target_population": "Adults with Diagnosed Diabetes",
+            "goal_description": "Peak postprandial capillary plasma glucose clinical target",
+            "target_value": 180.0,
+            "comparison_operator": "<",
+            "unit": "mg/dL",
+            "source_guideline": "ADA Standards of Care in Diabetes (2026) - Glycemic Targets",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "risk_classification_thresholds": []
+      },
+      "provenance": {
+        "primary_source_organization": "American Diabetes Association (ADA)",
+        "primary_document_title": "Standards of Care in Diabetes—2026: Classification and Diagnosis of Diabetes",
+        "publication_year": 2026,
+        "source_url": "https://diabetesjournals.org/care/issue",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Symptom status must be clinically verified prior to applying random glucose diagnostic rule. 70-139 mg/dL is an expected physiological postprandial finding, not a rigid universal reference interval."
+      }
+    },
+    {
+      "metric_id": "hba1c",
+      "canonical_name": "Hemoglobin A1c (Glycated Hemoglobin)",
+      "loinc_code": "4548-4",
+      "loinc_verification_status": "VERIFIED_REGISTRY",
+      "loinc_details": {
+        "loinc_version": "2.83 (August 2026)",
+        "component": "Hemoglobin A1c/Hemoglobin.total",
+        "property": "Mass fraction (MFr) or Content (Arb)",
+        "system_specimen": "Whole Blood (Bld)",
+        "scale_type": "Quantitative (Qn)",
+        "method_type": "HPLC, immunoassay, or capillary electrophoresis standardized to NGSP/DCCT"
+      },
+      "aliases": ["hba1c", "glycated hemoglobin", "glycohemoglobin", "a1c", "hemoglobin a1c"],
+      "description": "Ratio of beta-N-1-deoxyfructosyl hemoglobin to total hemoglobin; provides a 2-3 month weighted biological average of erythrocyte glycemic exposure.",
+      "standard_unit": "%",
+      "supported_alternative_units": [
+        {
+          "unit": "mmol/mol",
+          "conversion_factor_to_standard": 0.09148,
+          "conversion_formula": "NGSP % = (0.09148 * IFCC mmol/mol) + 2.152"
+        }
+      ],
+      "fasting_requirements": {
+        "is_required": false,
+        "recommended_hours": null,
+        "details": "HbA1c reflects chronic erythrocyte lifespan exposure; acute fasting status has zero impact on measurement."
+      },
+      "measurement_context": {
+        "measurement_type": "DIRECT_MEASUREMENT",
+        "methodology": "Must be performed using a method certified by the National Glycohemoglobin Standardization Program (NGSP) and standardized to the Diabetes Control and Complications Trial (DCCT) reference assay."
+      },
+      "data_concepts": {
+        "laboratory_reference_intervals": [
+          {
+            "population": "Healthy Non-Diabetic Adult Cohort (Subject to NGSP assay alignment and local laboratory platform verification)",
+            "gender": "all",
+            "age_min_years": 18,
+            "age_max_years": 120,
+            "pregnancy_status": "NOT_PREGNANT",
+            "unit": "%",
+            "min_normal": 4.0,
+            "max_normal": 5.6,
+            "source_reference": "ADA Standards of Care in Diabetes (2026) / NGSP Standards",
+            "verification_status": "VERIFIED",
+            "interval_context_note": "Assay must be NGSP certified. Values may trend slightly higher with advancing age in healthy non-diabetic elderly."
+          }
+        ],
+        "clinical_diagnostic_thresholds": [
+          {
+            "condition_name": "Prediabetes Diagnostic Category (HbA1c)",
+            "clinical_criteria": "HbA1c 5.7% to 6.4% (39-47 mmol/mol). Identifies increased risk for development of type 2 diabetes and cardiovascular disease. Warrants structured lifestyle intervention.",
+            "cutoff_value": 5.7,
+            "comparison_operator": ">=",
+            "unit": "%",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "ADA Standards of Care in Diabetes (2026)",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "condition_name": "Diabetes Mellitus Diagnostic Criterion (HbA1c)",
+            "clinical_criteria": "HbA1c >= 6.5% (48 mmol/mol). In the absence of unequivocal hyperglycemia, requires two abnormal test results from the same sample or two separate samples. Important clinical limitation: In the presence of conditions that alter erythrocyte turnover (e.g. hemolytic anemia, sickle cell disease, pregnancy in 2nd/3rd trimester, hemodialysis, recent blood transfusion), HbA1c is unreliable and plasma blood glucose criteria must be used exclusively.",
+            "cutoff_value": 6.5,
+            "comparison_operator": ">=",
+            "unit": "%",
+            "requires_repeat_confirmation": true,
+            "source_guideline": "ADA Standards of Care in Diabetes (2026)",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "critical_laboratory_limits": [],
+        "treatment_targets": [
+          {
+            "target_population": "Non-Pregnant Adults with Diagnosed Diabetes (General Benchmark)",
+            "goal_description": "General clinical recommendation: target HbA1c < 7.0% (53 mmol/mol) to reduce microvascular complications. Target may be adjusted to < 6.5% or < 8.0% based on patient age, comorbidity, and hypoglycemia risk per physician judgment.",
+            "target_value": 7.0,
+            "comparison_operator": "<",
+            "unit": "%",
+            "source_guideline": "ADA Standards of Care (2026) - Chapter 6: Glycemic Targets",
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "risk_classification_thresholds": [
+          {
+            "tier_name": "Normal Glycemic Baseline",
+            "tier_description": "Normoglycemic (< 5.7%)",
+            "lower_bound": 4.0,
+            "upper_bound": 5.6,
+            "unit": "%",
+            "clinical_significance": "Optimal long-term glycemic control",
+            "source_classification": "ADA (2026)",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "Prediabetes Spectrum",
+            "tier_description": "Increased risk tier (5.7 - 6.4%)",
+            "lower_bound": 5.7,
+            "upper_bound": 6.4,
+            "unit": "%",
+            "clinical_significance": "Lifestyle intervention and annual monitoring recommended",
+            "source_classification": "ADA (2026)",
+            "verification_status": "VERIFIED"
+          },
+          {
+            "tier_name": "Diagnostic Diabetic Threshold",
+            "tier_description": "Diabetic range (>= 6.5%)",
+            "lower_bound": 6.5,
+            "upper_bound": null,
+            "unit": "%",
+            "clinical_significance": "Confirmatory repeat testing required before formal diagnosis",
+            "source_classification": "ADA (2026)",
+            "verification_status": "VERIFIED"
+          }
+        ]
+      },
+      "provenance": {
+        "primary_source_organization": "American Diabetes Association / National Glycohemoglobin Standardization Program (NGSP)",
+        "primary_document_title": "Standards of Care in Diabetes—2026",
+        "publication_year": 2026,
+        "source_url": "https://diabetesjournals.org/care/issue",
+        "verification_status": "VERIFIED_DOCUMENTED_SOURCE",
+        "clinical_notes": "Assay invalid in altered erythrocyte turnover states (hemolytic anemia, end-stage renal disease on dialysis, pregnancy). Inconclusive when variant hemoglobins cause assay interference."
+      }
+    }
+  ]
+}
