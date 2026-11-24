@@ -4,16 +4,7 @@ Strictly prohibits eval() / exec() dynamic execution.
 """
 
 from typing import Optional, Dict, Any
-from pydantic import BaseModel
-
-class ConversionAudit(BaseModel):
-    original_value: float
-    original_unit: str
-    converted_value: float
-    standard_unit: str
-    conversion_type: str
-    formula_used: str
-    handler_executed: Optional[str] = None
+from clinical_engine.domain.schemas import ConversionAudit
 
 class UnitConversionRegistry:
     """Allowlisted mathematical conversion routines for laboratory units."""

@@ -50,6 +50,7 @@ class TestCanonicalPhase2(unittest.TestCase):
         ]
         cls.counts = cls.repo.ingest_canonical_reference_panels(cls.panel_paths)
         cls.engine = DiagnosticEngine(repository=cls.repo)
+        cls.selector = DeterministicClinicalSelector()
 
     @classmethod
     def tearDownClass(cls):
@@ -201,16 +202,20 @@ class TestCanonicalPhase2(unittest.TestCase):
         self.assertEqual(res.inconclusive_code, "UNRESOLVED_PREGNANCY_STATUS")
         self.assertIn("non-pregnant intervals cannot be safely presumed", res.inconclusive_reason)
 
-    def test_post_menopausal_female_exempt_from_pregnancy_halt(self):
-        """Female age > 55 is physiologically exempt from reproductive pregnancy halts."""
+    def test_post_menopausal_female_not_exempt_from_pregnancy_halt(self):
+        """
+        Pregnancy status must not be inferred from age alone.
+        Female patient with unknown pregnancy status halts even if age > 55.
+        """
         ctx_post_meno = PatientContext(
             biological_sex="female",
             age_years=62.0,
             is_pregnant=None
         )
         res = self.repo.get_contextual_metric_reference("Hemoglobin", ctx_post_meno)
-        self.assertTrue(res.is_conclusive)
-        self.assertEqual(res.interval.gender, "female")
+        self.assertFalse(res.is_conclusive)
+        self.assertEqual(res.inconclusive_code, "UNRESOLVED_PREGNANCY_STATUS")
+        self.assertIn("Pregnancy status must not be inferred from age alone", res.inconclusive_reason)
 
     def test_pregnant_patient_on_contraindicated_metric_halts(self):
         """If a metric is clinically contraindicated in pregnancy (e.g. eGFR), evaluation halts."""
@@ -307,6 +312,42 @@ class TestCanonicalPhase2(unittest.TestCase):
         self.assertIsNotNone(res.critical_limit)
         self.assertEqual(res.critical_limit.critical_low, 7.0)
 
+    def test_consensus_survey_median_cannot_trigger_automated_critical_alert(self):
+        """
+        Verify that CONSENSUS_PANIC_SURVEY_MEDIAN values are strictly informational
+        and cannot independently trigger automated critical alerts (is_critical=True)
+        or emergency escalation.
+        """
+        # Fasting Glucose has critical limits 45.0 / 450.0 mg/dL with limit_type=CONSENSUS_PANIC_SURVEY_MEDIAN
+        text = "Fasting Blood Glucose: 35 mg/dL"
+        report = self.engine.analyze_report(text, gender="male", age_years=40.0, pregnancy_status="NOT_PREGNANT")
+        self.assertEqual(len(report.findings), 1)
+        finding = report.findings[0]
+        # Must be abnormal (low) but NOT an automated critical alert
+        self.assertTrue(finding.is_abnormal)
+        self.assertFalse(finding.is_critical)
+        self.assertEqual(finding.status, MetricStatus.LOW)
+        self.assertEqual(finding.severity, SeverityLevel.MILD_LOW)
+        self.assertEqual(report.critical_metrics, 0)
+        self.assertEqual(finding.critical_alert_info["is_actionable_critical"], False)
+        self.assertIn("Informational Survey Benchmark", finding.clinical_note)
+
+    def test_clinical_practice_alert_threshold_triggers_critical_alert(self):
+        """
+        Verify that CLINICAL_PRACTICE_ALERT_THRESHOLD (e.g. Triglycerides > 1000 mg/dL)
+        CAN independently trigger actionable critical alerts.
+        """
+        text = "Triglycerides: 1200 mg/dL"
+        report = self.engine.analyze_report(text, gender="male", age_years=45.0, pregnancy_status="NOT_PREGNANT")
+        self.assertEqual(len(report.findings), 1)
+        finding = report.findings[0]
+        self.assertTrue(finding.is_critical)
+        self.assertEqual(finding.status, MetricStatus.CRITICAL_HIGH)
+        self.assertEqual(finding.severity, SeverityLevel.CRITICAL_HIGH)
+        self.assertEqual(report.critical_metrics, 1)
+        self.assertEqual(report.risk_level, "High")
+        self.assertEqual(finding.critical_alert_info["is_actionable_critical"], True)
+
     # =========================================================================
     # 6. FAIL-SAFE BACKWARD COMPATIBILITY
     # =========================================================================
@@ -333,12 +374,56 @@ class TestCanonicalPhase2(unittest.TestCase):
         self.assertIsNone(metric.max_normal)
 
     def test_legacy_stratified_lookup_with_explicit_gender(self):
-        """Explicit gender passed to legacy get_metric_reference() succeeds conclusively."""
+        """Explicit gender passed to legacy get_metric_reference() succeeds conclusively for non-age-stratified metric."""
         metric = self.repo.get_metric_reference("Hemoglobin", gender="female")
         self.assertIsNotNone(metric)
         self.assertEqual(metric.evaluation_status, "CONCLUSIVE")
         self.assertEqual(metric.min_normal, 12.0)
         self.assertEqual(metric.max_normal, 15.5)
+
+    def test_legacy_lookup_with_explicit_gender_enforces_age_stratification(self):
+        """
+        Verify that legacy lookups with explicit biological sex enforce age applicability.
+        eGFR has age bounds (18-39 yrs). Calling get_metric_reference('egfr', gender='male')
+        without age must return INSUFFICIENT_DEMOGRAPHIC_CONTEXT.
+        """
+        metric = self.repo.get_metric_reference("egfr", gender="male")
+        self.assertIsNotNone(metric)
+        self.assertTrue(metric.is_demographic_dependent)
+        self.assertEqual(metric.evaluation_status, "INSUFFICIENT_DEMOGRAPHIC_CONTEXT")
+        self.assertIsNone(metric.min_normal)
+        self.assertIsNone(metric.max_normal)
+        self.assertIn("age", metric.demographic_requirement_note.lower())
+
+    def test_legacy_lookup_enforces_interval_uniqueness(self):
+        """
+        Verify that legacy lookups enforce interval uniqueness.
+        If multiple candidate intervals exist without disambiguating context,
+        return an explicit inconclusive result.
+        """
+        # Test directly with an artificially added non-unique interval on a temp database
+        conn = self.repo._get_connection()
+        try:
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO metric_reference_intervals
+                (metric_id, population, gender, age_min_years, age_max_years, pregnancy_status,
+                 unit, min_normal, max_normal, interval_context_note, source_reference, verification_status)
+                VALUES ('cholesterol_total', 'Alternative Cohort', 'all', 18.0, 120.0, 'ALL', 'mg/dL', 120.0, 190.0, 'Note', 'Ref', 'VERIFIED')
+            """)
+            conn.commit()
+
+            metric = self.repo.get_metric_reference("Total Cholesterol", gender="all")
+            self.assertIsNotNone(metric)
+            self.assertEqual(metric.evaluation_status, "INCONCLUSIVE_NON_UNIQUE_INTERVAL")
+            self.assertIsNone(metric.min_normal)
+            self.assertIsNone(metric.max_normal)
+
+            # Cleanup duplicate test row
+            cursor.execute("DELETE FROM metric_reference_intervals WHERE population = 'Alternative Cohort'")
+            conn.commit()
+        finally:
+            conn.close()
 
     # =========================================================================
     # 7. DIAGNOSTIC ENGINE INTEGRATION & CLINICAL PIPELINE
@@ -401,6 +486,225 @@ class TestCanonicalPhase2(unittest.TestCase):
         self.assertEqual(report.abnormal_metrics, 1)
         self.assertTrue(len(report.findings[0].diagnostic_alerts) > 0)
         self.assertTrue(any("Diabetes" in a for a in report.findings[0].diagnostic_alerts))
+
+    # =========================================================================
+    # =========================================================================
+    # 8. CLINICAL SAFETY REGRESSION TESTS: GLUCOSE & TRIMESTER SELECTION
+    # =========================================================================
+
+    def test_glucose_35_mgdl_consensus_panic_survey_median_not_critical(self):
+        """
+        Verify that Fasting Blood Glucose at 35 mg/dL:
+        1. Is below the reference interval (70-99 mg/dL) and below consensus survey median (45 mg/dL).
+        2. Is flagged as abnormal (status=LOW, severity=MILD_LOW).
+        3. Sets is_critical=False because CONSENSUS_PANIC_SURVEY_MEDIAN cannot independently
+           trigger automated critical escalation.
+        4. Does NOT increment critical_metrics count (critical_metrics == 0).
+        5. Includes informative clinical note citing the survey median benchmark.
+        6. Confirms that no clinical practice alert threshold exists in canonical data for fasting glucose,
+           and that the missing independent threshold does NOT cause the survey median to be promoted.
+        """
+        text = "Fasting Blood Glucose: 35 mg/dL"
+        report = self.engine.analyze_report(text, gender="male", age_years=45.0, pregnancy_status="NOT_PREGNANT")
+        self.assertEqual(len(report.findings), 1)
+        finding = report.findings[0]
+        self.assertEqual(finding.status, MetricStatus.LOW)
+        self.assertEqual(finding.severity, SeverityLevel.MILD_LOW)
+        self.assertTrue(finding.is_abnormal)
+        self.assertFalse(finding.is_critical)
+        self.assertEqual(report.critical_metrics, 0)
+        self.assertIn("Informational Survey Benchmark", finding.clinical_note)
+        self.assertIn("45.0 mg/dL", finding.clinical_note)
+        self.assertIn("does not independently trigger automated panic alert", finding.clinical_note)
+
+        # Audit underlying critical limits in database for fasting glucose
+        with self.repo._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM metric_critical_limits WHERE metric_id = 'glucose_fasting'")
+            cl_rows = cursor.fetchall()
+            self.assertEqual(len(cl_rows), 1)
+            row = cl_rows[0]
+            # Confirm that the only configured critical limit is CONSENSUS_PANIC_SURVEY_MEDIAN
+            self.assertEqual(row["limit_type"], CriticalLimitType.CONSENSUS_PANIC_SURVEY_MEDIAN.value)
+            self.assertEqual(row["critical_low"], 45.0)
+            # Verify that absence of CLINICAL_PRACTICE_ALERT_THRESHOLD does NOT promote survey median
+            self.assertFalse(finding.critical_alert_info["is_actionable_critical"])
+
+    def test_validated_clinical_guideline_alert_not_suppressed(self):
+        """
+        Verify that an independently validated clinical guideline alert (CLINICAL_PRACTICE_ALERT_THRESHOLD)
+        or institutional panic alert (LABORATORY_SPECIFIC_PANIC_ALERT) is NOT suppressed.
+        Triglycerides at 1200 mg/dL exceeds the 1000 mg/dL threshold from Endocrine Society / AGA
+        guidelines (acute pancreatitis risk) and must trigger is_critical=True, critical_metrics=1,
+        and risk_level='High'.
+        """
+        text = "Triglycerides: 1200 mg/dL"
+        report = self.engine.analyze_report(text, gender="female", age_years=40.0, pregnancy_status="NOT_PREGNANT")
+        self.assertEqual(len(report.findings), 1)
+        finding = report.findings[0]
+        self.assertEqual(finding.status, MetricStatus.CRITICAL_HIGH)
+        self.assertTrue(finding.is_critical)
+        self.assertEqual(report.critical_metrics, 1)
+        self.assertEqual(report.risk_level, "High")
+        self.assertIn("Critical high alert", finding.clinical_note)
+        self.assertIn("1000.0", finding.clinical_note)
+
+    def test_institutional_panic_alert_triggers_critical(self):
+        """
+        Verify that a laboratory-specific panic alert with matching institutional context
+        (e.g., MGH Hemoglobin < 7.0 g/dL) triggers is_critical=True in engine.
+        """
+        text = "Hemoglobin: 6.8 g/dL"
+        report = self.engine.analyze_report(
+            text,
+            gender="female",
+            age_years=30.0,
+            pregnancy_status="NOT_PREGNANT",
+            institutional_context="MGH",
+        )
+        self.assertEqual(len(report.findings), 1)
+        finding = report.findings[0]
+        self.assertTrue(finding.is_critical)
+        self.assertEqual(finding.status, MetricStatus.CRITICAL_LOW)
+        self.assertEqual(report.critical_metrics, 1)
+        self.assertEqual(report.risk_level, "High")
+        self.assertIn("Critical low alert", finding.clinical_note)
+
+    def test_patient_context_gestational_age_weeks_mapping(self):
+        """
+        Verify PatientContext supports gestational_age_weeks and gestational_trimester,
+        and verify trimester derivation from gestational age in selector:
+        - 10 weeks -> Trimester 1 (< 14.0 weeks)
+        - 20 weeks -> Trimester 2 (14.0 <= weeks < 28.0)
+        - 32 weeks -> Trimester 3 (>= 28.0 weeks)
+        """
+        ctx1 = PatientContext(biological_sex="female", age_years=28.0, is_pregnant=True, gestational_age_weeks=10.0)
+        self.assertEqual(ctx1.gestational_age_weeks, 10.0)
+        self.assertIsNone(ctx1.gestational_trimester)
+
+        from clinical_engine.domain.schemas import ReferenceInterval
+        cand_t1 = ReferenceInterval(
+            metric_id="hemoglobin",
+            population="First Trimester",
+            gender="all",
+            age_min_years=18.0,
+            age_max_years=50.0,
+            pregnancy_status="PREGNANT",
+            unit="g/dL",
+            min_normal=11.0,
+            max_normal=14.0,
+            interval_context_note="1st trimester physiological range",
+            source_reference="ACOG Guidelines",
+            verification_status="VERIFIED",
+        )
+        cand_t2 = ReferenceInterval(
+            metric_id="hemoglobin",
+            population="Second Trimester",
+            gender="all",
+            age_min_years=18.0,
+            age_max_years=50.0,
+            pregnancy_status="PREGNANT",
+            unit="g/dL",
+            min_normal=10.5,
+            max_normal=14.0,
+            interval_context_note="2nd trimester physiological range",
+            source_reference="ACOG Guidelines",
+            verification_status="VERIFIED",
+        )
+        cand_t3 = ReferenceInterval(
+            metric_id="hemoglobin",
+            population="Third Trimester",
+            gender="all",
+            age_min_years=18.0,
+            age_max_years=50.0,
+            pregnancy_status="PREGNANT",
+            unit="g/dL",
+            min_normal=11.0,
+            max_normal=14.0,
+            interval_context_note="3rd trimester physiological range",
+            source_reference="ACOG Guidelines",
+            verification_status="VERIFIED",
+        )
+        cands = [cand_t1, cand_t2, cand_t3]
+
+        # 10.0 weeks -> Trimester 1
+        res1 = self.selector.select_interval_and_limits(cands, [], None, ctx1)
+        self.assertTrue(res1.is_conclusive)
+        self.assertEqual(res1.interval.population, "First Trimester")
+        self.assertEqual(res1.interval.min_normal, 11.0)
+
+        # 20.0 weeks -> Trimester 2
+        ctx2 = PatientContext(biological_sex="female", age_years=28.0, is_pregnant=True, gestational_age_weeks=20.0)
+        res2 = self.selector.select_interval_and_limits(cands, [], None, ctx2)
+        self.assertTrue(res2.is_conclusive)
+        self.assertEqual(res2.interval.population, "Second Trimester")
+        self.assertEqual(res2.interval.min_normal, 10.5)
+
+        # 32.0 weeks -> Trimester 3
+        ctx3 = PatientContext(biological_sex="female", age_years=28.0, is_pregnant=True, gestational_age_weeks=32.0)
+        res3 = self.selector.select_interval_and_limits(cands, [], None, ctx3)
+        self.assertTrue(res3.is_conclusive)
+        self.assertEqual(res3.interval.population, "Third Trimester")
+        self.assertEqual(res3.interval.min_normal, 11.0)
+
+        # Explicit trimester (trimester=2)
+        ctx_tri2 = PatientContext(biological_sex="female", age_years=28.0, is_pregnant=True, gestational_trimester=2)
+        res_tri2 = self.selector.select_interval_and_limits(cands, [], None, ctx_tri2)
+        self.assertTrue(res_tri2.is_conclusive)
+        self.assertEqual(res_tri2.interval.population, "Second Trimester")
+        self.assertEqual(res_tri2.interval.min_normal, 10.5)
+
+    def test_missing_gestational_trimester_halts_inconclusive(self):
+        """
+        Verify that if trimester information is required (TRIMESTER_STRATIFIED) but missing,
+        the selector returns INCONCLUSIVE with code MISSING_GESTATIONAL_TRIMESTER.
+        """
+        from clinical_engine.domain.schemas import ClinicalContext
+        ctx_missing_tri = PatientContext(biological_sex="female", age_years=28.0, is_pregnant=True)
+        clinical_ctx = ClinicalContext(
+            metric_id="hemoglobin",
+            gestational_applicability_type=GestationalApplicabilityType.TRIMESTER_STRATIFIED,
+        )
+        from clinical_engine.domain.schemas import ReferenceInterval
+        cand_t1 = ReferenceInterval(
+            metric_id="hemoglobin",
+            population="First Trimester",
+            gender="all",
+            age_min_years=18.0,
+            age_max_years=50.0,
+            pregnancy_status="PREGNANT",
+            unit="g/dL",
+            min_normal=11.0,
+            max_normal=14.0,
+            interval_context_note="1st trimester",
+            source_reference="ACOG Guidelines",
+            verification_status="VERIFIED",
+        )
+        res = self.selector.select_interval_and_limits([cand_t1], [], clinical_ctx, ctx_missing_tri)
+        self.assertFalse(res.is_conclusive)
+        self.assertEqual(res.inconclusive_code, "MISSING_GESTATIONAL_TRIMESTER")
+        self.assertIn("trimester-stratified in pregnancy", res.inconclusive_reason)
+
+    def test_canonical_dataset_pregnancy_limitations_honored(self):
+        """
+        Verify that canonical dataset behavior is strictly honored without inventing intervals:
+        1. Hemoglobin has NOT_PREGNANT intervals in canonical JSON; evaluating a PREGNANT patient
+           must halt with PREGNANCY_RANGE_UNAVAILABLE rather than silently falling back to NOT_PREGNANT.
+        2. eGFR has GESTATIONAL_METHODOLOGY_CONTRAINDICATED in metadata; evaluating a PREGNANT patient
+           must halt with GESTATIONAL_METHODOLOGY_CONTRAINDICATED.
+        """
+        ctx_pregnant = PatientContext(biological_sex="female", age_years=28.0, is_pregnant=True, gestational_trimester=2)
+
+        # Hemoglobin (canonical dataset has only NOT_PREGNANT intervals)
+        res_hb = self.repo.get_contextual_metric_reference("Hemoglobin", ctx_pregnant)
+        self.assertFalse(res_hb.is_conclusive)
+        self.assertEqual(res_hb.inconclusive_code, "PREGNANCY_RANGE_UNAVAILABLE")
+
+        # eGFR (CKD-EPI 2021 contraindicated in pregnancy)
+        res_egfr = self.repo.get_contextual_metric_reference("egfr", ctx_pregnant)
+        self.assertFalse(res_egfr.is_conclusive)
+        self.assertEqual(res_egfr.inconclusive_code, "GESTATIONAL_METHODOLOGY_CONTRAINDICATED")
+
 
 
 if __name__ == "__main__":

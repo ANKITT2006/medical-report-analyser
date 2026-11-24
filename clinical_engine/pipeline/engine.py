@@ -200,34 +200,85 @@ class DiagnosticEngine:
         crit_alert_info = None
 
         # Check Critical Limits
+        # CLINICAL GOVERNANCE RULE:
+        # CONSENSUS_PANIC_SURVEY_MEDIAN values are strictly informational/benchmark and CANNOT
+        # independently trigger automated critical alerts, critical severity, or emergency escalation.
+        # Only LABORATORY_SPECIFIC_PANIC_ALERT (with institutional match) or CLINICAL_PRACTICE_ALERT_THRESHOLD
+        # can trigger automated critical alerts (is_critical = True).
         is_critical = False
         is_abnormal = False
         status = MetricStatus.NORMAL
         severity = SeverityLevel.OPTIMAL
         note = f"Observation lies within established physiological reference limits ({interval.population})."
 
+        is_actionable_critical = (
+            crit_limit is not None and
+            crit_limit.limit_type in (
+                CriticalLimitType.LABORATORY_SPECIFIC_PANIC_ALERT,
+                CriticalLimitType.CLINICAL_PRACTICE_ALERT_THRESHOLD
+            )
+        )
+
         if c_low is not None and eval_value < c_low:
-            status = MetricStatus.CRITICAL_LOW
-            severity = SeverityLevel.CRITICAL_LOW
-            is_abnormal = True
-            is_critical = True
-            note = f"Critical low alert: {eval_value} {standard_unit} falls below critical threshold of {c_low}."
-            crit_alert_info = {
-                "limit_type": crit_limit.limit_type.value,
-                "institutional_note": crit_limit.institutional_note,
-                "urgency": crit_limit.clinical_urgency
-            }
+            if is_actionable_critical:
+                status = MetricStatus.CRITICAL_LOW
+                severity = SeverityLevel.CRITICAL_LOW
+                is_abnormal = True
+                is_critical = True
+                note = f"Critical low alert: {eval_value} {standard_unit} falls below critical threshold of {c_low}."
+                crit_alert_info = {
+                    "limit_type": crit_limit.limit_type.value,
+                    "institutional_note": crit_limit.institutional_note,
+                    "urgency": crit_limit.clinical_urgency,
+                    "is_actionable_critical": True
+                }
+            else:
+                # Strictly informational consensus survey benchmark: flag abnormal/low, NOT critical panic
+                status = MetricStatus.LOW
+                severity = SeverityLevel.MILD_LOW
+                is_abnormal = True
+                is_critical = False
+                note = (
+                    f"Sub-normal finding: {eval_value} {standard_unit} falls below biological reference limit ({interval.min_normal}). "
+                    f"[Informational Survey Benchmark: Below multi-center consensus survey median panic threshold of {c_low} {standard_unit}; "
+                    f"does not independently trigger automated panic alert or emergency escalation]."
+                )
+                crit_alert_info = {
+                    "limit_type": crit_limit.limit_type.value,
+                    "institutional_note": crit_limit.institutional_note,
+                    "urgency": crit_limit.clinical_urgency,
+                    "is_actionable_critical": False
+                }
         elif c_high is not None and eval_value > c_high:
-            status = MetricStatus.CRITICAL_HIGH
-            severity = SeverityLevel.CRITICAL_HIGH
-            is_abnormal = True
-            is_critical = True
-            note = f"Critical high alert: {eval_value} {standard_unit} exceeds critical threshold of {c_high}."
-            crit_alert_info = {
-                "limit_type": crit_limit.limit_type.value,
-                "institutional_note": crit_limit.institutional_note,
-                "urgency": crit_limit.clinical_urgency
-            }
+            if is_actionable_critical:
+                status = MetricStatus.CRITICAL_HIGH
+                severity = SeverityLevel.CRITICAL_HIGH
+                is_abnormal = True
+                is_critical = True
+                note = f"Critical high alert: {eval_value} {standard_unit} exceeds critical threshold of {c_high}."
+                crit_alert_info = {
+                    "limit_type": crit_limit.limit_type.value,
+                    "institutional_note": crit_limit.institutional_note,
+                    "urgency": crit_limit.clinical_urgency,
+                    "is_actionable_critical": True
+                }
+            else:
+                # Strictly informational consensus survey benchmark: flag abnormal/elevated, NOT critical panic
+                status = MetricStatus.ELEVATED
+                severity = SeverityLevel.MILD_HIGH
+                is_abnormal = True
+                is_critical = False
+                note = (
+                    f"Elevated finding: {eval_value} {standard_unit} exceeds biological reference limit ({interval.max_normal}). "
+                    f"[Informational Survey Benchmark: Exceeds multi-center consensus survey median panic threshold of {c_high} {standard_unit}; "
+                    f"does not independently trigger automated panic alert or emergency escalation]."
+                )
+                crit_alert_info = {
+                    "limit_type": crit_limit.limit_type.value,
+                    "institutional_note": crit_limit.institutional_note,
+                    "urgency": crit_limit.clinical_urgency,
+                    "is_actionable_critical": False
+                }
         elif eval_value < interval.min_normal:
             status = MetricStatus.LOW
             severity = SeverityLevel.MILD_LOW
@@ -285,7 +336,9 @@ class DiagnosticEngine:
         is_pregnant: Optional[bool] = None,
         institutional_context: Optional[str] = None,
         age_years: Optional[float] = None,
-        pregnancy_status: Optional[str] = None
+        pregnancy_status: Optional[str] = None,
+        gestational_age_weeks: Optional[float] = None,
+        gestational_trimester: Optional[int] = None
     ) -> AnalysisReport:
         """End-to-end clinical ingestion and evaluation pipeline."""
         final_age = age if age is not None else age_years
@@ -303,6 +356,8 @@ class DiagnosticEngine:
             age_years=final_age,
             biological_sex=gender,
             is_pregnant=final_pregnant,
+            gestational_age_weeks=gestational_age_weeks,
+            gestational_trimester=gestational_trimester,
             institutional_context=institutional_context
         )
 

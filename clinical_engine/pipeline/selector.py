@@ -78,17 +78,58 @@ class DeterministicClinicalSelector:
                     selection_audit_trail=["Halt: Gestational methodology contraindication encountered."]
                 )
 
+            # Resolve effective gestational trimester from explicit trimester or gestational age in weeks
+            eff_trimester = patient.gestational_trimester
+            if eff_trimester is None and patient.gestational_age_weeks is not None:
+                if patient.gestational_age_weeks < 14.0:
+                    eff_trimester = 1
+                elif patient.gestational_age_weeks < 28.0:
+                    eff_trimester = 2
+                else:
+                    eff_trimester = 3
+                audit_trail.append(f"Derived gestational trimester {eff_trimester} from gestational age {patient.gestational_age_weeks} weeks.")
+
             # Trimester-specific check
-            if gest_type == GestationalApplicabilityType.TRIMESTER_STRATIFIED and patient.gestational_trimester is None:
+            if gest_type == GestationalApplicabilityType.TRIMESTER_STRATIFIED and eff_trimester is None:
                 return IntervalSelectionResult(
                     is_conclusive=False,
                     inconclusive_code="MISSING_GESTATIONAL_TRIMESTER",
-                    inconclusive_reason="Biomarker interval is trimester-stratified in pregnancy. Gestational trimester is required.",
+                    inconclusive_reason="Biomarker interval is trimester-stratified in pregnancy. Gestational trimester (or gestational age in weeks) is required.",
                     selection_audit_trail=["Halt: Gestational trimester required but unstated."]
                 )
 
             preg_candidates = [i for i in candidates if i.pregnancy_status == "PREGNANT"]
             if preg_candidates:
+                # If trimester-specific candidates exist in canonical data, filter by trimester
+                if eff_trimester is not None:
+                    # Match population tags e.g. "1st Trimester", "First Trimester", "Trimester 1", or "Trimester-1"
+                    t_keywords = [
+                        f"{eff_trimester}st trimester", f"{eff_trimester}nd trimester", f"{eff_trimester}rd trimester",
+                        f"{eff_trimester}th trimester", f"trimester {eff_trimester}", f"trimester-{eff_trimester}"
+                    ]
+                    if eff_trimester == 1:
+                        t_keywords.extend(["first trimester", "1st tri"])
+                    elif eff_trimester == 2:
+                        t_keywords.extend(["second trimester", "2nd tri"])
+                    elif eff_trimester == 3:
+                        t_keywords.extend(["third trimester", "3rd tri"])
+
+                    t_matched = [
+                        i for i in preg_candidates
+                        if any(kw in i.population.lower() for kw in t_keywords)
+                    ]
+                    if t_matched:
+                        preg_candidates = t_matched
+                        audit_trail.append(f"Selected trimester {eff_trimester} gestational reference interval.")
+                    elif any("trimester" in i.population.lower() for i in preg_candidates):
+                        # Trimester-specific intervals exist but none covers the patient's trimester
+                        return IntervalSelectionResult(
+                            is_conclusive=False,
+                            inconclusive_code="TRIMESTER_INTERVAL_UNAVAILABLE",
+                            inconclusive_reason=f"No validated pregnancy reference interval covers gestational trimester {eff_trimester}.",
+                            selection_audit_trail=[f"Halt: No interval matched trimester {eff_trimester}."]
+                        )
+
                 candidates = preg_candidates
                 audit_trail.append("Matched pregnancy-specific reference intervals.")
             else:
@@ -111,9 +152,9 @@ class DeterministicClinicalSelector:
 
         elif patient.is_pregnant is None:
             # Pregnancy status is UNKNOWN
-            # Patients beyond reproductive age (e.g. > 55 yrs) are physiologically exempt from pregnancy halts
-            is_reproductive_age = patient.age_years is None or (12.0 <= patient.age_years <= 55.0)
-            if patient.biological_sex == "female" and is_reproductive_age and gest_type in (
+            # Clinical Safety Rule: Pregnancy status must not be inferred from age alone.
+            # No age-based exemptions (>55 or otherwise).
+            if patient.biological_sex == "female" and gest_type in (
                 GestationalApplicabilityType.PHYSIOLOGICAL_SHIFT,
                 GestationalApplicabilityType.METHODOLOGY_CONTRAINDICATED,
                 GestationalApplicabilityType.TRIMESTER_STRATIFIED
@@ -123,9 +164,10 @@ class DeterministicClinicalSelector:
                     inconclusive_code="UNRESOLVED_PREGNANCY_STATUS",
                     inconclusive_reason=(
                         "Biomarker physiological intervals or validity shift significantly during pregnancy. "
-                        "Maternal pregnancy status is unstated; non-pregnant intervals cannot be safely presumed."
+                        "Maternal pregnancy status is unstated; non-pregnant intervals cannot be safely presumed. "
+                        "Pregnancy status must not be inferred from age alone."
                     ),
-                    selection_audit_trail=["Halt: Female patient of reproductive age with unresolved pregnancy status on pregnancy-sensitive marker."]
+                    selection_audit_trail=["Halt: Female patient with unresolved pregnancy status on pregnancy-sensitive marker."]
                 )
             # Safe to evaluate non-pregnant
             candidates = [i for i in candidates if i.pregnancy_status in ("NOT_PREGNANT", "ALL")]

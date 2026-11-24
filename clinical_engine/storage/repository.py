@@ -315,6 +315,9 @@ class SQLClinicalRepository(ClinicalRepository):
 
             has_sex_stratification = any(i["gender"] in ("male", "female") for i in intervals)
             has_age_stratification = any(i["age_max_years"] < 100.0 or i["age_min_years"] > 18.0 for i in intervals)
+            # Check methodology stratification (e.g. multiple distinct methodology tags among candidates)
+            unique_method_tags = set(i["analytical_method_tag"] for i in intervals if i["analytical_method_tag"] != "ALL_METHODS")
+            has_method_stratification = len(unique_method_tags) > 1
 
             # Check critical limits for consensus alerts
             cursor.execute("""
@@ -326,7 +329,7 @@ class SQLClinicalRepository(ClinicalRepository):
 
             # Handle generic gender='all' call
             if gender.lower() == "all":
-                if has_sex_stratification or has_age_stratification:
+                if has_sex_stratification or has_age_stratification or has_method_stratification:
                     return LabMetric(
                         metric_id=m_row["metric_id"],
                         canonical_name=m_row["canonical_name"],
@@ -342,16 +345,103 @@ class SQLClinicalRepository(ClinicalRepository):
                         aliases=aliases,
                         is_demographic_dependent=True,
                         evaluation_status="INSUFFICIENT_DEMOGRAPHIC_CONTEXT",
-                        demographic_requirement_note="Biomarker interval is biological sex or age stratified. Demographic context required."
+                        demographic_requirement_note="Biomarker interval is biological sex, age, or methodology stratified. Context required."
                     )
-                # Universal metric
+                # Universal metric with unique interval
+                if len(intervals) != 1:
+                    return LabMetric(
+                        metric_id=m_row["metric_id"],
+                        canonical_name=m_row["canonical_name"],
+                        loinc_code=m_row["loinc_code"],
+                        category=m_row["category"],
+                        unit=m_row["standard_unit"],
+                        gender="all",
+                        min_normal=None,
+                        max_normal=None,
+                        critical_low=float(crit_row["critical_low"]) if crit_row and crit_row["critical_low"] is not None else None,
+                        critical_high=float(crit_row["critical_high"]) if crit_row and crit_row["critical_high"] is not None else None,
+                        description=m_row["description"],
+                        aliases=aliases,
+                        is_demographic_dependent=True,
+                        evaluation_status="INCONCLUSIVE_NON_UNIQUE_INTERVAL",
+                        demographic_requirement_note="Multiple candidate intervals exist without disambiguating context."
+                    )
                 target_inv = intervals[0]
             else:
                 # Explicit gender provided
-                matching = [i for i in intervals if i["gender"] == gender.lower()]
+                # CLINICAL GOVERNANCE RULE:
+                # Explicit gender lookups must still enforce age applicability, methodology applicability,
+                # and interval uniqueness. If age or methodology is stratified, missing context cannot
+                # default to an arbitrary range and must return INSUFFICIENT_DEMOGRAPHIC_CONTEXT.
+                matching = [i for i in intervals if i["gender"] == gender.lower() or i["gender"] == "all"]
                 if not matching:
                     return None
-                target_inv = matching[0]
+
+                # Enforce age stratification safety: if metric has age bounds, unstated age cannot resolve
+                if has_age_stratification:
+                    return LabMetric(
+                        metric_id=m_row["metric_id"],
+                        canonical_name=m_row["canonical_name"],
+                        loinc_code=m_row["loinc_code"],
+                        category=m_row["category"],
+                        unit=m_row["standard_unit"],
+                        gender=gender.lower(),
+                        min_normal=None,
+                        max_normal=None,
+                        critical_low=float(crit_row["critical_low"]) if crit_row and crit_row["critical_low"] is not None else None,
+                        critical_high=float(crit_row["critical_high"]) if crit_row and crit_row["critical_high"] is not None else None,
+                        description=m_row["description"],
+                        aliases=aliases,
+                        is_demographic_dependent=True,
+                        evaluation_status="INSUFFICIENT_DEMOGRAPHIC_CONTEXT",
+                        demographic_requirement_note="Biomarker interval is age-stratified. Patient age context is required."
+                    )
+
+                # Enforce methodology stratification safety
+                if has_method_stratification:
+                    return LabMetric(
+                        metric_id=m_row["metric_id"],
+                        canonical_name=m_row["canonical_name"],
+                        loinc_code=m_row["loinc_code"],
+                        category=m_row["category"],
+                        unit=m_row["standard_unit"],
+                        gender=gender.lower(),
+                        min_normal=None,
+                        max_normal=None,
+                        critical_low=float(crit_row["critical_low"]) if crit_row and crit_row["critical_low"] is not None else None,
+                        critical_high=float(crit_row["critical_high"]) if crit_row and crit_row["critical_high"] is not None else None,
+                        description=m_row["description"],
+                        aliases=aliases,
+                        is_demographic_dependent=True,
+                        evaluation_status="INSUFFICIENT_DEMOGRAPHIC_CONTEXT",
+                        demographic_requirement_note="Biomarker interval is methodology-stratified. Analytical methodology context is required."
+                    )
+
+                # Enforce interval uniqueness
+                # Prefer exact sex match if available
+                exact_sex_matches = [i for i in matching if i["gender"] == gender.lower()]
+                candidates = exact_sex_matches if exact_sex_matches else matching
+
+                if len(candidates) > 1:
+                    return LabMetric(
+                        metric_id=m_row["metric_id"],
+                        canonical_name=m_row["canonical_name"],
+                        loinc_code=m_row["loinc_code"],
+                        category=m_row["category"],
+                        unit=m_row["standard_unit"],
+                        gender=gender.lower(),
+                        min_normal=None,
+                        max_normal=None,
+                        critical_low=float(crit_row["critical_low"]) if crit_row and crit_row["critical_low"] is not None else None,
+                        critical_high=float(crit_row["critical_high"]) if crit_row and crit_row["critical_high"] is not None else None,
+                        description=m_row["description"],
+                        aliases=aliases,
+                        is_demographic_dependent=True,
+                        evaluation_status="INCONCLUSIVE_NON_UNIQUE_INTERVAL",
+                        demographic_requirement_note="Multiple candidate intervals match biological sex without disambiguating clinical context."
+                    )
+
+                target_inv = candidates[0]
 
             return LabMetric(
                 metric_id=m_row["metric_id"],
@@ -883,7 +973,7 @@ class SQLClinicalRepository(ClinicalRepository):
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """, (
                         metric.metric_id, metric.critical_low, metric.critical_high, metric.unit,
-                        "CONSENSUS_PANIC_SURVEY_MEDIAN", "Legacy critical values baseline",
+                        "CLINICAL_PRACTICE_ALERT_THRESHOLD", "Legacy critical values baseline",
                         "Urgent clinical evaluation advised", "Legacy Clinical Baseline", "VERIFIED"
                     ))
 
