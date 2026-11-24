@@ -156,10 +156,17 @@ class DiagnosticEngine:
         eval_value = detected_val
         conversion_info = None
 
-        if raw_unit and raw_unit.strip().lower() != standard_unit.strip().lower():
+        if raw_unit:
+            from clinical_engine.pipeline.normalizer import UnitLexicalNormalizer
+            norm_unit, _ = UnitLexicalNormalizer.normalize_unit(raw_unit)
+            effective_unit = norm_unit if norm_unit is not None else raw_unit.strip()
+        else:
+            effective_unit = None
+
+        if effective_unit and effective_unit != standard_unit.strip():
             unit_conv = None
             if hasattr(self.repository, "get_unit_conversion"):
-                unit_conv = self.repository.get_unit_conversion(metric_id, raw_unit)
+                unit_conv = self.repository.get_unit_conversion(metric_id, effective_unit)
 
             if not unit_conv:
                 return ClinicalFinding(
@@ -180,7 +187,7 @@ class DiagnosticEngine:
             # Execute allowlisted conversion
             res = convert_laboratory_value(
                 detected_value=detected_val,
-                incoming_unit=raw_unit,
+                incoming_unit=effective_unit,
                 standard_unit=standard_unit,
                 conversion_type=unit_conv.conversion_type,
                 handler_name=unit_conv.handler_function_name,

@@ -46,7 +46,7 @@ def convert_laboratory_value(
     Safely executes an allowlisted unit conversion routine.
     Returns dictionary with converted_value and full audit trail.
     """
-    if incoming_unit.strip().lower() == standard_unit.strip().lower():
+    if incoming_unit.strip() == standard_unit.strip():
         return {
             "converted_value": detected_value,
             "standard_unit": standard_unit,

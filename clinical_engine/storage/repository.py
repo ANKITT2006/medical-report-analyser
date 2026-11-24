@@ -567,17 +567,18 @@ class SQLClinicalRepository(ClinicalRepository):
             conn.close()
 
     def get_unit_conversion(self, metric_id: str, incoming_unit: str) -> Optional[UnitConversion]:
-        """Fetch registered unit conversion for metric and incoming unit."""
+        """Fetch registered unit conversion for metric and incoming unit using exact case-sensitive unit matching."""
         conn = self._get_connection()
         try:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM metric_unit_conversions
-                WHERE metric_id = ? AND LOWER(alternative_unit) = LOWER(?)
+                WHERE metric_id = ? AND alternative_unit = ?
             """, (metric_id, incoming_unit.strip()))
-            row = cursor.fetchone()
-            if not row:
+            rows = cursor.fetchall()
+            if len(rows) != 1:
                 return None
+            row = rows[0]
             return UnitConversion(
                 conversion_id=row["conversion_id"],
                 metric_id=row["metric_id"],

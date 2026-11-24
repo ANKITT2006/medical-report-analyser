@@ -705,6 +705,42 @@ class TestCanonicalPhase2(unittest.TestCase):
         self.assertFalse(res_egfr.is_conclusive)
         self.assertEqual(res_egfr.inconclusive_code, "GESTATIONAL_METHODOLOGY_CONTRAINDICATED")
 
+    def test_legacy_engine_rbc_standard_unit_M_ul_valid(self):
+        """RBC with its actual standard unit M/uL follows the valid standard-unit path."""
+        report = self.engine.analyze_report(
+            "RBC: 5.0 M/uL",
+            gender="male",
+            age_years=35.0,
+            pregnancy_status="NOT_PREGNANT",
+        )
+        self.assertEqual(len(report.findings), 1)
+        finding = report.findings[0]
+        self.assertEqual(finding.metric_id, "rbc")
+        self.assertEqual(finding.unit, "M/uL")
+        self.assertEqual(finding.status, MetricStatus.NORMAL)
+        self.assertEqual(finding.severity, SeverityLevel.OPTIMAL)
+        self.assertFalse(finding.is_abnormal)
+        self.assertFalse(finding.is_critical)
+
+    def test_legacy_engine_rbc_lowercase_m_ul_rejected_as_unsupported(self):
+        """RBC with m/uL is rejected as unsupported and is never evaluated clinically."""
+        report = self.engine.analyze_report(
+            "RBC: 5.0 m/uL",
+            gender="male",
+            age_years=35.0,
+            pregnancy_status="NOT_PREGNANT",
+        )
+        self.assertEqual(len(report.findings), 1)
+        finding = report.findings[0]
+        self.assertEqual(finding.metric_id, "rbc")
+        self.assertEqual(finding.status, MetricStatus.INCONCLUSIVE)
+        self.assertEqual(finding.severity, SeverityLevel.INCONCLUSIVE)
+        self.assertFalse(finding.is_abnormal)
+        self.assertFalse(finding.is_critical)
+        self.assertIn("Unsupported unit 'm/uL'", finding.clinical_note)
+        self.assertEqual(report.abnormal_metrics, 0)
+        self.assertEqual(report.critical_metrics, 0)
+
 
 
 if __name__ == "__main__":

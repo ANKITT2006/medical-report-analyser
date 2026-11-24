@@ -9,6 +9,7 @@ Phase 3.3 Implementation:
 
 import re
 import unicodedata
+from enum import Enum
 from typing import Optional, List, Dict, Tuple, Any
 
 from clinical_engine.domain.schemas import (
@@ -29,6 +30,16 @@ from clinical_engine.storage.repository import ClinicalRepository, SQLClinicalRe
 # 1. CANONICAL BIOMARKER RESOLVER
 # =============================================================================
 
+class BiomarkerResolutionStatus(str, Enum):
+    """Internal resolution status for CanonicalBiomarkerResolver."""
+    RESOLVED = "RESOLVED"
+    UNKNOWN = "UNKNOWN"
+    AMBIGUOUS = "AMBIGUOUS"
+
+    # Backward compatibility with IngestionStatus checks if any
+    VALID = "RESOLVED"
+
+
 class CanonicalBiomarkerResolver:
     """
     Deterministic resolver that maps a raw biomarker label to its canonical entity.
@@ -37,9 +48,9 @@ class CanonicalBiomarkerResolver:
     Rules:
     - Normalizes case and whitespace.
     - Strips leading/trailing punctuation/bullets.
-    - Exactly one match -> returns canonical tuple.
-    - Zero matches -> UNKNOWN_BIOMARKER.
-    - Multiple distinct matches -> AMBIGUOUS_BIOMARKER.
+    - Exactly one match -> returns canonical tuple with BiomarkerResolutionStatus.RESOLVED.
+    - Zero matches -> BiomarkerResolutionStatus.UNKNOWN.
+    - Multiple distinct matches -> BiomarkerResolutionStatus.AMBIGUOUS.
     - Never uses fuzzy LLM matching or manufactures canonical IDs.
     - Does NOT require demographic context (gender/age) merely to identify a biomarker.
     """
@@ -47,14 +58,14 @@ class CanonicalBiomarkerResolver:
     def __init__(self, repository: Optional[ClinicalRepository] = None):
         self.repository = repository or SQLClinicalRepository()
 
-    def resolve(self, raw_label: str) -> Tuple[Optional[Dict[str, Any]], IngestionStatus, Optional[str]]:
+    def resolve(self, raw_label: str) -> Tuple[Optional[Dict[str, Any]], BiomarkerResolutionStatus, Optional[str]]:
         """
         Resolves raw_label into:
-        (canonical_metric_dict, ingestion_status, explanation)
+        (canonical_metric_dict, resolution_status, explanation)
         canonical_metric_dict contains: metric_id, canonical_name, loinc_code, standard_unit, category.
         """
         if not raw_label or not raw_label.strip():
-            return None, IngestionStatus.UNKNOWN_BIOMARKER, "Empty or missing biomarker label."
+            return None, BiomarkerResolutionStatus.UNKNOWN, "Empty or missing biomarker label."
 
         cleaned = raw_label.strip()
         # Clean leading bullets, dashes, or numbered lists (e.g. "1. Hemoglobin" or "- Glucose")
@@ -68,7 +79,7 @@ class CanonicalBiomarkerResolver:
         normalized_query = re.sub(r"\s+", " ", cleaned).lower()
 
         if not normalized_query:
-            return None, IngestionStatus.UNKNOWN_BIOMARKER, "Biomarker label contains no searchable characters."
+            return None, BiomarkerResolutionStatus.UNKNOWN, "Biomarker label contains no searchable characters."
 
         # Query database directly using connection
         conn = getattr(self.repository, "_get_connection")()
@@ -100,18 +111,18 @@ class CanonicalBiomarkerResolver:
             matched_list = list(combined.values())
 
             if len(matched_list) == 1:
-                return matched_list[0], IngestionStatus.VALID, None
+                return matched_list[0], BiomarkerResolutionStatus.RESOLVED, None
 
             if len(matched_list) > 1:
                 candidate_ids = [m["metric_id"] for m in matched_list]
                 return (
                     None,
-                    IngestionStatus.AMBIGUOUS_BIOMARKER,
+                    BiomarkerResolutionStatus.AMBIGUOUS,
                     f"Ambiguous biomarker label '{raw_label}': maps to multiple canonical metrics ({', '.join(candidate_ids)})."
                 )
 
             # Zero matches
-            return None, IngestionStatus.UNKNOWN_BIOMARKER, f"Unrecognized biomarker label: '{raw_label}'."
+            return None, BiomarkerResolutionStatus.UNKNOWN, f"Unrecognized biomarker label: '{raw_label}'."
 
         finally:
             conn.close()
@@ -133,6 +144,15 @@ class UnitLexicalNormalizer:
     - Unrecognized units return None (caller flags UNSUPPORTED_UNIT).
     - Ambiguous aliases return None with explicit ambiguity flag.
     """
+
+    # Case-sensitive mappings for SI-prefix-sensitive unit tokens (e.g., M = Mega vs m = milli)
+    CASE_SENSITIVE_UNIT_MAP: Dict[str, str] = {
+        "M/uL": "M/uL",
+        "M / uL": "M/uL",
+        "M/mcL": "M/uL",
+        "M/µL": "M/uL",
+        "M/μL": "M/uL",
+    }
 
     # Controlled mapping: lowercase stripped normalized form -> canonical unit string
     CONTROLLED_UNIT_MAP: Dict[str, str] = {
@@ -196,11 +216,6 @@ class UnitLexicalNormalizer:
         "cells/μl": "/uL",
         "per microliter": "/uL",
 
-        "m/ul": "M/uL",
-        "m / ul": "M/uL",
-        "m/mcl": "M/uL",
-        "m/µl": "M/uL",
-        "m/μl": "M/uL",
         "mil/ul": "M/uL",
         "million/ul": "M/uL",
         "10^6/ul": "M/uL",
@@ -267,13 +282,21 @@ class UnitLexicalNormalizer:
         norm_text = unicodedata.normalize("NFKC", cleaned)
         # Collapse internal spaces
         norm_text = re.sub(r"\s+", " ", norm_text).strip()
+
+        # 1. Exact-case check for SI-prefix-sensitive tokens (prevents e.g. 'm/uL' collapsing to 'M/uL')
+        if norm_text in cls.CASE_SENSITIVE_UNIT_MAP:
+            return cls.CASE_SENSITIVE_UNIT_MAP[norm_text], None
+        collapsed_exact_slash = re.sub(r"\s*/\s*", "/", norm_text)
+        if collapsed_exact_slash in cls.CASE_SENSITIVE_UNIT_MAP:
+            return cls.CASE_SENSITIVE_UNIT_MAP[collapsed_exact_slash], None
+
         lower_key = norm_text.lower()
 
-        # Direct map check
+        # 2. Direct controlled map check
         if lower_key in cls.CONTROLLED_UNIT_MAP:
             return cls.CONTROLLED_UNIT_MAP[lower_key], None
 
-        # Try removing spaces around slashes
+        # 3. Try removing spaces around slashes
         collapsed_slash = re.sub(r"\s*/\s*", "/", lower_key)
         if collapsed_slash in cls.CONTROLLED_UNIT_MAP:
             return cls.CONTROLLED_UNIT_MAP[collapsed_slash], None
@@ -335,8 +358,11 @@ class ObservationNormalizer:
 
         # 3. Resolve canonical biomarker identity
         bio_dict, bio_status, bio_expl = self.resolver.resolve(raw_obs.raw_label)
-        if bio_status != IngestionStatus.VALID or bio_dict is None:
-            normalized.ingestion_status = bio_status
+        if bio_status != BiomarkerResolutionStatus.RESOLVED or bio_dict is None:
+            if bio_status == BiomarkerResolutionStatus.AMBIGUOUS:
+                normalized.ingestion_status = IngestionStatus.AMBIGUOUS_BIOMARKER
+            else:
+                normalized.ingestion_status = IngestionStatus.UNKNOWN_BIOMARKER
             msg = bio_expl or f"Biomarker resolution status: {bio_status.value}."
             normalized.validation_messages.append(msg)
             normalized.inconclusive_reason = msg
@@ -400,14 +426,15 @@ class ObservationNormalizer:
             normalized.inconclusive_reason = msg
             return normalized
 
-        # 7. Check if incoming unit is already the standard unit (case-insensitive check against canonical standard unit)
-        if norm_incoming_unit.strip().lower() == standard_unit.strip().lower():
+        # 7. Check if incoming unit is already the standard unit
+        if norm_incoming_unit.strip() == standard_unit.strip():
             normalized.normalized_value = raw_obs.detected_value
-            normalized.normalized_unit = standard_unit  # Assign canonical standard unit casing
+            normalized.normalized_unit = standard_unit
             normalized.ingestion_status = IngestionStatus.VALID
             return normalized
 
         # 8. Check Metric-Specific Unit Compatibility in Database Registry
+        # Enforces exact case match on alternative_unit to preserve SI prefix semantics (e.g. 'M' vs 'm')
         conn = getattr(self.repository, "_get_connection")()
         try:
             cursor = conn.cursor()
@@ -415,11 +442,23 @@ class ObservationNormalizer:
                 SELECT conversion_id, alternative_unit, standard_unit, conversion_type,
                        conversion_factor, canonical_conversion_formula, handler_function_name
                 FROM metric_unit_conversions
-                WHERE metric_id = ? AND LOWER(alternative_unit) = ?
-            """, (normalized.canonical_metric_id, norm_incoming_unit.lower()))
-            conv_row = cursor.fetchone()
+                WHERE metric_id = ? AND alternative_unit = ?
+            """, (normalized.canonical_metric_id, norm_incoming_unit))
+            conv_rows = cursor.fetchall()
         finally:
             conn.close()
+
+        if len(conv_rows) > 1:
+            normalized.ingestion_status = IngestionStatus.CONVERSION_FAILED
+            msg = (
+                f"Ambiguous conversion registry entries ({len(conv_rows)}) for metric "
+                f"'{normalized.canonical_metric_id}' and unit '{norm_incoming_unit}'."
+            )
+            normalized.validation_messages.append(msg)
+            normalized.inconclusive_reason = msg
+            return normalized
+
+        conv_row = conv_rows[0] if len(conv_rows) == 1 else None
 
         if not conv_row:
             # No registered conversion for this metric + unit pair
