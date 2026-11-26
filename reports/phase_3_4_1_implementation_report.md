@@ -48,7 +48,7 @@ All **156 unit tests** (142 existing + 14 Step 3.4.1 tests) pass with 0 failures
    - Valid images return `DocumentFormat.IMAGE`, `DocumentProcessingStatus.PENDING`, `is_structurally_validated=True`, and safe dimensions/mode metadata.
 5. **Safe UTF-8 / UTF-16 Text Detection**:
    - Supports explicit UTF-16 BOM (`\xff\xfe`, `\xfe\xff`) and strict UTF-8 / UTF-8-SIG decoding.
-   - Rejects NUL bytes (`\x00` in non-UTF-16 streams), `Cc` control characters, and Unicode replacement noise (`\ufffd`) so arbitrary binary data is never silently classified as text.
+   - Rejects NUL bytes (`\x00`) in non-UTF-16 streams; explicitly permits ordinary line separators (`\n`, `\r`, `\t`); and rejects all other inappropriate `Cc` control characters and Unicode replacement noise (`\ufffd`) so arbitrary binary data is never silently classified as text.
    - Classifies verified text into `DocumentFormat.TSV`, `DocumentFormat.CSV`, or `DocumentFormat.PLAIN_TEXT` based on content structure rather than extension.
 6. **Unsupported Binary Rejection**:
    - Unrecognized binary signatures (e.g., ELF, ZIP, raw binary) return `DocumentFormat.UNSUPPORTED`, `DocumentProcessingStatus.UNSUPPORTED_FORMAT`, and `UNSUPPORTED_BINARY_CONTENT`.
