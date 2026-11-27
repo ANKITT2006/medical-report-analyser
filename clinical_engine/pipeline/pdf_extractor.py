@@ -8,7 +8,7 @@ and emits explicit diagnostics for scanned/encrypted/corrupted/oversized PDFs.
 """
 
 import io
-from typing import List, Optional, Set, Tuple
+from typing import Any, List, Optional, Set, Tuple
 
 import pdfplumber
 from pdfminer.pdfdocument import PDFEncryptionError, PDFPasswordIncorrect
@@ -242,7 +242,7 @@ class PDFTextExtractor:
     @classmethod
     def _extract_single_page(
         cls,
-        page: object,
+        page: Any,
         page_num: int,
     ) -> Tuple[List[RawObservation], List[ExtractionDiagnostic], bool]:
         """
@@ -331,11 +331,11 @@ class PDFTextExtractor:
 
     @staticmethod
     def _observation_signature(obs: RawObservation) -> Tuple[str, str, str]:
-        """Deterministic per-page deduplication key (label, raw_value_text, raw_unit)."""
+        """Deterministic per-page deduplication key preserving exact case-sensitive raw_unit."""
         return (
             obs.raw_label.strip().lower(),
             obs.raw_value_text.strip(),
-            (obs.raw_unit or "").strip().lower(),
+            (obs.raw_unit or "").strip(),
         )
 
     @staticmethod

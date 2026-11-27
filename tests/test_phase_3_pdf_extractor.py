@@ -345,6 +345,36 @@ class TestPhase3PDFExtractor(unittest.TestCase):
         self.assertIsNone(res.observations[1].detected_value)
         self.assertIsNone(res.observations[1].raw_unit)
 
+    def test_15_unit_safe_deduplication_preserves_M_ul_vs_m_ul(self):
+        """
+        15. Unit-safe deduplication:
+        - Identical label, value, and exact unit from table & layout strategies are deduplicated.
+        - Identical label and value with 'M/uL' vs 'm/uL' remain separate observations.
+        - Original raw_unit strings are preserved unmodified.
+        """
+        stream = _pdf_text_stream([
+            (72, 720, "Metric Cell: 5.0 M/uL"),
+            (72, 700, "Metric Cell: 5.0 m/uL"),
+        ])
+        pdf_bytes = _build_technical_pdf([stream])
+        res = PDFTextExtractor.extract_from_bytes(pdf_bytes)
+
+        self.assertEqual(res.extraction_status, ExtractionStatus.SUCCESS)
+        self.assertEqual(len(res.observations), 2)
+        self.assertEqual(res.observations[0].raw_unit, "M/uL")
+        self.assertEqual(res.observations[1].raw_unit, "m/uL")
+
+        # Also verify cross-page identical observations (same label, value, exact unit) are preserved
+        p1 = _pdf_text_stream([(72, 720, "Metric Cell: 5.0 M/uL")])
+        p2 = _pdf_text_stream([(72, 720, "Metric Cell: 5.0 M/uL")])
+        res_multi = PDFTextExtractor.extract_from_bytes(_build_technical_pdf([p1, p2]))
+        self.assertEqual(res_multi.extraction_status, ExtractionStatus.SUCCESS)
+        self.assertEqual(len(res_multi.observations), 2)
+        self.assertEqual(res_multi.observations[0].source_location.page_number, 1)
+        self.assertEqual(res_multi.observations[1].source_location.page_number, 2)
+        self.assertEqual(res_multi.observations[0].raw_unit, "M/uL")
+        self.assertEqual(res_multi.observations[1].raw_unit, "M/uL")
+
 
 if __name__ == "__main__":
     unittest.main()
